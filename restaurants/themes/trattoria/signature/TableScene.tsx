@@ -70,22 +70,30 @@ export function TableScene({ course }: { course: Course }) {
   );
 
   if (!sideways) {
-    // Phones and reduced motion: the same tickets, pinned in a grid.
+    // Phones and reduced motion: the same rail, swiped sideways by hand.
     return (
-      <section id={`course-${course.id}`} data-course={course.id} aria-label={course.title} className="relative overflow-hidden bg-espresso py-16 text-cream">
-        <div className="px-5">
-          {header}
-          {course.backdrop && (
-            <RusticCard className="mt-8 -rotate-1" pad="p-2.5 pb-6">
-              <PhotoSlot photo={course.backdrop} ratio="aspect-[4/5]" focal="50% 55%" sizes="100vw" className="paper-photo" />
-            </RusticCard>
-          )}
+      <section id={`course-${course.id}`} data-course={course.id} aria-label={course.title} className="relative overflow-hidden bg-espresso py-14 text-cream">
+        <div aria-hidden className="absolute inset-0 opacity-35">
+          <PhotoSlot photo="sp-03b" ratio="h-full w-full" sizes="100vw" focal="50% 60%" className="h-full" />
         </div>
-        <ul className="mt-12 grid grid-cols-2 gap-x-3 gap-y-10 px-4">
-          {course.dishes.map((d, i) => (
-            <li key={d.id}><Ticket dish={d} i={i} /></li>
-          ))}
-        </ul>
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-espresso/80 via-espresso/40 to-espresso/90" />
+        <div className="relative px-5">{header}</div>
+        <div className="relative mt-10">
+          <span aria-hidden className="brass absolute left-0 right-0 top-0 h-2 rounded-full" />
+          <ul className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-5 px-5 pb-6 pt-8 [scrollbar-width:none]">
+            {course.backdrop && (
+              <li className="w-[64vw] max-w-72 shrink-0 snap-start">
+                <Ticket dish={{ id: course.id, name: "Rolled by hand, every morning", price: null, photo: course.backdrop }} i={5} label />
+              </li>
+            )}
+            {course.dishes.map((d, i) => (
+              <li key={d.id} className="w-[64vw] max-w-72 shrink-0 snap-start">
+                <Ticket dish={d} i={i} />
+              </li>
+            ))}
+          </ul>
+          <p aria-hidden className="px-5 font-hand text-xl text-cream/60">swipe the orders →</p>
+        </div>
       </section>
     );
   }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { useHideOnScroll } from "@/components/motion/useHideOnScroll";
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
@@ -19,6 +20,18 @@ export function SiteHeader({ site }: { site: SiteData }) {
   const path = usePathname();
   const home = path === "/";
   const hidden = useHideOnScroll(path, true);
+  const bar = useRef<HTMLElement>(null);
+
+  // Publish how much of the screen the header covers, so sticky bars (the menu's course nav) sit below it.
+  useEffect(() => {
+    const el = bar.current;
+    if (!el) return;
+    const set = () => document.documentElement.style.setProperty("--header-offset", hidden || home ? "0px" : `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [hidden, home]);
 
   // On Home the header floats over the dark scenes; elsewhere it is a solid cream bar.
   const skin = home
@@ -26,7 +39,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
     : "sticky text-espresso bg-paper/95 backdrop-blur border-b border-espresso/10";
 
   return (
-    <header className={`top-0 z-40 transition-transform duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
+    <header ref={bar} className={`top-0 z-40 transition-transform duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
       <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 pt-3 sm:px-6 md:flex-row md:items-center md:justify-between md:gap-6 md:py-4">
         <Link href="/" className="group flex items-center gap-3 whitespace-nowrap" aria-label={`${site.name}, home`}>
           <span className="flex flex-col leading-none">

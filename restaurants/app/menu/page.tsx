@@ -22,7 +22,7 @@ export default function Menu() {
         </p>
       </div>
 
-      <nav aria-label="Courses" className="sticky top-0 z-20 mt-8 border-y border-espresso/10 bg-cream/95 backdrop-blur">
+      <nav aria-label="Courses" className="sticky top-[var(--header-offset,0px)] z-20 mt-8 transition-[top] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] border-y border-espresso/10 bg-cream/95 backdrop-blur">
         <ul className="mx-auto flex max-w-3xl justify-start gap-5 overflow-x-auto px-4 py-2 font-hand text-xl sm:justify-center sm:px-6 sm:py-3 sm:text-2xl">
           {sections.map((s) => (
             <li key={s.id}><a href={`#${s.id}`} className="ink whitespace-nowrap text-terracotta-deep">{s.title}</a></li>

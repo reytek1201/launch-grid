@@ -4,7 +4,7 @@ import Link from "next/link";
 import { type MotionValue, motion, useMotionValue, useTransform } from "framer-motion";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Magnetic } from "@/components/motion/Magnetic";
-import { DESKTOP, useMedia } from "@/components/motion/useMedia";
+import { useMedia } from "@/components/motion/useMedia";
 import { useRamp } from "@/components/motion/useRamp";
 import { HoursReceipt } from "@/components/site/HoursReceipt";
 import type { SiteData } from "@/lib/types";
@@ -21,26 +21,32 @@ const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
  * and "Grazie" writes itself. Address, phone and buttons never move.
  */
 function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pinned: boolean }) {
-  const candleScale = useTransform(p, [0, 1], [1, 1.45]);
+  const candleScale = useTransform(p, [0, 1], [1.04, 1.22]);
   const glow = useRamp(p, [0.1, 0.8], [0.15, 0.75]);
   const checkY = useTransform(p, [0, 0.45], ["38%", "0%"]);
   const checkRotate = useTransform(p, [0, 0.45], [-9, -2]);
   const cupDraw = useRamp(p, [0.15, 0.55], [0, 1]);
-  const thanks = useTransform(useRamp(p, [0.55, 0.9], [0, 1]), (v) => `inset(-20% ${100 - v * 100}% -20% 0)`);
+  const thanks = useTransform(useRamp(p, [0.55, 0.9], [0, 1]), (v) => `inset(-30% ${100 - v * 115}% -30% -10%)`);
 
   return (
     <div className={`${pinned ? "sticky top-0 h-svh" : "relative"} overflow-hidden bg-espresso text-cream`}>
-      <div className="mx-auto grid h-full max-w-6xl items-center gap-10 px-5 py-16 md:px-8 lg:grid-cols-[1.05fr_1fr_0.8fr] lg:gap-8 lg:py-0">
-        {/* Candle: first on phones, right column on desktop */}
-        <div className="relative order-first h-64 overflow-hidden rounded-lg md:h-80 lg:order-last lg:h-[78svh]">
-          <motion.div className="absolute inset-0 origin-[50%_24%]" style={{ scale: pinned ? candleScale : 1 }}>
-            <PhotoSlot photo="sp-10" ratio="h-full w-full" sizes="(min-width: 1024px) 30vw, 100vw" focal="72% 40%" className="h-full" />
-          </motion.div>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 mix-blend-screen"
-            style={{ opacity: glow, background: "radial-gradient(circle at 50% 24%, rgba(255,190,100,0.55), rgba(255,150,60,0) 55%)" }}
-          />
+      {/* Desktop: the candle photo fills the frame and melts into the dark on the left */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 hidden origin-[74%_22%] lg:block"
+        style={{ scale: pinned ? candleScale : 1, maskImage: "linear-gradient(to right, transparent 18%, black 62%)", WebkitMaskImage: "linear-gradient(to right, transparent 18%, black 62%)" }}
+      >
+        <PhotoSlot photo="sp-10" ratio="h-full w-full" sizes="100vw" focal="70% 45%" className="h-full" />
+      </motion.div>
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hidden mix-blend-screen lg:block"
+        style={{ opacity: glow, background: "radial-gradient(circle at 74% 22%, rgba(255,190,100,0.5), rgba(255,150,60,0) 40%)" }}
+      />
+      <div className="mx-auto grid h-full max-w-6xl items-center gap-10 px-5 py-16 md:px-8 lg:grid-cols-[1fr_1fr_0.85fr] lg:gap-8 lg:py-0">
+        {/* Phones and tablets: the candle as a band on top */}
+        <div className="relative h-64 overflow-hidden rounded-lg md:h-80 lg:hidden">
+          <PhotoSlot photo="sp-10" ratio="h-full w-full" sizes="100vw" focal="72% 40%" className="h-full" />
           <div className="absolute inset-0 bg-gradient-to-t from-espresso/50 to-transparent" />
         </div>
 
@@ -60,7 +66,7 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
             <div className="relative w-24 text-cream/80 md:w-28">
               <Ink name="cup" draw={cupDraw} strokeWidth={1.6} />
             </div>
-            <motion.p className="font-hand text-6xl leading-none text-[#f2b27a] md:text-7xl" style={{ clipPath: thanks }}>
+            <motion.p className="pr-3 font-hand text-6xl leading-none text-[#f2b27a] md:text-7xl" style={{ clipPath: thanks }}>
               Grazie!
             </motion.p>
           </div>
@@ -77,7 +83,8 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
 
 export function CheckScene({ site }: { site: SiteData }) {
   const { ref, reduce, progress } = useScene(1);
-  const desktop = useMedia(DESKTOP);
+  // Pinned only where the three-column layout fits (1024px and up).
+  const desktop = useMedia("(min-width: 1024px)");
   const done = useMotionValue(1);
   const pinned = desktop && !reduce;
   return (

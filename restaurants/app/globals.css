@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #F6EEDD;
+  --color-paper: #FBF6EA;
+  --color-espresso: #2B1D14;
+  --color-terracotta: #B9532F;
+  --color-terracotta-deep: #9A3F20;
+  --color-olive: #4F5E2F;
+  --color-wine: #6E2233;
+  --font-heading: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-source), system-ui, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+}
+
+html { background: var(--color-cream); color: var(--color-espresso); }
+body { font-family: var(--font-body); }
+h1, h2, h3 { font-family: var(--font-heading); }
+
+@layer base {
+  :focus-visible { outline: 2px solid var(--color-terracotta-deep); outline-offset: 3px; border-radius: 4px; }
+}
+
+/* One easing, three durations: 0.25s hover, 0.6s reveal, 0.9s scene. */
+@layer components {
+  .ink {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .ink:hover, .ink:focus-visible, .group:hover .ink, .group:focus-visible .ink { background-size: 100% 2px; }
+
+  .btn {
+    position: relative; isolation: isolate; overflow: hidden; display: inline-block; text-align: center;
+    border-radius: 9999px; padding: 0.75rem 1.5rem; font-weight: 600; border: 1px solid transparent;
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.25s;
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .btn:hover::before, .btn:focus-visible::before { transform: scaleX(1); }
+  .btn:active { transform: scale(0.96); }
+  .btn-solid { background: var(--color-terracotta-deep); color: var(--color-cream); }
+  .btn-solid::before { background: var(--color-espresso); }
+  .btn-terra { background: #d9693f; color: var(--color-espresso); }
+  .btn-terra::before { background: var(--color-cream); }
+  .btn-line-light { border-color: rgb(246 238 221 / 0.7); color: var(--color-cream); }
+  .btn-line-light::before { background: var(--color-cream); }
+  .btn-line-light:hover, .btn-line-light:focus-visible { color: var(--color-espresso); }
+  .btn-line-dark { border-color: rgb(43 29 20 / 0.3); color: var(--color-espresso); }
+  .btn-line-dark::before { background: var(--color-espresso); }
+  .btn-line-dark:hover, .btn-line-dark:focus-visible { color: var(--color-cream); }
+
+  .leader {
+    flex: 1 1 1rem; min-width: 1rem; align-self: end; margin-bottom: 0.35em;
+    border-bottom: 2px dotted rgb(43 29 20 / 0.35); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .group:hover .leader, .group:focus-within .leader { transform: scaleX(1); }
+}
+
+@keyframes swing { 0%,100% { transform: rotate(0) } 25% { transform: rotate(5deg) } 60% { transform: rotate(-3deg) } 85% { transform: rotate(1.5deg) } }
+.sign-swing { transform-origin: 50% -0.5rem; }
+.sign-swing:hover, .sign-swing:focus-visible { animation: swing 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) { .sign-swing:hover { animation: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

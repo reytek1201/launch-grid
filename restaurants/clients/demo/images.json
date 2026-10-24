@@ -1,0 +1,170 @@
+{
+  "sp-03": {
+    "id": "SP-03",
+    "src": "/demo/sp-03-dining-room.jpg",
+    "alt": "Long communal oak table set for dinner in a candlelit brick trattoria, five paper lanterns hanging in a row, wood-fired oven glowing at the back",
+    "width": 1376,
+    "height": 768,
+    "focal": "50% 50%"
+  },
+  "sp-03b": {
+    "id": "SP-03b",
+    "src": "/demo/sp-03b-dining-room-evening.jpg",
+    "alt": "The same dining room at dusk, candles, sconces and oven fire lighting the table, deep blue sky in the windows",
+    "width": 1376,
+    "height": 768,
+    "focal": "50% 50%"
+  },
+  "sp-05": {
+    "id": "SP-05",
+    "src": "/demo/sp-05-place-setting.jpg",
+    "alt": "Overhead view of a cream plate with a terracotta rim, brass cutlery and a linen napkin on a dark oak table",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "sp-11": {
+    "id": "SP-11",
+    "src": "/demo/sp-11-five-lanterns.jpg",
+    "alt": "Five round glowing paper lanterns hanging in a row from a dark oak beam against a limewash wall",
+    "width": 1376,
+    "height": 768,
+    "focal": "50% 50%"
+  },
+  "sp-04": {
+    "id": "SP-04",
+    "src": "/demo/sp-04-oven.jpg",
+    "alt": "Arched brick wood-fired oven with a roaring fire, copper pots on shelves and a flour-dusted peel in a candlelit trattoria",
+    "width": 896,
+    "height": 1200,
+    "focal": "50% 50%"
+  },
+  "sp-01": {
+    "id": "SP-01",
+    "src": "/demo/sp-01-exterior-dusk.jpg",
+    "alt": "Brick corner trattoria at dusk with amber arched windows, an olive-green door, lemon trees in terracotta pots and a blank hanging wooden sign",
+    "width": 1376,
+    "height": 768,
+    "focal": "50% 50%"
+  },
+  "sp-06": {
+    "id": "SP-06",
+    "src": "/demo/sp-06-hands-pasta.jpg",
+    "alt": "Floured hands rolling out fresh pasta dough with a wooden rolling pin on a worn oak board, with eggs, a bowl of semolina and candles behind",
+    "width": 896,
+    "height": 1200,
+    "focal": "50% 50%"
+  },
+  "sp-07": {
+    "id": "SP-07",
+    "src": "/demo/sp-07-bar-corner.jpg",
+    "alt": "Corner of the bar with a worn oak counter, wine glasses, bottles on wooden shelves, a lit brass sconce and a blank chalkboard on an ochre wall",
+    "width": 1200,
+    "height": 896,
+    "focal": "50% 50%"
+  },
+  "sp-08": {
+    "id": "SP-08",
+    "src": "/demo/sp-08-window-booth.jpg",
+    "alt": "A window booth at golden hour with a red-and-cream checkered tablecloth, a candle in a wine bottle and a glass of red wine",
+    "width": 896,
+    "height": 1200,
+    "focal": "50% 50%"
+  },
+  "sp-03v": {
+    "id": "SP-03v",
+    "src": "/demo/sp-03v-dining-room-vertical.jpg",
+    "alt": "Vertical view of the long oak table with a single place setting, five paper lanterns overhead and the oven glowing at the far end (bonus, e.g. mobile hero)",
+    "width": 896,
+    "height": 1200,
+    "focal": "50% 50%"
+  },
+  "sp-09": {
+    "id": "SP-09",
+    "src": "/demo/sp-09-pantry.jpg",
+    "alt": "Pantry shelves with jars of whole tomatoes, bundles of dried pasta, plain olive-oil tins, a bowl of lemons, strings of garlic and chilies beside a lit brass sconce",
+    "width": 1200,
+    "height": 896,
+    "focal": "50% 50%"
+  },
+  "sp-10": {
+    "id": "SP-10",
+    "src": "/demo/sp-10-candle.jpg",
+    "alt": "A single candle with wax drips burning in an unlabelled wine bottle on a dark oak table, with softly blurred glowing paper lanterns behind",
+    "width": 1200,
+    "height": 896,
+    "focal": "50% 50%"
+  },
+  "sp-12": {
+    "id": "SP-12",
+    "src": "/demo/sp-12-espresso-dessert.jpg",
+    "alt": "Two steaming espresso cups and a brass coffee pot on a tray beside a half-eaten slice of tiramisu on a cream plate with a terracotta rim",
+    "width": 896,
+    "height": 1200,
+    "focal": "50% 50%"
+  },
+  "d-01": {
+    "id": "D-01",
+    "src": "/demo/d-01-burrata.jpg",
+    "alt": "A whole burrata with roasted cherry tomatoes, basil and olive oil on a cream plate with a terracotta rim, on a dark oak table in candlelight",
+    "width": 896,
+    "height": 1200,
+    "focal": "50% 50%"
+  },
+  "d-02": {
+    "id": "D-02",
+    "src": "/demo/d-02-bruschetta.jpg",
+    "alt": "Four slices of grilled bruschetta topped with chopped tomato, garlic and basil on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-03": {
+    "id": "D-03",
+    "src": "/demo/d-03-tagliatelle-ragu.jpg",
+    "alt": "Tagliatelle in a slow-cooked meat ragù with grated parmigiano and steam rising, on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-04": {
+    "id": "D-04",
+    "src": "/demo/d-04-cacio-e-pepe.jpg",
+    "alt": "Cacio e pepe, spaghetti twirled high in a creamy pecorino sauce with cracked black pepper, steam rising, on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-05": {
+    "id": "D-05",
+    "src": "/demo/d-05-ossobuco.jpg",
+    "alt": "Braised ossobuco with the marrow bone showing, on creamy polenta with gremolata and a glossy sauce, on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-06": {
+    "id": "D-06",
+    "src": "/demo/d-06-branzino.jpg",
+    "alt": "Whole roasted branzino with lemon slices, rosemary and olive oil on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-07": {
+    "id": "D-07",
+    "src": "/demo/d-07-tiramisu.jpg",
+    "alt": "A clean square slice of tiramisu with visible layers and cocoa dusting on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-08": {
+    "id": "D-08",
+    "src": "/demo/d-08-cannoli.jpg",
+    "alt": "Two cannoli siciliani filled with ricotta cream and pistachio, dusted with powdered sugar, on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  }
+}

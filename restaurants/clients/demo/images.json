@@ -198,5 +198,13 @@
     "width": 1024,
     "height": 1024,
     "focal": "50% 50%"
+  },
+  "d-13": {
+    "id": "D-13",
+    "src": "/demo/d-13-pollo-limone.jpg",
+    "alt": "Half roasted chicken, split lengthwise, with golden crisp skin, roasted lemon halves, rosemary and potatoes on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
   }
 }

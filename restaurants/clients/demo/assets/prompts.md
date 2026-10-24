@@ -86,3 +86,10 @@ Same template as D-01 to D-08 with the strengthened D-08 background sentence, pl
 | D-10 | risotto ai funghi porcini: creamy risotto spread gently across the plate, sliced golden porcini mushrooms on top, a little chopped parsley and grated parmigiano |
 | D-11 | spaghetti alle vongole: spaghetti twirled with small open clams in their shells, glossy with olive oil and white wine, chopped parsley and a few chili flakes |
 | D-12 | carpaccio di manzo: paper-thin slices of raw beef fanned across the plate, topped with wild rocket, shaved parmigiano, a drizzle of olive oil and a lemon wedge |
+
+## Dish D-13 (third Secondi, Oct 24 evening)
+Same template as D-09 to D-12; image 1 = SP-05, image 2 = D-12 ("Do not include the carpaccio, the rocket or the beef from image 2").
+
+| ID | {DISH} as prompted |
+| --- | --- |
+| D-13 | pollo al limone: half a roasted chicken, split lengthwise, with deep golden crisp skin and glistening pan juices, the leg and the breast with its wing both visible, resting on the plate with roasted lemon halves, sprigs of rosemary and a few roasted potatoes beside it |

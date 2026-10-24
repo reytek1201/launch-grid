@@ -36,7 +36,7 @@ const menu: MenuSection[] = [
     id: "secondi",
     title: "Secondi",
     items: [
-      { id: "pollo", name: "Pollo al limone", description: "Roast chicken, lemon, rosemary", price: 2400, tags: ["gluten-free"] },
+      { id: "pollo", name: "Pollo al limone", description: "Half roast chicken, lemon, rosemary", price: 2400, tags: ["gluten-free"], photo: "d-13" },
       { id: "ossobuco", name: "Ossobuco con polenta", description: "Braised veal shank, polenta, gremolata", price: 3600, tags: ["gluten-free"], photo: "d-05" },
       { id: "branzino", name: "Branzino al forno", description: "Whole roasted sea bass, lemon, rosemary", price: 3200, tags: ["gluten-free"], photo: "d-06" },
       { id: "melanzane", name: "Melanzane alla parmigiana", description: "Baked eggplant, tomato, mozzarella", price: 2100, tags: ["vegetarian"] },

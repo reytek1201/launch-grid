@@ -3,9 +3,29 @@
 import { type MotionValue, motion, useMotionValue, useTransform } from "framer-motion";
 
 // Hand-drawn ink illustrations. Strokes draw in with `draw` (0..1); fills wash in at the end.
-type Stroke = { d: string; fill?: "terra" | "olive" };
+type Stroke = { d: string; fill?: "terra" | "olive" | "wine" };
+const grape = (cx: number, cy: number, r = 9): Stroke => ({
+  d: `M${cx - r} ${cy} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0`,
+  fill: "wine",
+});
 
 const ART: Record<string, { viewBox: string; strokes: Stroke[] }> = {
+  bottle: {
+    viewBox: "0 0 50 140",
+    strokes: [
+      { d: "M21 4 L29 4 L29 18 C 29 28, 41 34, 41 52 L41 128 C 41 133, 38 136, 33 136 L17 136 C 12 136, 9 133, 9 128 L9 52 C 9 34, 21 28, 21 18 Z", fill: "wine" },
+      { d: "M19 11 L31 11" },
+      { d: "M15 58 L15 120" },
+    ],
+  },
+  grapes: {
+    viewBox: "0 0 100 100",
+    strokes: [
+      { d: "M50 4 C 50 14, 52 20, 56 24" },
+      { d: "M56 22 C 66 10, 82 12, 88 22 C 78 30, 64 30, 56 22 Z", fill: "olive" },
+      grape(36, 40), grape(54, 40), grape(72, 40), grape(45, 56), grape(63, 56), grape(54, 72),
+    ],
+  },
   plate: {
     viewBox: "0 0 100 100",
     strokes: [
@@ -76,7 +96,7 @@ const ART: Record<string, { viewBox: string; strokes: Stroke[] }> = {
 
 export type InkName = keyof typeof ART;
 
-const FILL = { terra: "var(--color-terracotta)", olive: "var(--color-olive)" };
+const FILL = { terra: "var(--color-terracotta)", olive: "var(--color-olive)", wine: "var(--color-wine)" };
 
 export function Ink({
   name,

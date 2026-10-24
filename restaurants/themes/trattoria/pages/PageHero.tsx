@@ -14,6 +14,7 @@ export function PageHero({
   photo,
   focal = "50% 50%",
   ink,
+  inkClass = "top-[26%] w-24 md:w-40",
 }: {
   kicker: string;
   title: string;
@@ -21,6 +22,7 @@ export function PageHero({
   photo: string;
   focal?: string;
   ink?: InkName;
+  inkClass?: string;
 }) {
   const { ref, progress } = usePassing();
   const reduce = useReducedMotion();
@@ -41,7 +43,7 @@ export function PageHero({
       </motion.div>
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-espresso via-espresso/45 to-espresso/70" />
       {ink && (
-        <div aria-hidden className="absolute right-[6%] top-[26%] w-24 text-cream/75 md:right-[10%] md:w-40">
+        <div aria-hidden className={`absolute right-[6%] text-cream/75 md:right-[10%] ${inkClass}`}>
           <Ink name={ink} draw={draw} strokeWidth={1.4} />
         </div>
       )}

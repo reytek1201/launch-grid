@@ -10,6 +10,7 @@ import { Moons } from "./Moons";
 
 const links = [
   { href: "/menu", label: "Menu" },
+  { href: "/cellar", label: "Cellar" },
   { href: "/visit", label: "Hours & location" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },

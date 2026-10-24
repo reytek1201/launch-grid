@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Flourish } from "@/components/motion/Flourish";
 import { Reveal } from "@/components/motion/Reveal";
@@ -52,6 +53,7 @@ export default function Menu() {
                     <h2 className="font-hand text-5xl text-terracotta-deep">{s.title}</h2>
                     <Flourish width={140} className="mx-auto -mt-1" />
                     {s.note && <p className="mt-1 text-espresso/75">{s.note}</p>}
+                    {s.id === "bevande" && <p className="mt-2"><Link href="/cellar" className="ink font-semibold text-terracotta-deep">See the whole wine cellar →</Link></p>}
                   </div>
                 </Reveal>
                 <ul className="mt-6 divide-y divide-dashed divide-espresso/20">

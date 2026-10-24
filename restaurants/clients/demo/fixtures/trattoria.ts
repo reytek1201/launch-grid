@@ -1,4 +1,5 @@
 import type { MenuSection, SiteData } from "@/lib/types";
+import { cellar } from "./cellar";
 import { demoConfig } from "../config";
 
 const menu: MenuSection[] = [
@@ -86,6 +87,7 @@ export const trattoria: SiteData = {
   ],
   closures: [{ date: "2026-11-26", label: "Thanksgiving Day" }],
   menu,
+  cellar,
   tier: demoConfig.tier,
   isDemo: demoConfig.isDemo,
 };

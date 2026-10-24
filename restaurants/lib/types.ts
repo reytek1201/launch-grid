@@ -15,6 +15,26 @@ export type MenuItem = {
 
 export type MenuSection = { id: string; title: string; note?: string; items: MenuItem[] };
 
+export type Wine = {
+  id: string;
+  name: string;
+  producer: string;
+  region: string;
+  grape?: string;
+  vintage?: number; // omit for non-vintage
+  /** cents; omit when not sold that way */
+  glass?: number;
+  bottle?: number;
+  notes?: string;
+  /** menu item ids this wine goes with */
+  pairs?: string[];
+  organic?: boolean;
+  soldOut?: boolean;
+  /** shown on the "Il Consiglio" board */
+  pick?: boolean;
+};
+export type WineSection = { id: string; title: string; note?: string; wines: Wine[] };
+
 export type HoursInterval = { open: string; close: string }; // 24h "HH:MM"
 export type DayHours = { day: 0 | 1 | 2 | 3 | 4 | 5 | 6; intervals: HoursInterval[] }; // 0 = Sunday
 export type Closure = { date: string; label: string }; // YYYY-MM-DD
@@ -30,6 +50,7 @@ export type SiteData = {
   hours: DayHours[];
   closures: Closure[];
   menu: MenuSection[];
+  cellar: WineSection[];
   tier: Tier;
   isDemo: boolean;
 };

@@ -57,6 +57,7 @@ export function TableScene({ course }: { course: Course }) {
   const draw = useRamp(progress, [0, 0.4], [0, 1]);
   const inkY = useTransform(progress, [0, 1], [120, -120]);
   const titleOpacity = useRamp(progress, [0, 0.1], [0.3, 1]);
+  const bgX = useTransform(progress, [0, 1], ["0%", "-8%"]);
 
   if (!sideways) {
     // Phones and reduced motion: the same plates, stacked.
@@ -78,7 +79,12 @@ export function TableScene({ course }: { course: Course }) {
 
   return (
     <section ref={ref} id={`course-${course.id}`} data-course={course.id} aria-label={course.title} className="relative h-[320vh]">
-      <div className="sticky top-0 flex h-svh flex-col justify-center overflow-hidden text-cream" style={{ backgroundImage: WOOD }}>
+      <div className="sticky top-0 flex h-svh flex-col justify-center overflow-hidden bg-espresso text-cream">
+        {/* The long table itself, drifting slower than the plates (parallax) */}
+        <motion.div aria-hidden className="absolute inset-y-0 -left-[4%] -right-[12%] opacity-45" style={{ x: bgX }}>
+          <PhotoSlot photo="sp-03b" ratio="h-full w-full" sizes="100vw" focal="50% 60%" className="h-full" />
+        </motion.div>
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-espresso/75 via-espresso/25 to-espresso/85" />
         <motion.div aria-hidden className="pointer-events-none absolute right-[8%] top-[6%] w-40 text-cream/60" style={{ y: inkY }}>
           <Ink name="fork" draw={draw} className="inline-block w-10" />
           <Ink name="knife" draw={draw} className="ml-3 inline-block w-10" />

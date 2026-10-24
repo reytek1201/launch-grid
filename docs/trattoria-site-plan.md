@@ -132,3 +132,20 @@ T1-T6b are Phase 1 (about 21 h with the ported kit); T7 is Phase 2 (10 h). It is
 - Phones: header is not sticky, the bottom bar shows "Call to reserve" and "Menu" and hides on scroll down. Reserve is a phone call at the Counter tier.
 - Accessibility checks and what was skipped are listed in `restaurant-build-plan.md` (Status).
 - Bar to beat, from your feedback: the first pass reads as a template. T7 and the illustrations are where that changes; the calmer pages (Menu, Hours, Contact) stay plain on purpose but pick up the illustrations and type.
+
+## 9. T7 raised to the Funkharp level (Oct 24, your call)
+
+The first pass read as a template; the scroll story is where that changes. Funkharp sets itself apart with **pinned, scroll-scrubbed scenes** (`CaseHero`, `InkQuote`, `FeaturedReel`) and **parallax layers** (`VideoWall`, `StageStrip`). T7 now targets that level:
+
+| Scene | What happens on scroll |
+| --- | --- |
+| La Porta (pinned) | The dusk exterior zooms toward the door, light floods in, it dissolves into the dining room (SP-03), then the room warms to evening (SP-03b). A giant outlined "Cinque Lune" drifts behind. Name, open sign and buttons are on the first frame |
+| Lantern strip | The five lanterns drift against the page; they glow near the pointer |
+| Antipasti, Secondi, Dolci (pinned) | Course photo drifts behind; dish tickets set down one by one; ink illustrations (plate, cutlery, glass, olive branch, cup) draw themselves in the foreground and move faster than the photo |
+| Primi (pinned, desktop) | The one sideways moment: plates travel along a long oak table as you scroll down. Phones get a vertical stack |
+| Il Conto | Candle photo drifts, hours receipt and buttons stay still (never animated), "Grazie" writes itself |
+| Course tracker | Left edge on desktop, follows the meal |
+
+Phones keep the zoom, crossfades and parallax with shorter scenes; the sideways table becomes vertical. Reduced motion shows the final frames with no pinning. Scenes come from the menu data, so courses can change.
+
+Estimate: about 14 h instead of 10 (the illustration layers). This replaces the "about 24px drift, no heavy parallax" line in `trattoria-space-and-interaction.md` 2.5.

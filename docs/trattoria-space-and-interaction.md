@@ -171,7 +171,7 @@ A soft warm light follows the pointer with a little lag. It brightens over inter
 
 - Reveals are staggered per course, not all at once.
 - Illustrations stroke-draw as they enter; handwritten words write themselves.
-- Photos drift slightly against the page (about 24px at most); no heavy parallax.
+- ~~Photos drift slightly against the page (about 24px at most); no heavy parallax.~~ **Raised Oct 24:** layered parallax and pinned, scroll-scrubbed scenes at the Funkharp level; see `trattoria-site-plan.md` section 9.
 - Scenes pin only on desktop, and the sideways table is the only horizontal moment.
 - On phones, scroll position replaces hover: the dish nearest the center of the screen gets the "hover" treatment.
 

@@ -34,8 +34,8 @@ Oct 24, 2026 · Save as `docs/restaurant-build-plan.md`. Companions: `restaurant
 Steps T1-T6b in `trattoria-site-plan.md`: tokens and fonts, photo slots with placeholders, nav and "check" tray, hover vocabulary and candle cursor, Home (static), Menu, Hours and Location, Contact, Gallery, plus the motion kit applied.
 - **Done when:** all five pages work at 390px and desktop, keyboard and screen-reader basics pass, and nothing animates the hours, phone or order buttons.
 
-### Phase 2: The signature piece, "A Meal in Scroll" (about 10 h)
-Step T7 in the trattoria plan.
+### Phase 2: The signature piece, "A Meal in Scroll" (about 14 h, raised from 10)
+Step T7 in the trattoria plan, at the Funkharp level (pinned scenes, parallax layers, ink illustrations); see `trattoria-site-plan.md` section 9.
 - **Checkpoint 1 (about Nov 6):** deploy a labelled preview ("Demo restaurant, not a real business"). You look at it and decide: keep, change, or push harder on the interaction.
 
 ### Phase 3: Backend for menu and hours (about 22 h)

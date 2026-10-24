@@ -3,6 +3,7 @@ import { Caveat, Fraunces, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { getSiteData } from "@/lib/config";
 import { SiteHeader } from "@/components/site/SiteHeader";
+import { BackToTop } from "@/components/site/BackToTop";
 import { CheckTray } from "@/components/site/CheckTray";
 import { CandleCursorLoader } from "@/components/site/CandleCursorLoader";
 import { MealProvider } from "@/components/motion/Meal";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Demo restaurant, not a real business. Images are AI-generated.
           </footer>
         )}
+        <BackToTop />
         <CheckTray site={site} />
         <CandleCursorLoader />
         </MealProvider>

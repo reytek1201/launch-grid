@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { scrollToTop } from "@/components/motion/scrollToTop";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useHideOnScroll } from "@/components/motion/useHideOnScroll";
@@ -59,7 +60,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
   return (
     <header ref={bar} className={`top-0 z-40 transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
       <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 pt-3 sm:px-6 md:flex-row md:items-center md:justify-between md:gap-6 md:py-4">
-        <Link href="/" className="group flex items-center gap-3 whitespace-nowrap">
+        <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="group flex items-center gap-3 whitespace-nowrap">
           <span className="flex flex-col leading-none">
             <span className="text-[0.65rem] uppercase tracking-[0.35em] opacity-80">Trattoria</span>
             <span className="font-heading text-2xl font-semibold tracking-tight md:text-[1.7rem]">Cinque Lune</span>

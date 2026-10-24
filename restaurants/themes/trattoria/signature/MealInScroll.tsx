@@ -23,7 +23,8 @@ export function MealInScroll({ site }: { site: SiteData }) {
     .filter((s) => s.items.length > 0 && s.id !== "bevande")
     .map((s, i) => {
       const style = STYLE[s.id] ?? { line: s.note ?? "", ink: ["plate"] as InkName[] };
-      const withPhotos = [...s.items].sort((a, b) => Number(!!b.photo) - Number(!!a.photo));
+      const photoDishes = s.items.filter((i) => i.photo);
+      const withPhotos = photoDishes.length ? photoDishes : s.items.slice(0, 2);
       return { id: s.id, title: s.title, numeral: NUMERALS[i] ?? String(i + 1), line: style.line, backdrop: style.backdrop, ink: style.ink, dishes: withPhotos };
     });
 

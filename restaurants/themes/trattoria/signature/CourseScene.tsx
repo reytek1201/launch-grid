@@ -27,7 +27,7 @@ function Ticket({ dish, i, p, count }: { dish: MenuItem; i: number; p: MotionVal
   const rotate = useTransform(p, [start, start + 0.22], [TILT[i % 4] * 2.5, TILT[i % 4]]);
   const opacity = useRamp(p, [start, start + 0.08], [0, 1]);
   return (
-    <motion.li className={`w-[46%] max-w-[15rem] shrink-0 md:w-56 lg:w-60 ${i > 1 ? "hidden md:block" : ""}`} style={{ y, rotate, opacity }}>
+    <motion.li className={`w-[46%] max-w-[15rem] shrink-0 md:w-56 xl:w-60 ${i > 1 ? "hidden xl:block" : ""}`} style={{ y, rotate, opacity }}>
       <Link href={`/menu#${dish.id}`} className="group block bg-paper p-2 pb-3 text-espresso shadow-[0_18px_40px_rgb(20_12_8/0.45)]">
         {dish.photo ? (
           <PhotoSlot photo={dish.photo} ratio="aspect-[4/5]" sizes="(min-width: 768px) 15rem, 46vw" />
@@ -69,12 +69,12 @@ function Frame({ c, p, still }: { c: Course; p: MotionValue<number>; still: bool
 
       {/* Ink, near and far layers */}
       {c.ink[0] && (
-        <motion.div aria-hidden className="pointer-events-none absolute right-[4%] top-[8%] w-32 text-cream/85 md:w-56" style={{ y: farY }}>
+        <motion.div aria-hidden className="pointer-events-none absolute right-[4%] top-[22%] w-32 text-cream/85 md:w-48 lg:top-[14%] lg:right-[44%] lg:w-40" style={{ y: farY }}>
           <Ink name={c.ink[0]} draw={draw} strokeWidth={1.6} />
         </motion.div>
       )}
       {c.ink[1] && (
-        <motion.div aria-hidden className="pointer-events-none absolute bottom-[4%] left-[6%] hidden w-14 text-cream/85 md:block md:w-20" style={{ y: nearY }}>
+        <motion.div aria-hidden className="pointer-events-none absolute bottom-[4%] left-[1.5%] hidden w-12 text-cream/85 xl:block" style={{ y: nearY }}>
           <Ink name={c.ink[1]} draw={draw} strokeWidth={1.6} />
         </motion.div>
       )}
@@ -84,8 +84,8 @@ function Frame({ c, p, still }: { c: Course; p: MotionValue<number>; still: bool
         </motion.div>
       )}
 
-      <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-8 px-5 md:flex-row md:items-center md:justify-between md:px-8">
-        <motion.div className="md:max-w-sm" style={{ opacity: titleOpacity, x: titleX }}>
+      <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-8 px-5 md:px-8 lg:flex-row lg:items-center lg:justify-between">
+        <motion.div className="lg:max-w-sm" style={{ opacity: titleOpacity, x: titleX }}>
           <p className="font-heading text-sm uppercase tracking-[0.3em] text-[#f2b27a]">Course {c.numeral}</p>
           <h2 className="mt-1 font-hand text-6xl leading-none md:text-8xl">{c.title}</h2>
           <p className="mt-4 text-lg text-cream/90 md:text-xl">{c.line}</p>
@@ -93,7 +93,7 @@ function Frame({ c, p, still }: { c: Course; p: MotionValue<number>; still: bool
             All the {c.title.toLowerCase()} →
           </Link>
         </motion.div>
-        <ul className="flex items-start justify-center gap-3 md:gap-5">
+        <ul className="flex items-start justify-center gap-3 md:gap-5 lg:justify-end">
           {c.dishes.slice(0, 3).map((d, i, all) => (
             <Ticket key={d.id} dish={d} i={i} p={p} count={all.length} />
           ))}

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { DESKTOP, useMedia } from "./useMedia";
 
-export function useHideOnScroll(resetKey?: string) {
-  const desktop = useMedia(DESKTOP);
+export function useHideOnScroll(resetKey?: string, everywhere = false) {
+  const desktop = useMedia(DESKTOP) && !everywhere;
   const [hidden, setHidden] = useState(false);
   const [route, setRoute] = useState(resetKey);
   const [layout, setLayout] = useState(desktop);

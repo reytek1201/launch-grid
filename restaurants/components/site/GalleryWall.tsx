@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import type { Photo } from "@/lib/types";
+import { RusticCard } from "./RusticCard";
 
 const tilt = ["-rotate-2", "rotate-1", "rotate-2", "-rotate-1", "rotate-[1.5deg]", "-rotate-[1.5deg]"];
 
@@ -30,10 +31,12 @@ export function GalleryWall({ photos }: { photos: Photo[] }) {
             <Reveal><button
               type="button"
               onClick={(e) => { opener.current = e.currentTarget; setOpen(n); }}
-              className={`block w-full bg-paper p-3 pb-10 shadow-md transition duration-[250ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] hover:-translate-y-1.5 hover:rotate-0 hover:shadow-xl focus-visible:-translate-y-1.5 focus-visible:rotate-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-deep ${tilt[n % tilt.length]}`}
+              className={`block w-full transition duration-[250ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] hover:-translate-y-1.5 hover:rotate-0 focus-visible:-translate-y-1.5 focus-visible:rotate-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-deep ${tilt[n % tilt.length]}`}
               aria-label={`Enlarge photo: ${p.alt}`}
             >
-              <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw" className="h-auto w-full" />
+              <RusticCard tape={n % 3 !== 1} pad="p-3 pb-10">
+                <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw" className="paper-photo h-auto w-full" />
+              </RusticCard>
             </button></Reveal>
           </li>
         ))}

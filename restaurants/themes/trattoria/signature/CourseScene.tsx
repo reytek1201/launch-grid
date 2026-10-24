@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type MotionValue, motion, useTransform } from "framer-motion";
 import { PhotoSlot } from "@/components/PhotoSlot";
+import { RusticCard } from "@/components/site/RusticCard";
 import { useRamp } from "@/components/motion/useRamp";
 import { price } from "@/lib/format";
 import type { MenuItem } from "@/lib/types";
@@ -28,9 +29,10 @@ function Ticket({ dish, i, p, count }: { dish: MenuItem; i: number; p: MotionVal
   const opacity = useRamp(p, [start, start + 0.08], [0, 1]);
   return (
     <motion.li className={`w-[46%] max-w-[15rem] shrink-0 md:w-56 xl:w-60 ${i > 1 ? "hidden xl:block" : ""}`} style={{ y, rotate, opacity }}>
-      <Link href={`/menu#${dish.id}`} className="group block bg-paper p-2 pb-3 text-espresso shadow-[0_18px_40px_rgb(20_12_8/0.45)]">
+      <Link href={`/menu#${dish.id}`} className="group block text-espresso">
+        <RusticCard tape={i % 2 === 0}>
         {dish.photo ? (
-          <PhotoSlot photo={dish.photo} ratio="aspect-[4/5]" sizes="(min-width: 768px) 15rem, 46vw" />
+          <PhotoSlot photo={dish.photo} ratio="aspect-[4/5]" sizes="(min-width: 768px) 15rem, 46vw" className="paper-photo" />
         ) : (
           <div className="flex aspect-[4/5] items-center justify-center bg-cream p-4 text-center font-hand text-2xl text-terracotta-deep">
             {dish.name}
@@ -38,6 +40,7 @@ function Ticket({ dish, i, p, count }: { dish: MenuItem; i: number; p: MotionVal
         )}
         <p className="mt-2 px-1 text-sm leading-snug md:text-base"><span className="ink">{dish.name}</span></p>
         <p className="px-1 text-sm font-semibold text-terracotta-deep">{price(dish.price)}</p>
+        </RusticCard>
       </Link>
     </motion.li>
   );

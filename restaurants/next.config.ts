@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   images: {
     // Optimized masters live in public/demo/ (npm run images).
     qualities: [75, 85],
+    // AVIF first, then WebP: the photos are the heaviest thing on the page.
+    formats: ["image/avif", "image/webp"],
   },
 };
 

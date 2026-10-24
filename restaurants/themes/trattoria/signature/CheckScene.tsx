@@ -25,6 +25,8 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
   const glow = useRamp(p, [0.1, 0.8], [0.15, 0.75]);
   const checkY = useTransform(p, [0, 0.45], ["38%", "0%"]);
   const checkRotate = useTransform(p, [0, 0.45], [-9, -2]);
+  // Small screens: the check slides in from the side so it never lies over "Grazie".
+  const checkX = useTransform(p, [0, 0.45], ["-28%", "0%"]);
   const cupDraw = useRamp(p, [0.15, 0.55], [0, 1]);
   const bandY = useTransform(p, [0, 1], ["-6%", "6%"]);
   const bandScale = useTransform(p, [0, 1], [1.05, 1.2]);
@@ -77,7 +79,7 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
         </div>
 
         {/* The check: slides and settles, always fully readable */}
-        <motion.div style={{ y: checkY, rotate: checkRotate }}>
+        <motion.div style={pinned ? { y: checkY, rotate: checkRotate } : { x: checkX, rotate: checkRotate }}>
           <HoursReceipt site={site} className="mx-auto w-full max-w-sm" />
         </motion.div>
 

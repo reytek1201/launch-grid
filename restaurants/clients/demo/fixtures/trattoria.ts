@@ -8,7 +8,7 @@ const menu: MenuSection[] = [
     items: [
       { id: "burrata", name: "Burrata con pomodori arrostiti", description: "Roasted cherry tomatoes, basil, olive oil", price: 1400, tags: ["vegetarian"], photo: "d-01" },
       { id: "bruschetta", name: "Bruschetta al pomodoro", description: "Grilled bread, chopped tomato, garlic, basil", price: 900, tags: ["vegan"], photo: "d-02" },
-      { id: "carpaccio", name: "Carpaccio di manzo", description: "Rocket, shaved parmigiano", price: 1600, tags: ["gluten-free"] },
+      { id: "carpaccio", name: "Carpaccio di manzo", description: "Rocket, shaved parmigiano", price: 1600, tags: ["gluten-free"], photo: "d-12" },
       { id: "polpette", name: "Polpette della nonna", description: "Grandmother's meatballs in tomato", price: 1200 },
       { id: "finocchio", name: "Insalata di finocchio e arance", description: "Shaved fennel, orange, olives", price: 1100, tags: ["vegan", "gluten-free"] },
     ],
@@ -20,9 +20,9 @@ const menu: MenuSection[] = [
     items: [
       { id: "tagliatelle", name: "Tagliatelle al ragù domenicale", description: "The Sunday sauce: slow-cooked beef and pork, parmigiano", price: 2100, photo: "d-03" },
       { id: "cacio", name: "Cacio e pepe", description: "Spaghetti, pecorino romano, cracked black pepper", price: 1900, tags: ["vegetarian"], photo: "d-04" },
-      { id: "gnocchi", name: "Gnocchi al pesto di basilico", description: "Potato gnocchi, basil pesto, pine nuts", price: 2000, tags: ["vegetarian"] },
-      { id: "risotto", name: "Risotto ai funghi porcini", description: "Carnaroli rice, porcini, parmigiano", price: 2300, tags: ["vegetarian", "gluten-free"] },
-      { id: "vongole", name: "Spaghetti alle vongole", description: "Clams, white wine, garlic, chili", price: 2500, tags: ["spicy"] },
+      { id: "gnocchi", name: "Gnocchi al pesto di basilico", description: "Potato gnocchi, basil pesto, pine nuts", price: 2000, tags: ["vegetarian"], photo: "d-09" },
+      { id: "risotto", name: "Risotto ai funghi porcini", description: "Carnaroli rice, porcini, parmigiano", price: 2300, tags: ["vegetarian", "gluten-free"], photo: "d-10" },
+      { id: "vongole", name: "Spaghetti alle vongole", description: "Clams, white wine, garlic, chili", price: 2500, tags: ["spicy"], photo: "d-11" },
       { id: "lasagna", name: "Lasagna della casa", description: "Layered with ragù and béchamel", price: 2200, soldOut: true },
       {
         id: "long-name",

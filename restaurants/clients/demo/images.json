@@ -166,5 +166,37 @@
     "width": 1024,
     "height": 1024,
     "focal": "50% 50%"
+  },
+  "d-09": {
+    "id": "D-09",
+    "src": "/demo/d-09-gnocchi-pesto.jpg",
+    "alt": "Soft potato gnocchi in bright green basil pesto with toasted pine nuts, shaved parmigiano and a basil leaf, on a cream plate with a terracotta rim",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-10": {
+    "id": "D-10",
+    "src": "/demo/d-10-risotto-porcini.jpg",
+    "alt": "Creamy risotto topped with sliced golden porcini, parsley and parmigiano on a cream plate with a terracotta rim, a brass spoon beside it",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-11": {
+    "id": "D-11",
+    "src": "/demo/d-11-spaghetti-vongole.jpg",
+    "alt": "Spaghetti alle vongole with small open clams, parsley and chili flakes on a cream plate with a terracotta rim, brass cutlery on both sides",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
+  },
+  "d-12": {
+    "id": "D-12",
+    "src": "/demo/d-12-carpaccio.jpg",
+    "alt": "Thin slices of beef carpaccio fanned on a cream plate with a terracotta rim, topped with rocket, shaved parmigiano, olive oil and a lemon wedge",
+    "width": 1024,
+    "height": 1024,
+    "focal": "50% 50%"
   }
 }

@@ -18,14 +18,14 @@ function Plates({ course }: { course: Course }) {
   return (
     <>
       {course.dishes.map((d, i) => (
-        <li key={d.id} className={`flex w-64 shrink-0 flex-col items-center text-center ${i % 2 ? "md:translate-y-10" : "md:-translate-y-4"}`}>
+        <li key={d.id} className={`flex w-72 shrink-0 flex-col items-center text-center ${i % 2 ? "md:translate-y-10" : "md:-translate-y-4"}`}>
           <Link href={`/menu#${d.id}`} className="group block">
             {d.photo ? (
               <div className="rounded-full p-1.5 shadow-[0_24px_40px_rgb(0_0_0/0.5)] transition-transform duration-[250ms] group-hover:-translate-y-1.5" style={{ background: "#f6eedd" }}>
-                <PhotoSlot photo={d.photo} ratio="aspect-square" sizes="16rem" focal="50% 62%" className="w-56 rounded-full" />
+                <PhotoSlot photo={d.photo} ratio="aspect-square" sizes="18rem" focal="50% 62%" className="w-64 rounded-full" />
               </div>
             ) : (
-              <div className="flex aspect-square w-56 items-center justify-center rounded-full border-2 border-cream/50 shadow-[0_24px_40px_rgb(0_0_0/0.45)] transition-transform duration-[250ms] group-hover:-translate-y-1.5">
+              <div className="flex aspect-square w-64 items-center justify-center rounded-full border-2 border-cream/50 shadow-[0_24px_40px_rgb(0_0_0/0.45)] transition-transform duration-[250ms] group-hover:-translate-y-1.5">
                 <span aria-hidden className="flex h-[72%] w-[72%] items-center justify-center rounded-full border border-cream/30 font-hand text-3xl text-[#f2b27a]">{d.soldOut ? "finito" : "fatto a mano"}</span>
               </div>
             )}
@@ -68,7 +68,7 @@ export function TableScene({ course }: { course: Course }) {
           <p className="mt-3 text-lg text-cream/90">{course.line}</p>
           {course.backdrop && <PhotoSlot photo={course.backdrop} ratio="aspect-[4/5]" focal="50% 55%" sizes="100vw" className="mt-6 rounded-lg" />}
         </div>
-        <ul className="mt-10 grid grid-cols-2 gap-x-3 gap-y-8 px-4 [&>li]:w-auto [&_.w-56]:w-full">
+        <ul className="mt-10 grid grid-cols-2 gap-x-3 gap-y-8 px-4 [&>li]:w-auto [&_.w-64]:w-full">
           <Plates course={course} />
         </ul>
         <p className="mt-10 px-5"><Link href={`/menu#${course.id}`} className="ink font-semibold text-[#f2b27a]">All the {course.title.toLowerCase()} →</Link></p>

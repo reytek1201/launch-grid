@@ -76,3 +76,13 @@ D-01 (image 2 = SP-12, so the opening names "a candlelit table scene" and says n
 | D-08 | two cannoli siciliani with ricotta cream and pistachio: two crisp golden fried pastry shells filled with white ricotta cream, the ends dipped in chopped green pistachio, dusted with powdered sugar |
 
 **D-08 needed a stronger background line** (try 1 invented a row of small glass lanterns). Final version of the middle sentence: "From image 2 copy the camera angle, the framing, the wide dark oak table filling the foreground, the candle in a small glass holder on the left, the linen napkin, the candlelight, and the background exactly: the soft cluster of round paper lanterns hanging at the top right, glowing warm and out of focus, with the blurred limewash and brick wall behind. Do not add any other lanterns, no glass lanterns, no brass lanterns, no string of lights."
+
+## Dishes D-09 to D-12 (Primi table and Antipasti trio, Oct 24 evening)
+Same template as D-01 to D-08 with the strengthened D-08 background sentence, plus "Do not include the {previous dish} from image 2." Image 1 = SP-05; image 2 = the previous dish (D-09 used D-08).
+
+| ID | {DISH} as prompted |
+| --- | --- |
+| D-09 | gnocchi al pesto: small soft potato gnocchi coated in bright green basil pesto, a few toasted pine nuts and shaved parmigiano on top, a basil leaf |
+| D-10 | risotto ai funghi porcini: creamy risotto spread gently across the plate, sliced golden porcini mushrooms on top, a little chopped parsley and grated parmigiano |
+| D-11 | spaghetti alle vongole: spaghetti twirled with small open clams in their shells, glossy with olive oil and white wine, chopped parsley and a few chili flakes |
+| D-12 | carpaccio di manzo: paper-thin slices of raw beef fanned across the plate, topped with wild rocket, shaved parmigiano, a drizzle of olive oil and a lemon wedge |

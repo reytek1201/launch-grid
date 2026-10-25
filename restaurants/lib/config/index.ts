@@ -126,7 +126,12 @@ async function fromDatabase(): Promise<SiteData> {
     cellar,
     banner: bannerLive ? bannerText : undefined,
     uploads,
-    gallery: gallery.map((g) => ({ id: `g:${g.id}`, src: photoUrl(g.path as string), alt: (g.alt as string | null) || (g.caption as string), width: g.width as number, height: g.height as number, focal: "50% 50%", caption: g.caption as string })),
+    gallery: gallery.map((g) => {
+      // "sample:<key>" is a photo shipped with the site; anything else is a file in the storage bucket.
+      const path = g.path as string;
+      const sample = path.startsWith("sample:") ? photos[path.slice(7)] : undefined;
+      return { id: `g:${g.id}`, src: sample ? sample.src : photoUrl(path), alt: (g.alt as string | null) || (g.caption as string), width: g.width as number, height: g.height as number, focal: sample?.focal ?? "50% 50%", caption: g.caption as string, chapter: (g.chapter as string) ?? "nuove" };
+    }),
   };
 }
 

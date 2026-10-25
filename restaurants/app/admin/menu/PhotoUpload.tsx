@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Submit } from "../submit";
 import { btn, btnPrimary, input } from "../ui";
 
@@ -43,9 +43,11 @@ type Props = {
   /** gallery mode: keep the photo's shape, and ask for a caption too */
   fit?: boolean;
   submitLabel?: string;
+  /** extra fields shown with the caption (the gallery's chapter picker) */
+  extra?: ReactNode;
 };
 
-export function PhotoUpload({ action, dish, current, alt, fit = false, submitLabel = "Save photo" }: Props) {
+export function PhotoUpload({ action, dish, current, alt, fit = false, submitLabel = "Save photo", extra }: Props) {
   const picker = useRef<HTMLInputElement>(null);
   const hidden = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -115,6 +117,7 @@ export function PhotoUpload({ action, dish, current, alt, fit = false, submitLab
               <input name="caption" required maxLength={80} placeholder="The long table, set for Sunday." className={input} />
             </label>
           )}
+          {extra}
           <label className="block text-sm text-espresso/80">
             What does it show? (optional, read aloud for blind visitors)
             <textarea name="alt" defaultValue={alt ?? ""} rows={5} maxLength={300} placeholder={fit ? "A long wooden table set with plates and candles" : `${dish}, on a white plate`} className={`${input} field-sizing-content min-h-32`} />

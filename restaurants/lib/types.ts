@@ -87,7 +87,7 @@ export type SiteData = {
   /** one line shown at the top of every page while the specials banner is on */
   banner?: string;
   /** photos added in the admin, in order (shown on the Gallery page) */
-  gallery?: (Photo & { caption: string })[];
+  gallery?: (Photo & { caption: string; chapter: string })[];
   /** photos uploaded in the admin, by the key a dish's `photo` points to */
   uploads?: Record<string, Photo>;
   events?: EventsData;

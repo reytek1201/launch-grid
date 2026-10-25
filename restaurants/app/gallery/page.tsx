@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getSiteData, photos } from "@/lib/config";
+import { CHAPTERS } from "@/lib/gallery";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import { GalleryLine, type LineChapter } from "@/themes/trattoria/pages/GalleryLine";
 
@@ -57,14 +58,16 @@ const LIMEWASH =
 
 export default async function Gallery() {
   const site = await getSiteData();
-  const chapters: LineChapter[] = LINE.map((c) => ({
-    id: c.id,
-    title: c.title,
-    line: c.line,
-    photos: c.photos.filter(([k]) => photos[k]).map(([k, caption]) => ({ ...photos[k], caption })),
-  })).filter((c) => c.photos.length > 0);
-  // Photos the restaurant added from the admin hang on the end of the line.
-  if (site.gallery?.length) chapters.push({ id: "nuove", title: "Di recente", line: "Fresh from the room.", photos: site.gallery });
+  // From the database when the gallery has rows (the admin controls order, captions and what is hidden);
+  // otherwise the built-in line above.
+  const chapters: LineChapter[] = site.gallery?.length
+    ? CHAPTERS.map((c) => ({ id: c.id, title: c.title, line: c.line, photos: site.gallery!.filter((g) => g.chapter === c.id) })).filter((c) => c.photos.length > 0)
+    : LINE.map((c) => ({
+        id: c.id,
+        title: c.title,
+        line: c.line,
+        photos: c.photos.filter(([k]) => photos[k]).map(([k, caption]) => ({ ...photos[k], caption })),
+      })).filter((c) => c.photos.length > 0);
 
   return (
     <main id="main" style={{ backgroundImage: LIMEWASH }}>

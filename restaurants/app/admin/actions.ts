@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath, updateTag } from "next/cache";
 import { requireAdmin } from "@/lib/admin";
 import { SITE_TAG } from "@/lib/config";
+import { isChapter } from "@/lib/gallery";
 import { adminClient, adminConfigured } from "@/lib/supabase/server";
 
 /* ───────── sign in / out ───────── */
@@ -69,7 +70,7 @@ const check = (path: string, error: { message: string } | null) => {
 type Tbl = "menu_items" | "menu_sections" | "wines" | "wine_sections" | "gallery_photos";
 const TABLES: Tbl[] = ["menu_items", "menu_sections", "wines", "wine_sections", "gallery_photos"];
 const PAGE: Record<Tbl, string> = { menu_items: "/admin/menu", menu_sections: "/admin/menu", wines: "/admin/cellar", wine_sections: "/admin/cellar", gallery_photos: "/admin/gallery" };
-const PARENT: Record<Tbl, string | null> = { menu_items: "section_id", menu_sections: null, wines: "section_id", wine_sections: null, gallery_photos: null };
+const PARENT: Record<Tbl, string | null> = { menu_items: "section_id", menu_sections: null, wines: "section_id", wine_sections: null, gallery_photos: "chapter" };
 const okTable = (t: string): t is Tbl => (TABLES as string[]).includes(t);
 
 /* ───────── inbox ───────── */
@@ -142,7 +143,7 @@ export async function deleteRow(table: string, id: string) {
   }
   if (table === "gallery_photos") {
     const { data } = await supabase.from("gallery_photos").select("path").eq("id", id);
-    files = (data ?? []).map((r: { path: string }) => r.path);
+    files = (data ?? []).map((r: { path: string }) => r.path).filter((p) => !p.startsWith("sample:"));
   }
   const { error } = await supabase.from(table).delete().eq("id", id);
   check(PAGE[table], error);
@@ -302,7 +303,8 @@ export async function addGalleryPhoto(form: FormData) {
   const up = await supabase.storage.from(BUCKET).upload(path, f, { contentType: f.type, cacheControl: "31536000", upsert: false });
   if (up.error) fail(back, "Could not upload the photo. Try again in a moment.");
   const sort = await nextSort("gallery_photos", null, null);
-  const { error } = await supabase.from("gallery_photos").insert({ id, path, caption, alt: orNull(str(form, "alt").slice(0, 300)), width, height, sort });
+  const chapter = isChapter(str(form, "chapter")) ? str(form, "chapter") : "nuove";
+  const { error } = await supabase.from("gallery_photos").insert({ id, path, chapter, caption, alt: orNull(str(form, "alt").slice(0, 300)), width, height, sort });
   if (error) {
     await supabase.storage.from(BUCKET).remove([path]);
     check(back, error);
@@ -314,7 +316,8 @@ export async function saveGalleryPhoto(id: string, form: FormData) {
   const { supabase } = await requireAdmin();
   const caption = str(form, "caption").slice(0, 80);
   if (!caption) fail("/admin/gallery", "A photo needs a caption.");
-  const { error } = await supabase.from("gallery_photos").update({ caption, alt: orNull(str(form, "alt").slice(0, 300)) }).eq("id", id);
+  const chapter = str(form, "chapter");
+  const { error } = await supabase.from("gallery_photos").update({ ...(isChapter(chapter) ? { chapter } : {}), caption, alt: orNull(str(form, "alt").slice(0, 300)) }).eq("id", id);
   check("/admin/gallery", error);
   done("/admin/gallery");
 }

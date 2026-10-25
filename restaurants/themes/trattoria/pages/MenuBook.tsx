@@ -1,12 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Flourish } from "@/components/motion/Flourish";
 import { Reveal } from "@/components/motion/Reveal";
-import { FINE_POINTER, useMedia } from "@/components/motion/useMedia";
+import { useMedia } from "@/components/motion/useMedia";
 import { DietTags } from "@/components/site/DietTags";
 import { price } from "@/lib/format";
 import type { MenuItem, MenuSection, Photo } from "@/lib/types";
@@ -26,9 +26,8 @@ const matches = (i: MenuItem, diets: Diet[]) =>
   diets.every((d) => i.tags?.includes(d) || (d === "vegetarian" && i.tags?.includes("vegan")));
 
 /*
- * The printed menu, with three helpers that never move prices or reflow the page:
- * diet chips fade what does not match, a photo peeks beside the cursor on desktop,
- * and any photographed dish opens large in a viewer you can step or swipe through.
+ * The printed menu, with two helpers that never move prices or reflow the page:
+ * diet chips fade what does not match, and any photographed dish opens large in a viewer you can step or swipe through.
  */
 export function MenuBook({
   sections,
@@ -72,15 +71,7 @@ export function MenuBook({
   const current = open === null ? null : viewable[open];
   const currentPhoto = current?.item.photo ? photos[current.item.photo] : undefined;
 
-  // Desktop peek: a small polaroid that trails the cursor over a dish with a photo.
-  const fine = useMedia(FINE_POINTER);
   const calm = useMedia("(prefers-reduced-motion: reduce)");
-  const [peek, setPeek] = useState<Photo | null>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const px = useSpring(mx, { stiffness: 380, damping: 32 });
-  const py = useSpring(my, { stiffness: 380, damping: 32 });
-  const peekOn = fine && !calm;
 
   return (
     <>
@@ -142,9 +133,6 @@ export function MenuBook({
                         key={i.id}
                         id={i.id}
                         data-faded={faded || undefined}
-                        onPointerEnter={(e) => { if (peekOn && photo && e.pointerType === "mouse") { mx.set(e.clientX); my.set(e.clientY); px.jump(e.clientX); py.jump(e.clientY); setPeek(photo); } }}
-                        onPointerMove={(e) => { if (peekOn && photo) { mx.set(e.clientX); my.set(e.clientY); } }}
-                        onPointerLeave={() => setPeek(null)}
                         className={`group flex scroll-mt-28 gap-3 py-4 transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] hover:-translate-y-0.5 md:scroll-mt-36 md:gap-4 ${faded ? "opacity-30" : ""}`}
                       >
                         {photo && (
@@ -201,26 +189,6 @@ export function MenuBook({
           </div>
         </article>
       </div>
-
-      {/* Desktop peek */}
-      <AnimatePresence>
-        {peekOn && peek && (
-          <motion.div
-            key={peek.id}
-            aria-hidden
-            initial={{ opacity: 0, scale: 0.9, rotate: -6 }}
-            animate={{ opacity: 1, scale: 1, rotate: 3 }}
-            exit={{ opacity: 0, scale: 0.92 }}
-            transition={{ duration: 0.25, ease: EASE }}
-            style={{ x: px, y: py }}
-            className="pointer-events-none fixed left-0 top-0 z-50 ml-8 -mt-28 w-52 bg-[#f4ead3] p-2 pb-3 shadow-[0_18px_40px_rgb(20_12_8/0.45)]"
-          >
-            <div className="relative aspect-square overflow-hidden">
-              <Image src={peek.src} alt="" fill sizes="208px" quality={75} className="object-cover" style={{ objectPosition: peek.focal }} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Dish viewer */}
       <dialog

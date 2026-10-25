@@ -3,7 +3,7 @@ import { getAdmin } from "@/lib/admin";
 import { getSiteData } from "@/lib/config";
 import { openStatus } from "@/lib/hours";
 import { redirect } from "next/navigation";
-import { saveBanner, setSoldOut, signOut } from "./actions";
+import { saveBanner, saveLinks, setSoldOut, signOut } from "./actions";
 import { ago, KIND, type Req } from "./ago";
 import { Submit } from "./submit";
 import { Banner, btn, btnPrimary, Card, Field, input } from "./ui";
@@ -40,9 +40,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
     supabase.from("requests").select("id", { count: "exact", head: true }).eq("status", "new"),
     supabase.from("menu_items").select("id,name").eq("sold_out", true).order("name"),
     supabase.from("wines").select("id,name").eq("sold_out", true).order("name"),
-    supabase.from("settings").select("banner_text,banner_on,banner_until").eq("id", 1).single(),
+    supabase.from("settings").select("banner_text,banner_on,banner_until,order_url,reserve_url").eq("id", 1).single(),
   ]);
-  const b = (banner.data ?? {}) as { banner_text: string | null; banner_on: boolean; banner_until: string | null };
+  const b = (banner.data ?? {}) as { banner_text: string | null; banner_on: boolean; banner_until: string | null; order_url: string | null; reserve_url: string | null };
   const latest = (reqs.data ?? []) as Req[];
   const fresh = newCount.count ?? 0;
   const out = [
@@ -86,6 +86,16 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
             Show it on the site
           </label>
           <div className="sm:col-span-2"><Submit className={btnPrimary}>Save banner</Submit></div>
+        </form>
+      </Card>
+
+      <Card className="mt-4">
+        <h2 className="font-heading text-xl font-semibold">Order and booking links</h2>
+        <p className="mt-1 text-sm text-espresso/75">Already use Toast, DoorDash, OpenTable or Resy? Paste the links and the site shows an &ldquo;Order online&rdquo; button and a &ldquo;Book online&rdquo; card that open them. Leave a box empty to hide its button.</p>
+        <form action={saveLinks} className="mt-3 grid gap-3 sm:grid-cols-2">
+          <Field label="Online ordering link"><input type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" name="order" defaultValue={b.order_url ?? ""} placeholder="https://order.toasttab.com/online/your-restaurant" maxLength={300} className={input} /></Field>
+          <Field label="Online booking link"><input type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" name="reserve" defaultValue={b.reserve_url ?? ""} placeholder="https://www.opentable.com/r/your-restaurant" maxLength={300} className={input} /></Field>
+          <div className="sm:col-span-2"><Submit className={btnPrimary}>Save links</Submit></div>
         </form>
       </Card>
 

@@ -23,6 +23,14 @@ export default async function Reserve() {
       <PageHero kicker="Prenota" title="Reserve a table" line="Pick a night. We will save you a seat by the oven." photo="sp-03b" focal="50% 55%" ink="glass" />
       <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-[1.7fr_1fr]">
         <Reveal className="min-w-0">
+          {site.links?.reserve && (
+            <div className="mb-8 rounded-2xl border border-espresso/15 bg-paper/70 p-5">
+              <h2 className="font-hand text-4xl text-terracotta-deep">Book online</h2>
+              <p className="mt-1 text-espresso/85">See open tables and confirm instantly on our booking page.</p>
+              <div className="mt-3"><a href={site.links.reserve} target="_blank" rel="noopener noreferrer" className="btn btn-solid">Book a table online<span className="sr-only"> (opens in a new tab)</span></a></div>
+              <p className="mt-4 text-sm text-espresso/75">Or send us a request below and we will write back.</p>
+            </div>
+          )}
           <RusticCard flat className="-rotate-[0.4deg]" pad="p-0">
             <ReserveSlip site={site} />
           </RusticCard>

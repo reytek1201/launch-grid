@@ -227,6 +227,31 @@ export async function saveBanner(form: FormData) {
   done("/admin");
 }
 
+/* ───────── order and booking links ───────── */
+
+/** A web address the restaurant gave us: https only, so a typo cannot become a script or a plain-http page. */
+function webLink(back: string, raw: string): string | null {
+  if (!raw) return null;
+  const withScheme = /^[a-z]+:/i.test(raw) ? raw : `https://${raw}`;
+  let u: URL;
+  try {
+    u = new URL(withScheme);
+  } catch {
+    return fail(back, "That web address was not understood. Paste the full link, like https://order.example.com/menu");
+  }
+  if (u.protocol !== "https:" || !u.hostname.includes(".") || withScheme.length > 300) return fail(back, "Use a full https:// link of 300 characters or fewer.");
+  return u.toString();
+}
+
+export async function saveLinks(form: FormData) {
+  const { supabase } = await requireAdmin();
+  const order = webLink("/admin", str(form, "order"));
+  const reserve = webLink("/admin", str(form, "reserve"));
+  const { error } = await supabase.from("settings").update({ order_url: order, reserve_url: reserve }).eq("id", 1);
+  check("/admin", error);
+  done("/admin");
+}
+
 /* ───────── dish photos ───────── */
 
 const BUCKET = "trattoria-demo";

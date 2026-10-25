@@ -8,6 +8,11 @@ export function siteUrl() {
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const e164 = (phone: string) => `+1${phone.replace(/\D/g, "")}`;
 
+const upcoming = (site: SiteData) => {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: site.timezone }).format(new Date());
+  return site.closures.filter((c) => c.date >= today);
+};
+
 /** schema.org Restaurant: what Google reads for the knowledge panel, hours and "reserve" links. */
 export function restaurantLd(site: SiteData, base: string) {
   return {
@@ -30,10 +35,14 @@ export function restaurantLd(site: SiteData, base: string) {
       postalCode: site.address.zip,
       addressCountry: "US",
     },
+    // A closed weekday is spelled out (opens and closes both 00:00), as Google's documentation shows.
     openingHoursSpecification: site.hours.flatMap((d) =>
-      d.intervals.map((i) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: DAYS[d.day], opens: i.open, closes: i.close })),
+      d.intervals.length
+        ? d.intervals.map((i) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: DAYS[d.day], opens: i.open, closes: i.close }))
+        : [{ "@type": "OpeningHoursSpecification", dayOfWeek: DAYS[d.day], opens: "00:00", closes: "00:00" }],
     ),
-    specialOpeningHoursSpecification: site.closures.map((c) => ({
+    // Only closures still ahead: a date that has passed is noise.
+    specialOpeningHoursSpecification: upcoming(site).map((c) => ({
       "@type": "OpeningHoursSpecification",
       validFrom: c.date,
       validThrough: c.date,
@@ -41,7 +50,8 @@ export function restaurantLd(site: SiteData, base: string) {
       closes: "00:00",
     })),
     hasMenu: `${base}/menu`,
-    acceptsReservations: `${base}/reserve`,
+    acceptsReservations: site.links?.reserve ?? `${base}/reserve`,
+    ...(site.links?.order ? { potentialAction: { "@type": "OrderAction", target: { "@type": "EntryPoint", urlTemplate: site.links.order, actionPlatform: ["https://schema.org/DesktopWebPlatform", "https://schema.org/MobileWebPlatform"] } } } : {}),
   };
 }
 

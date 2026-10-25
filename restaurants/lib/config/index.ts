@@ -125,6 +125,7 @@ async function fromDatabase(): Promise<SiteData> {
     menu,
     cellar,
     banner: bannerLive ? bannerText : undefined,
+    links: { order: opt(s.order_url as string | null), reserve: opt(s.reserve_url as string | null) },
     uploads,
     gallery: gallery.map((g) => {
       // "sample:<key>" is a photo shipped with the site; anything else is a file in the storage bucket.

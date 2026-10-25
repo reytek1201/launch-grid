@@ -86,6 +86,8 @@ export type SiteData = {
   reservations: ReservationRules;
   /** one line shown at the top of every page while the specials banner is on */
   banner?: string;
+  /** the restaurant's own online ordering and booking pages, when it has them (https only) */
+  links?: { order?: string; reserve?: string };
   /** photos added in the admin, in order (shown on the Gallery page) */
   gallery?: (Photo & { caption: string; chapter: string })[];
   /** photos uploaded in the admin, by the key a dish's `photo` points to */

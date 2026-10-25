@@ -44,6 +44,13 @@ export default async function Menu() {
         </ul>
       </nav>
 
+      {site.links?.order && (
+        <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-x-5 gap-y-3 px-4 pt-8 text-center">
+          <p className="font-hand text-3xl text-[#f2b27a]">Eating at home tonight?</p>
+          <a href={site.links.order} target="_blank" rel="noopener noreferrer" className="btn btn-terra">Order online<span className="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      )}
+
       <MenuBook sections={sections} photos={dishPhotos} wines={wines} dividers={DIVIDER} />
     </main>
   );

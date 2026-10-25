@@ -40,7 +40,10 @@ export function SiteFooter({ site }: { site: SiteData }) {
             <Moons id="moon-foot" className="h-3 w-auto text-[#f2b27a]" />
           </Link>
           <p className="mt-4 max-w-xs text-cream/85">{site.tagline} {site.blurb.split(". ")[0]}.</p>
-          <Link href="/reserve" className="btn btn-terra mt-6 inline-block">Reserve a table</Link>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/reserve" className="btn btn-terra inline-block">Reserve a table</Link>
+            {site.links?.order && <a href={site.links.order} target="_blank" rel="noopener noreferrer" className="btn btn-line-light inline-block">Order online<span className="sr-only"> (opens in a new tab)</span></a>}
+          </div>
 
           <div className="mt-8">
             <p className="font-hand text-2xl text-[#f2b27a]">Seguici</p>

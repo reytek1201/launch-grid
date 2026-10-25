@@ -1,6 +1,7 @@
 import { Doors } from "@/components/Doors";
 import { BackOfficeDemo } from "@/components/BackOfficeDemo";
 import { LaunchSequence } from "@/components/LaunchSequence";
+import { HowIWork } from "@/components/HowIWork";
 import { Hero } from "@/components/Hero";
 import { StartForm } from "@/components/StartForm";
 import { YearOfWork } from "@/components/YearOfWork";
@@ -34,11 +35,8 @@ export default function Home() {
 
       <section className="section" aria-labelledby="how-title">
         <div className="section-head"><span className="label">How I work</span><h2 id="how-title">Everything in writing.</h2><p>No calls to schedule. You always have a record of what was agreed.</p></div>
-        <ol className="steps">
-          <li><span className="n">01</span><div><b>You fill in the project form.</b><span>A few questions about your business and what you need.</span></div></li>
-          <li><span className="n">02</span><div><b>You get a written proposal.</b><span>A fixed price, what&rsquo;s included and a launch date.</span></div></li>
-          <li><span className="n">03</span><div><b>Feedback happens in one thread.</b><span>Comments go in writing, so nothing gets lost.</span></div></li>
-        </ol>
+        <HowIWork />
+        <p className="pt-note">Sample documents. Names are made up.</p>
       </section>
 
       <section className="section" aria-labelledby="faq-title">

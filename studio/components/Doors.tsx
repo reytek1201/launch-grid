@@ -2,79 +2,124 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const DOORS = [
-  { kind: "band", title: "Bands and artists", text: "Shows, music, videos, a booking inbox and your fan list.", go: "Start a band project" },
-  { kind: "restaurant", title: "Restaurants", text: "Menu, specials, hours, reservations and photos you change yourself.", go: "Start a restaurant project" },
-  { kind: "other", title: "Other small businesses", text: "The same build and back office, shaped to what you sell. I’ll reply with the nearest fit.", go: "Tell me what you run" },
-] as const;
+type Kind = "band" | "restaurant" | "other";
+type Phase = "arming" | "open";
 
-function Room({ kind }: { kind: (typeof DOORS)[number]["kind"] }) {
+const BAYS: { kind: Kind; n: string; short: string; title: string; text: string; go: string }[] = [
+  { kind: "band", n: "01", short: "Bands", title: "Bands and artists", text: "Shows, music, videos, a booking inbox and your fan list.", go: "Start a band project" },
+  { kind: "restaurant", n: "02", short: "Restaurants", title: "Restaurants", text: "Menu, specials, hours, reservations and photos you change yourself.", go: "Start a restaurant project" },
+  { kind: "other", n: "03", short: "Other", title: "Other small businesses", text: "The same build and back office, shaped to what you sell. I’ll reply with the nearest fit.", go: "Tell me what you run" },
+];
+
+const BULBS = Array.from({ length: 9 }, (_, i) => { const x = 6 + i * 11; const t = x / 100; return { x, y: 3 + 4 * t * (1 - t) * 13 }; });
+
+function Room({ kind }: { kind: Kind }) {
   if (kind === "band") return (
-    <span className="dr-room dr-room-band">
-      <Image src="/work/funkharp-photo.webp" alt="" fill sizes="(min-width: 760px) 300px, 90vw" />
-      <i className="dr-beam b1" /><i className="dr-beam b2" />
-      <span className="dr-eq">{[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => <i key={i} style={{ ["--i" as string]: i }} />)}</span>
+    <span className="bay-room room-band">
+      <Image src="/work/funkharp-photo.webp" alt="" fill sizes="(min-width: 760px) 330px, 33vw" />
+      <span className="haze" />
+      <span className="truss">{[0, 1, 2, 3].map((i) => <i key={i} style={{ ["--i" as string]: i }} />)}</span>
+      <i className="beam b1" /><i className="beam b2" />
+      <span className="eq">{Array.from({ length: 11 }, (_, i) => <i key={i} style={{ ["--i" as string]: i }} />)}</span>
     </span>
   );
   if (kind === "restaurant") return (
-    <span className="dr-room dr-room-rest">
-      <Image src="/work/cinque-lune-door.webp" alt="" fill sizes="(min-width: 760px) 300px, 90vw" />
-      <i className="dr-candle" />
+    <span className="bay-room room-rest">
+      <Image src="/work/cinque-lune-door.webp" alt="" fill sizes="(min-width: 760px) 330px, 33vw" />
+      <span className="candle" />
+      <svg className="bulbs" viewBox="0 0 100 24" preserveAspectRatio="none">
+        <path d="M0 2 Q50 30 100 2" />
+        {BULBS.map((b, i) => <circle key={i} cx={b.x} cy={b.y + 2.4} r="1.7" style={{ ["--i" as string]: i }} />)}
+      </svg>
     </span>
   );
   return (
-    <span className="dr-room dr-room-other">
-      <span className="dr-grid">{Array.from({ length: 9 }, (_, i) => <i key={i} className={i === 2 ? "lift" : undefined} />)}</span>
+    <span className="bay-room room-other">
+      <span className="scan" />
+      <span className="cells">{Array.from({ length: 9 }, (_, i) => <i key={i} className={i === 2 ? "lift" : undefined} />)}<b className="slot" /></span>
+      <span className="dims">W 36 · H 80</span>
     </span>
   );
 }
 
-function Panel({ kind }: { kind: (typeof DOORS)[number]["kind"] }) {
-  return (
-    <span className={`dr-panel dr-panel-${kind}`}>
-      {kind === "band" && <><span className="dr-stencil">Stage door</span><span className="dr-bar" /></>}
-      {kind === "restaurant" && <><span className="dr-inset" /><span className="dr-inset" /><span className="dr-sign">Open</span></>}
-      {kind === "other" && <><span className="dr-draw" /><span className="dr-dim w">W 36 in</span><span className="dr-dim h">H 80 in</span><span className="dr-stamp">Your business</span></>}
-      <span className="dr-knob" />
-    </span>
-  );
-}
-
-/** "Pick your door." Three real doors, each opening onto its own world. They open on hover, and on phones as each one reaches the middle of the screen. */
+/**
+ * "Pick your bay." Three launch bays with steel roll-up shutters, all shut. Tap one: its lamp counts down,
+ * the shutter rolls up, the lights inside come on and the bay locks in. If the visitor already picked a
+ * kind in the launch sequence above, that bay opens by itself when it scrolls into view.
+ */
 export function Doors() {
   const root = useRef<HTMLDivElement>(null);
+  const timer = useRef<number | undefined>(undefined);
+  const chosen = useRef(false);
+  const pending = useRef<Kind | null>(null);
+  const [locked, setLocked] = useState<Kind | null>(null);
+  const [phase, setPhase] = useState<Phase>("open");
+
+  const choose = (k: Kind) => {
+    chosen.current = true;
+    if (k === locked) return;
+    window.clearTimeout(timer.current);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setLocked(k);
+    setPhase(reduce ? "open" : "arming");
+    if (!reduce) timer.current = window.setTimeout(() => setPhase("open"), 780);
+  };
+  const chooseRef = useRef(choose);
+  useEffect(() => { chooseRef.current = choose; });
+
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const doors = Array.from(el.querySelectorAll<HTMLElement>(".dr"));
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) (e.target as HTMLElement).dataset.open = String(e.isIntersecting);
-    }, { rootMargin: "-38% 0px -38% 0px" });
-    const seen = new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) (e.target as HTMLElement).dataset.seen = "true";
-    }, { threshold: 0.35 });
-    doors.forEach((d) => { io.observe(d); seen.observe(d); });
-    return () => { io.disconnect(); seen.disconnect(); };
+    let visible = false;
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      el.dataset.seen = String(visible || el.dataset.seen === "true");
+      if (visible && pending.current && !chosen.current) { const k = pending.current; pending.current = null; window.setTimeout(() => chooseRef.current(k), 350); }
+    }, { threshold: 0.45 });
+    io.observe(el);
+    const onKind = (ev: Event) => {
+      if (chosen.current) return;
+      const k = (ev as CustomEvent<Kind>).detail;
+      if (visible) chooseRef.current(k); else pending.current = k;
+    };
+    window.addEventListener("lg:kind", onKind);
+    return () => { io.disconnect(); window.removeEventListener("lg:kind", onKind); window.clearTimeout(timer.current); };
   }, []);
 
+  const cur = BAYS.find((b) => b.kind === locked);
+
   return (
-    <div ref={root} className="grid3 doors">
-      {DOORS.map((d, i) => (
-        <Link key={d.kind} className={`dr dr-${d.kind}`} href={`/start?kind=${d.kind}`} style={{ ["--i" as string]: i }}>
-          <span className="dr-frame" aria-hidden="true">
-            <Room kind={d.kind} />
-            <span className="dr-spill" />
-            <Panel kind={d.kind} />
-          </span>
-          <div className="dr-copy">
-            <h3>{d.title}</h3>
-            <p>{d.text}</p>
-            <span className="go">{d.go} →</span>
-          </div>
-        </Link>
-      ))}
+    <div ref={root} className="dock" data-locked={locked ?? "none"}>
+      <div className="dock-wall" aria-hidden="true"><span>Launch bays</span><i /><i /><i /></div>
+      <div className="bays" role="group" aria-label="Pick what you run">
+        {BAYS.map((b) => {
+          const state = locked === b.kind ? phase : "shut";
+          return (
+            <button key={b.kind} type="button" className={`bay bay-${b.kind}`} data-state={state} aria-pressed={locked === b.kind} aria-describedby={`bay-${b.kind}-d`} onClick={() => choose(b.kind)}>
+              <span className="bay-plate" aria-hidden="true"><b>Bay {b.n}</b><span className="lamp" /></span>
+              <span className="bay-door" aria-hidden="true">
+                <Room kind={b.kind} />
+                <span className="shutter"><span className="stencil">{b.n}</span><span className="stripe" /><span className="bar"><i /><i /></span></span>
+                <span className="leak" />
+                <span className="housing" />
+              </span>
+              <span className="bay-floor" aria-hidden="true" />
+              <span className="bay-name">{b.short}<span className="sr-only">: {b.title}</span></span>
+              <span id={`bay-${b.kind}-d`} className="sr-only">{b.text}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="console">
+        <p className="readout" aria-live="polite">
+          <span className="dot" aria-hidden="true" />
+          {cur ? <><span className="mono">Bay {cur.n} · {cur.short} · {phase === "open" ? "Locked in" : "Opening"}</span><b>{cur.title}</b><span className="txt">{cur.text}</span></>
+               : <><span className="mono">All bays shut</span><b>Tap a bay to lock it in.</b><span className="txt">Bands, restaurants, or any other small business.</span></>}
+        </p>
+        <Link className="btn" href={cur ? `/start?kind=${cur.kind}` : "/start"}>{cur ? cur.go : "Start a project"} <span aria-hidden="true">→</span></Link>
+      </div>
     </div>
   );
 }

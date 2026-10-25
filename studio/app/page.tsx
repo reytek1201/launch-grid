@@ -28,7 +28,7 @@ export default function Home() {
       <YearOfWork />
 
       <section className="section" aria-labelledby="doors-title">
-        <div className="section-head"><span className="label">Who it&rsquo;s for</span><h2 id="doors-title">Pick your door.</h2><p>Each one opens onto a different kind of site.</p></div>
+        <div className="section-head"><span className="label">Who it&rsquo;s for</span><h2 id="doors-title">Pick your bay.</h2><p>Three bays, one for each kind of site. Tap one to lock it in.</p></div>
         <Doors />
       </section>
 

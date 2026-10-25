@@ -154,7 +154,7 @@ export function LaunchSequence() {
               <span className="label">T−4 · Brief</span>
               <h3>What are we launching?</h3>
               <div className="mc-kinds" role="group" aria-label="What you run">
-                {(Object.keys(KIND_LABEL) as Kind[]).map((k) => <button key={k} type="button" aria-pressed={kind === k} onClick={() => setKind(k)}>{KIND_LABEL[k]}</button>)}
+                {(Object.keys(KIND_LABEL) as Kind[]).map((k) => <button key={k} type="button" aria-pressed={kind === k} onClick={() => { setKind(k); window.dispatchEvent(new CustomEvent("lg:kind", { detail: k })); }}>{KIND_LABEL[k]}</button>)}
               </div>
               <label className="mc-name"><span>Its name</span><input value={typed} maxLength={40} placeholder={DEFAULT_NAME[kind]} onChange={(e) => setTyped(e.target.value)} autoComplete="organization" /></label>
               <p className="mc-msg"><small>Your brief</small>{briefShown}<i className="mc-caret" /></p>

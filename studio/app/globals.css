@@ -695,74 +695,119 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
   .yr-node i { transition: none; }
 }
 
-/* ---------- Pick your door: three real doors, each opening onto its own world ---------- */
-.dr { display: grid; gap: 14px; text-decoration: none; color: inherit; border-radius: 18px; outline-offset: 6px; }
-.dr-frame { position: relative; display: block; height: clamp(250px, 70vw, 290px); perspective: 1100px; border-radius: 14px 14px 4px 4px; padding: 10px 10px 0; background: var(--sunk); box-shadow: inset 0 0 0 1px var(--line); }
-.dr-room, .dr-panel { position: absolute; inset: 10px 10px 0; border-radius: 8px 8px 0 0; overflow: hidden; display: block; }
-.dr-room img { object-fit: cover; }
-.dr-panel { overflow: visible; transform-origin: 0 50%; transform-style: preserve-3d; z-index: 2; transition: transform 1.1s var(--ease-launch); box-shadow: 0 0 0 1px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.06); }
-.dr[data-seen="true"] .dr-panel { transform: rotateY(14deg); }
-.dr:hover .dr-panel, .dr:focus-visible .dr-panel { transform: rotateY(80deg); }
-@media (hover: none), (max-width: 759px) { .dr[data-open="true"] .dr-panel { transform: rotateY(80deg); } }
-.dr-knob { position: absolute; right: 9%; top: 52%; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #F4E3B0, #B08A3A 60%, #6E5420); box-shadow: 0 2px 4px rgba(0,0,0,.4); }
-.dr-spill { position: absolute; left: 10px; right: 10px; bottom: -22px; height: 22px; z-index: 0; clip-path: polygon(0 0, 100% 0, 112% 100%, -12% 100%); opacity: 0; transition: opacity .9s .15s; }
-.dr:hover .dr-spill, .dr:focus-visible .dr-spill { opacity: 1; }
-@media (hover: none), (max-width: 759px) { .dr[data-open="true"] .dr-spill { opacity: 1; } }
-.dr-copy { display: grid; gap: 6px; padding: 18px 4px 0; }
-.dr-copy p { color: var(--muted); }
-.dr .go { font-family: var(--font-mono); font-size: .75rem; color: var(--cobalt); letter-spacing: .06em; text-transform: uppercase; padding-block: 8px; }
-.dr:hover h3 { color: var(--cobalt); }
+/* ---------- Pick your bay: launch bays with roll-up shutters that lock in ---------- */
+.dock { --steel: #2A2E36; --steel-2: #353A44; --conc: #1A1C21; --ease-roll: cubic-bezier(.55,0,.15,1);
+  position: relative; display: grid; gap: 0; border-radius: 18px; overflow: hidden; background: linear-gradient(#23262d, #1b1d22); color: #F2F0EA; box-shadow: 0 30px 60px -30px rgba(10,12,20,.5); isolation: isolate; }
+.dock-wall { position: relative; display: flex; align-items: center; gap: 10px; padding: 12px 14px 10px; border-bottom: 2px solid #111317; background: repeating-linear-gradient(90deg, transparent 0 46px, rgba(0,0,0,.18) 46px 48px), linear-gradient(#30343d, #272a31); }
+.dock-wall span { font-family: var(--font-mono); font-weight: 700; font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: #E9C46A; flex: 1; }
+.dock-wall i { width: 8px; height: 8px; border-radius: 50%; background: #3d424d; box-shadow: inset 0 1px 1px rgba(255,255,255,.15); }
+.dock[data-locked="band"] .dock-wall i:nth-of-type(1), .dock[data-locked="restaurant"] .dock-wall i:nth-of-type(2), .dock[data-locked="other"] .dock-wall i:nth-of-type(3) { background: #3BE38F; box-shadow: 0 0 8px #3BE38F; }
+.bays { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px 10px 0; }
+.bay { all: unset; box-sizing: border-box; position: relative; display: grid; gap: 0; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; }
+.bay:focus-visible { outline: 3px solid #7B90FF; outline-offset: 3px; }
+.bay-plate { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 5px 7px; border-radius: 5px 5px 0 0; background: linear-gradient(#4a4f5a, #3a3e47); box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+.bay-plate b { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #F2F0EA; }
+.lamp { width: 9px; height: 9px; border-radius: 50%; background: #6b2626; box-shadow: inset 0 0 0 1px rgba(0,0,0,.4); transition: background .3s, box-shadow .3s; }
+.bay[data-state="arming"] .lamp { animation: bay-arm .26s steps(1) 3; background: #F0A830; }
+@keyframes bay-arm { 0% { background: #F0A830; box-shadow: 0 0 10px #F0A830; } 50% { background: #5a3d10; box-shadow: none; } }
+.bay[data-state="open"] .lamp { background: #3BE38F; box-shadow: 0 0 10px #3BE38F, 0 0 2px #fff inset; }
+.bay-door { position: relative; display: block; aspect-ratio: 3 / 4.2; overflow: hidden; background: #0c0d10; border-left: 4px solid #3a3e47; border-right: 4px solid #3a3e47; box-shadow: inset 0 0 0 1px #111317; }
+.bay-room { position: absolute; inset: 0; display: block; overflow: hidden; }
+.bay-room img { object-fit: cover; }
+.housing { position: absolute; left: 0; right: 0; top: 0; height: 9px; background: linear-gradient(#5a606b, #2b2f36); box-shadow: 0 3px 6px rgba(0,0,0,.5); z-index: 4; }
 
-/* band: a steel stage door; behind it, the harp under moving spotlights */
-.dr-panel-band { background: linear-gradient(90deg, #22252c, #2f333c 50%, #1e2027); }
-.dr-panel-band::before { content: ""; position: absolute; inset: 8px; border: 2px solid rgba(255,255,255,.06); border-radius: 4px; background-image: radial-gradient(circle, #555a66 1.6px, transparent 2px); background-size: 100% 22px; background-position: 4px 6px; background-repeat: repeat-y; }
-.dr-stencil { position: absolute; left: 0; right: 0; top: 18%; text-align: center; font-family: var(--font-mono); font-weight: 700; font-size: .9375rem; letter-spacing: .25em; text-transform: uppercase; color: #E9C46A; opacity: .9; }
-.dr-bar { position: absolute; left: 12%; right: 12%; top: 48%; height: 12px; border-radius: 6px; background: linear-gradient(#9aa0ab, #5d626d); box-shadow: 0 3px 6px rgba(0,0,0,.4); }
-.dr-panel-band .dr-knob { display: none; }
-.dr-room-band { background: #0d0e12; }
-.dr-room-band img { opacity: .55; scale: 1.08; }
-.dr-beam { position: absolute; top: -10%; width: 70%; height: 130%; background: conic-gradient(from 168deg at 50% 0, transparent 0, rgba(255,236,190,.45) 12deg, transparent 24deg); mix-blend-mode: screen; transform-origin: 50% 0; }
-.dr-beam.b1 { left: -10%; } .dr-beam.b2 { right: -10%; filter: hue-rotate(150deg); }
-.dr-eq { position: absolute; left: 12%; right: 12%; bottom: 10px; height: 34px; display: flex; align-items: flex-end; gap: 4px; }
-.dr-eq i { flex: 1; height: 30%; border-radius: 2px; background: #1F8A7C; }
-.dr-band .dr-spill { background: linear-gradient(rgba(255,236,190,.35), transparent); }
-.dr-band[data-seen="true"] .dr-beam.b1 { animation: dr-sway 3.4s ease-in-out infinite alternate; }
-.dr-band[data-seen="true"] .dr-beam.b2 { animation: dr-sway 2.8s ease-in-out infinite alternate-reverse; }
-.dr-band[data-seen="true"] .dr-eq i { animation: yr-eq .9s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -.13s); }
-@keyframes dr-sway { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+/* the shutter: ribbed steel, a painted bay number and a kind stripe, a bottom bar with handles */
+.shutter { position: absolute; inset: 0; z-index: 3; display: block; transform: translateY(0); transition: transform 1.25s var(--ease-roll);
+  background: repeating-linear-gradient(180deg, #8d939e 0 2px, #6c727d 2px 9px, #4f545e 9px 11px, #9aa0ab 11px 12px), #747a85; box-shadow: inset 6px 0 10px -6px rgba(0,0,0,.5), inset -6px 0 10px -6px rgba(0,0,0,.5); }
+.shutter::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.2) 45%, transparent 60%); background-size: 260% 100%; background-position: calc(100% - var(--sheen, 0) * 100%) 0; transition: background-position 1.6s; }
+.dock[data-seen="true"] .shutter::after { --sheen: 1; }
+.stencil { position: absolute; left: 50%; top: 30%; translate: -50% 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.75rem, 8vw, 3.5rem); line-height: 1; color: rgba(20,22,28,.55); letter-spacing: -.02em; mix-blend-mode: multiply; }
+.stripe { position: absolute; left: 0; right: 0; top: 62%; height: 6px; background: var(--k); opacity: .9; }
+.bay-band { --k: #1F8A7C; --glow: 255,236,190; } .bay-restaurant { --k: #C4562E; --glow: 242,178,122; } .bay-other { --k: #4C66FF; --glow: 123,144,255; }
+.bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: linear-gradient(#3e434c, #23262c); display: flex; justify-content: space-around; align-items: center; }
+.bar i { width: 18%; height: 4px; border-radius: 2px; background: linear-gradient(#c9ccd4, #7c808c); }
+.leak { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 2; background: rgb(var(--glow)); box-shadow: 0 0 14px 4px rgba(var(--glow), .6); opacity: 0; transition: opacity .3s; }
+@media (hover: hover) { .bay[data-state="shut"]:hover .shutter { transform: translateY(-9%); } .bay[data-state="shut"]:hover .leak { opacity: 1; } }
+.bay[data-state="arming"] .shutter { transform: translateY(-5%); transition-duration: .5s; }
+.bay[data-state="arming"] .leak { opacity: 1; }
+.bay[data-state="open"] .shutter { transform: translateY(-101%); }
+.bay-floor { display: block; height: 16px; background: repeating-linear-gradient(-45deg, #E9C46A 0 6px, #17181c 6px 12px); opacity: .85; border-radius: 0 0 3px 3px; position: relative; }
+.bay-floor::after { content: ""; position: absolute; left: -10%; right: -10%; top: 0; height: 40px; background: radial-gradient(60% 100% at 50% 0, rgba(var(--glow), .55), transparent 70%); opacity: 0; transition: opacity .8s .5s; pointer-events: none; }
+.bay[data-state="open"] .bay-floor::after { opacity: 1; }
+.bay-name { display: block; text-align: center; padding: 10px 2px 14px; font-family: var(--font-display); font-weight: 700; font-size: .9375rem; color: #A4A9B6; transition: color .3s; }
+.bay[aria-pressed="true"] .bay-name { color: #F2F0EA; }
+.dock[data-locked]:not([data-locked="none"]) .bay[aria-pressed="false"] .bay-door { filter: brightness(.6) saturate(.6); transition: filter .5s; }
 
-/* restaurant: a wood door with an Open sign; behind it, the candlelit trattoria */
-.dr-panel-restaurant { background: repeating-linear-gradient(90deg, #6b3a22 0 7px, #5c3019 7px 9px, #73412a 9px 15px), #6b3a22; display: grid; grid-template-rows: 1fr 1fr; gap: 10%; padding: 14% 14% 18%; }
-.dr-inset { display: block; border-radius: 3px; box-shadow: inset 0 0 0 2px rgba(0,0,0,.25), inset 2px 2px 0 3px rgba(255,255,255,.06); }
-.dr-sign { position: absolute; left: 50%; top: 40%; translate: -50% 0; font-family: var(--font-display); font-weight: 700; font-size: .875rem; padding: 3px 12px; border-radius: 4px; background: #F6EEDD; color: #9A3F20; box-shadow: 0 3px 8px rgba(0,0,0,.35); rotate: -3deg; }
-.dr-sign::before { content: ""; position: absolute; left: 20%; right: 20%; top: -12px; height: 12px; border: 1px solid #c9b48a; border-bottom: 0; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
-.dr-room-rest { background: #2B1D14; }
-.dr-candle { position: absolute; inset: 0; background: radial-gradient(60% 50% at 50% 75%, rgba(242,178,122,.5), transparent 70%); mix-blend-mode: screen; }
-.dr-restaurant[data-seen="true"] .dr-candle { animation: yr-flicker 3s ease-in-out infinite; }
-.dr-restaurant .dr-spill { background: linear-gradient(rgba(242,178,122,.45), transparent); }
+/* the lights inside come on like fluorescent tubes once the shutter clears */
+.bay-room > :not(img) { opacity: 0; }
+.bay-room img { opacity: 0; transition: opacity .2s; }
+.bay[data-state="open"] .bay-room img { animation: bay-on .9s .55s steps(1) both; }
+.bay[data-state="open"] .bay-room > :not(img) { animation: bay-on .9s .7s steps(1) both; }
+@keyframes bay-on { 0% { opacity: 0; } 12% { opacity: .9; } 18% { opacity: .1; } 30% { opacity: 1; } 36% { opacity: .3; } 48%, 100% { opacity: 1; } }
 
-/* other: a door drawn as a blueprint; behind it, the grid with the lift-off cell */
-.dr-panel-other { background: #1F3FFF; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 14px 14px; }
-.dr-draw { position: absolute; inset: 16% 20% 0; border: 1.5px solid rgba(255,255,255,.85); border-bottom: 0; }
-.dr-draw::after { content: ""; position: absolute; right: 10%; top: 52%; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #fff; }
-.dr-dim { position: absolute; font-family: var(--font-mono); font-size: 10px; color: #fff; letter-spacing: .06em; }
-.dr-dim.w { top: 7%; left: 0; right: 0; text-align: center; }
-.dr-dim.w::before, .dr-dim.w::after { content: ""; position: absolute; top: 50%; width: 16%; height: 1px; background: rgba(255,255,255,.7); }
-.dr-dim.w::before { left: 20%; } .dr-dim.w::after { right: 20%; }
-.dr-dim.h { left: 4%; top: 50%; writing-mode: vertical-rl; rotate: 180deg; translate: 0 -50%; }
-.dr-stamp { position: absolute; left: 50%; bottom: 12%; translate: -50% 0; white-space: nowrap; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; border: 1.5px solid #fff; padding: 3px 7px; border-radius: 3px; rotate: -4deg; }
-.dr-panel-other .dr-knob { display: none; }
-.dr-room-other { background: #0B0D14; background-image: linear-gradient(rgba(123,144,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(123,144,255,.14) 1px, transparent 1px); background-size: 18px 18px; display: grid; place-items: center; }
-.dr-grid { display: grid; grid-template-columns: repeat(3, 26px); gap: 6px; }
-.dr-grid i { width: 26px; height: 26px; border-radius: 5px; background: #F2F0EA; }
-.dr-grid i.lift { background: #7B90FF; box-shadow: 0 0 18px rgba(123,144,255,.8); }
-.dr-other:hover .dr-grid i.lift, .dr-other:focus-visible .dr-grid i.lift { animation: dr-lift 1.6s var(--ease-launch) .4s infinite; }
-@media (hover: none), (max-width: 759px) { .dr-other[data-open="true"] .dr-grid i.lift { animation: dr-lift 1.6s var(--ease-launch) .4s infinite; } }
-@keyframes dr-lift { 0%, 15% { transform: none; opacity: 1; } 70% { transform: translate(26px, -30px); opacity: 0; } 71% { transform: none; opacity: 0; } 100% { opacity: 1; } }
-.dr-other .dr-spill { background: linear-gradient(rgba(123,144,255,.4), transparent); }
+/* band: the harp under a lighting truss, two beams sweeping through haze, an equalizer on the floor */
+.room-band { background: #0b0c10; }
+.bay-band[data-state="open"] .room-band img { --o: .6; }
+.room-band img { filter: brightness(.55) contrast(1.1); }
+.haze { position: absolute; inset: 0; background: radial-gradient(80% 50% at 50% 20%, rgba(255,236,190,.16), transparent 70%); }
+.truss { position: absolute; left: 6%; right: 6%; top: 12px; height: 10px; display: flex; justify-content: space-around; align-items: flex-end; background: repeating-linear-gradient(60deg, transparent 0 4px, #555b66 4px 5px), linear-gradient(#555b66, #555b66) top / 100% 1.5px no-repeat, linear-gradient(#555b66, #555b66) bottom / 100% 1.5px no-repeat; }
+.truss i { width: 9px; height: 9px; margin-bottom: -7px; border-radius: 50%; background: #FFE9B8; box-shadow: 0 0 10px 3px rgba(255,233,184,.8); }
+.truss i:nth-child(even) { background: #9FE3D7; box-shadow: 0 0 10px 3px rgba(159,227,215,.7); }
+.beam { position: absolute; top: 18px; width: 90%; height: 120%; mix-blend-mode: screen; transform-origin: 50% 0; background: conic-gradient(from 168deg at 50% 0, transparent 0, rgba(255,236,190,.42) 12deg, transparent 24deg); }
+.beam.b1 { left: -20%; } .beam.b2 { right: -20%; background: conic-gradient(from 168deg at 50% 0, transparent 0, rgba(159,227,215,.4) 12deg, transparent 24deg); }
+.eq { position: absolute; left: 8%; right: 8%; bottom: 8px; height: 22%; display: flex; align-items: flex-end; gap: 3px; }
+.eq i { flex: 1; height: 30%; border-radius: 2px 2px 0 0; background: linear-gradient(#5fd4c3, #1F8A7C); }
+.bay-band[data-state="open"] .beam.b1 { animation: bay-on .9s .7s steps(1) both, bay-sway 3.6s 1.6s ease-in-out infinite alternate; }
+.bay-band[data-state="open"] .beam.b2 { animation: bay-on .9s .7s steps(1) both, bay-sway 3s 1.6s ease-in-out infinite alternate-reverse; }
+.bay-band[data-state="open"] .eq i { animation: bay-on .9s .7s steps(1) both, yr-eq .85s 1.6s ease-in-out infinite alternate; animation-delay: .7s, calc(1.6s + var(--i) * -.11s); }
+.bay-band[data-state="open"] .truss i { animation: bay-chase 1.6s 1.6s ease-in-out infinite; animation-delay: calc(1.6s + var(--i) * .2s); }
+@keyframes bay-sway { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+@keyframes bay-chase { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 
-@media (min-width: 760px) { .dr-frame { height: 300px; } }
+/* restaurant: the trattoria doorway, candle glow, a string of warm bulbs */
+.room-rest { background: #2B1D14; }
+.candle { position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 80%, rgba(242,178,122,.45), transparent 70%); mix-blend-mode: screen; }
+.bulbs { position: absolute; left: 0; top: 14px; width: 100%; height: 26%; overflow: visible; }
+.bulbs path { fill: none; stroke: #1a120c; stroke-width: .6; vector-effect: non-scaling-stroke; }
+.bulbs circle { fill: #FFD9A0; filter: drop-shadow(0 0 2px #FFB866); }
+.bay-restaurant[data-state="open"] .candle { animation: bay-on .9s .7s steps(1) both, yr-flicker 3s 1.6s ease-in-out infinite; }
+.bay-restaurant[data-state="open"] .bulbs circle { animation: bay-twinkle 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * -.37s); }
+@keyframes bay-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* other: the blueprint grid, a scan line and the lift-off cell launching from its slot */
+.room-other { background: #0B0D14; background-image: linear-gradient(rgba(123,144,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(123,144,255,.16) 1px, transparent 1px); background-size: 14px 14px; }
+.room-other .cells { position: absolute; left: 50%; top: 50%; translate: -50% -50%; display: grid; grid-template-columns: repeat(3, var(--c, 16px)); gap: calc(var(--c, 16px) * .25); }
+.room-other .cells i { width: var(--c, 16px); height: var(--c, 16px); border-radius: 3px; background: #F2F0EA; grid-row: auto; }
+.room-other .cells i.lift { background: #7B90FF; box-shadow: 0 0 14px rgba(123,144,255,.9); position: relative; z-index: 1; }
+.room-other .slot { position: absolute; right: 0; top: 0; width: var(--c, 16px); height: var(--c, 16px); border: 1.5px dashed rgba(123,144,255,.8); border-radius: 3px; }
+.scan { position: absolute; left: 0; right: 0; top: 8%; height: 2px; background: #7B90FF; box-shadow: 0 0 12px 2px rgba(123,144,255,.7); }
+.dims { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; color: #A4B2FF; }
+.bay-other[data-state="open"] .cells i.lift { animation: bay-lift 2.2s 1.7s var(--ease-launch) infinite; }
+.bay-other[data-state="open"] .scan { animation: bay-on .9s .7s steps(1) both, bay-scan 2.6s 1.6s linear infinite; }
+@keyframes bay-lift { 0%, 20% { transform: none; opacity: 1; } 70% { transform: translate(calc(var(--c, 16px) * 1.6), calc(var(--c, 16px) * -2.2)); opacity: 0; } 71% { transform: none; opacity: 0; } 90%, 100% { opacity: 1; } }
+@keyframes bay-scan { 0% { top: 8%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: 90%; opacity: 0; } }
+
+/* the console under the bays: what's locked in, and the one button */
+.console { display: grid; gap: 14px; padding: 16px 16px 18px; border-top: 2px solid #111317; background: linear-gradient(#202329, #191b20); }
+.readout { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; row-gap: 4px; align-items: center; margin: 0; }
+.readout .dot { width: 10px; height: 10px; border-radius: 50%; background: #6b2626; grid-row: 1; }
+.dock:not([data-locked="none"]) .readout .dot { background: #3BE38F; box-shadow: 0 0 10px #3BE38F; }
+.readout .mono { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: #A4A9B6; }
+.readout b { grid-column: 1 / -1; font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -.02em; }
+.readout .txt { grid-column: 1 / -1; color: #A4A9B6; }
+.console .btn { justify-self: start; background: #7B90FF; border-color: #7B90FF; color: #0B0D14; }
+@media (min-width: 760px) {
+  .bays { gap: 16px; padding: 18px 18px 0; }
+  .bay-plate { padding: 8px 12px; } .bay-plate b { font-size: 12px; }
+  .bay-door { aspect-ratio: 4 / 3.6; border-width: 6px; }
+  .room-other { --c: 26px; }
+  .bay-name { font-size: 1.125rem; }
+  .bulbs { height: 22%; }
+  .console { grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 20px 24px; }
+  .console .btn { justify-self: end; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .dr-panel { transition: none; } .dr[data-seen="true"] .dr-panel, .dr-panel { transform: rotateY(30deg); }
-  .dr-beam, .dr-eq i, .dr-candle, .dr-grid i.lift { animation: none !important; }
+  .shutter, .bay-floor::after, .lamp { transition: none; }
+  .bay[data-state] .bay-room > *, .bay[data-state] .bay-room img, .bay[data-state] .lamp, .bay[data-state] .beam, .bay[data-state] .eq i, .bay[data-state] .truss i, .bay[data-state] .candle, .bay[data-state] .bulbs circle, .bay[data-state] .cells i.lift, .bay[data-state] .scan { animation: none !important; }
+  .bay[data-state="open"] .bay-room > *, .bay[data-state="open"] .bay-room img { opacity: 1; }
 }

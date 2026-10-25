@@ -116,7 +116,7 @@ export function LaunchSequence() {
       </ol>
       <div className="stage mc" data-beat={beat} data-kind={kind}>
         <div className="mc-top" aria-hidden="true">
-          <span className="label">Launch sequence · {beat < 4 ? "keep scrolling" : "lift-off"}</span>
+          <span className="label">{beat < 4 ? "Launch sequence" : "Lift-off"}</span>
           <span className="mc-ticks">{BEATS.map((b, i) => <i key={b.t} style={{ ["--f" as string]: i < beat ? 1 : i === beat ? sub : 0 }} />)}</span>
           <span className="mc-t">{BEATS[beat].t}</span>
         </div>
@@ -191,6 +191,10 @@ export function LaunchSequence() {
               <span className="mc-fine">Sample only. Nothing you typed here is saved.</span>
             </div>
           </div>
+        </div>
+        <div className="mc-cue" data-show={beat < 4} data-first={p < 0.04} aria-hidden="true">
+          <span>{p < 0.04 ? "Scroll to launch" : "Keep scrolling"}</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6l5 5 5-5" /></svg>
         </div>
       </div>
     </section>

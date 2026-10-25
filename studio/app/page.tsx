@@ -3,6 +3,7 @@ import { BackOfficeDemo } from "@/components/BackOfficeDemo";
 import { LaunchSequence } from "@/components/LaunchSequence";
 import { Hero } from "@/components/Hero";
 import { StartForm } from "@/components/StartForm";
+import { YearOfWork } from "@/components/YearOfWork";
 import { copyConfigured } from "@/lib/email";
 
 const FAQ = [
@@ -23,6 +24,8 @@ export default function Home() {
       </section>
 
       <LaunchSequence />
+
+      <YearOfWork />
 
       <section className="section" aria-labelledby="doors-title">
         <div className="section-head"><span className="label">Who it&rsquo;s for</span><h2 id="doors-title">Pick your door.</h2></div>

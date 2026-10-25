@@ -65,6 +65,16 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .sign-swing:hover, .sign-swing:focus-visible { animation: swing 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) { .sign-swing:hover { animation: none; } }
 
+/* Cellar: lantern glow breathing, bubbles rising in a glass of bollicine */
+@keyframes breath { 0%,100% { opacity: 0.55 } 30% { opacity: 0.8 } 55% { opacity: 0.6 } 75% { opacity: 0.9 } }
+.lantern-breath { animation: breath 6s ease-in-out infinite; }
+@keyframes bubble { 0% { transform: translateY(0); opacity: 0 } 15% { opacity: 1 } 100% { transform: translateY(-46px); opacity: 0 } }
+.bubble { animation: bubble 2.2s ease-in infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lantern-breath, .bubble { animation: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

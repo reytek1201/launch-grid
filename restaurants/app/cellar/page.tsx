@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PhotoSlot } from "@/components/PhotoSlot";
 import { Flourish } from "@/components/motion/Flourish";
 import { Reveal } from "@/components/motion/Reveal";
 import { getSiteData } from "@/lib/config";
@@ -8,6 +7,9 @@ import { price } from "@/lib/format";
 import type { Wine } from "@/lib/types";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
+import { type PourCourse, PourScene, type PourWine } from "@/themes/trattoria/pages/PourScene";
+
+const KIND: Record<string, PourWine["kind"]> = { bollicine: "sparkling", bianchi: "white", rosati: "rose", rossi: "red", dolci: "sweet" };
 
 export const metadata: Metadata = { title: "Wine cellar", description: "Italian wines by the glass and by the bottle at Trattoria Cinque Lune." };
 
@@ -18,6 +20,26 @@ export default function Cellar() {
   const site = getSiteData();
   const sections = site.cellar.filter((s) => s.wines.length > 0);
   const dish = new Map(site.menu.flatMap((s) => s.items).map((i) => [i.id, i.name]));
+  // Abbinamento: every dish some wine is listed with, in menu order, with up to two wines each.
+  const pourWines: Record<string, PourWine> = {};
+  for (const s of sections)
+    for (const w of s.wines)
+      if (!w.soldOut) pourWines[w.id] = { id: w.id, name: w.name, where: `${w.region}${w.vintage ? ` · ${w.vintage}` : ""}`, notes: w.notes, glass: w.glass, bottle: w.bottle, kind: KIND[s.id] ?? "red" };
+  const pairsWith = (dishId: string) =>
+    sections
+      .flatMap((s) => s.wines)
+      .filter((w) => !w.soldOut && w.pairs?.includes(dishId))
+      .sort((a, b) => Number(!!b.glass) - Number(!!a.glass))
+      .slice(0, 2)
+      .map((w) => w.id);
+  const pourCourses: PourCourse[] = site.menu
+    .filter((s) => s.id !== "bevande")
+    .map((s) => ({
+      id: s.id,
+      title: s.title,
+      dishes: s.items.filter((i) => !i.soldOut).map((i) => ({ id: i.id, name: i.name, wines: pairsWith(i.id) })).filter((d) => d.wines.length > 0),
+    }))
+    .filter((c) => c.dishes.length > 0);
   const picks = sections.flatMap((s) => s.wines).filter((w) => w.pick && !w.soldOut);
 
   const pairing = (w: Wine, light = false) => {
@@ -52,7 +74,7 @@ export default function Cellar() {
 
   return (
     <main id="main" style={{ backgroundImage: STONE }}>
-      <PageHero kicker="La Cantina" title="The wine cellar" line="A short list, chosen by hand, all of it Italian. Ask us what is open tonight." photo="sp-13" focal="50% 55%" />
+      <PageHero kicker="La Cantina" title="The wine cellar" line="A short list, chosen by hand, all of it Italian. Ask us what is open tonight." photo="sp-13" focal="50% 55%" push />
 
       <nav aria-label="Wine list" className="sticky top-[var(--header-offset,0px)] z-20 border-y border-cream/10 bg-espresso/90 backdrop-blur transition-[top] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)]">
         <ul className="mx-auto flex max-w-3xl justify-start gap-5 overflow-x-auto px-4 py-2 font-hand text-xl sm:justify-center sm:px-6 sm:py-3 sm:text-2xl">
@@ -92,19 +114,7 @@ export default function Cellar() {
         </section>
       )}
 
-      {/* The pour: a quiet band between the board and the book */}
-      <section aria-label="Pairing help" className="relative mt-10 overflow-hidden md:mt-16">
-        <PhotoSlot photo="sp-14" ratio="aspect-[4/3] md:aspect-[21/9]" sizes="100vw" focal="55% 50%" className="w-full" />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-[#170d0a]/90 via-[#170d0a]/35 to-transparent" />
-        <div className="absolute inset-0 flex items-center">
-          <Reveal>
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
-              <p className="font-hand text-3xl text-[#f2b27a] md:text-4xl">Not sure?</p>
-              <p className="mt-1 max-w-[11.5rem] font-heading text-2xl leading-tight text-cream md:max-w-md md:text-4xl">Tell us what you are eating and we will pour you a taste.</p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {pourCourses.length > 0 && <PourScene courses={pourCourses} wines={pourWines} />}
 
       {/* The list, in the cellar book */}
       <div className="px-3 py-10 sm:px-6 md:py-16">
@@ -119,7 +129,7 @@ export default function Cellar() {
 
             {sections.map((s, n) => (
               <section key={s.id} id={s.id} className="scroll-mt-28 pt-10 md:scroll-mt-36">
-                <InkOnView name={n % 2 === 0 ? "grapes" : "bottle"} className={`mx-auto mb-6 text-espresso/55 ${n % 2 === 0 ? "w-14" : "w-6"}`} />
+                <InkOnView name={n % 2 === 0 ? "grapes" : "rack"} className={`mx-auto mb-6 text-espresso/55 ${n % 2 === 0 ? "w-14" : "w-24"}`} />
                 <Reveal>
                   <div className="text-center">
                     <h2 className="font-hand text-5xl text-terracotta-deep">{s.title}</h2>

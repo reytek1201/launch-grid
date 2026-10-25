@@ -15,6 +15,7 @@ export function PageHero({
   focal = "50% 50%",
   ink,
   inkClass = "top-[26%] w-24 md:w-40",
+  push = false,
 }: {
   kicker: string;
   title: string;
@@ -23,11 +24,14 @@ export function PageHero({
   focal?: string;
   ink?: InkName;
   inkClass?: string;
+  /** slow push deeper into the photo as you scroll past */
+  push?: boolean;
 }) {
   const { ref, progress } = usePassing();
   const reduce = useReducedMotion();
   const y = useTransform(progress, [0, 1], ["-10%", "14%"]);
   const textY = useTransform(progress, [0.5, 1], [0, -70]);
+  const scale = useTransform(progress, [0.5, 1], [1, push ? 1.14 : 1]);
   const draw = useMotionValue(reduce ? 1 : 0);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export function PageHero({
 
   return (
     <section ref={ref} data-hero className="relative isolate flex h-[56svh] min-h-[24rem] items-end overflow-hidden bg-espresso text-cream md:h-[64svh]">
-      <motion.div className="absolute inset-[-14%_0] -z-10 opacity-60" style={{ y }}>
+      <motion.div className="absolute inset-[-14%_0] -z-10 opacity-60" style={{ y, scale }}>
         <PhotoSlot photo={photo} ratio="h-full w-full" sizes="100vw" hero focal={focal} className="h-full" />
       </motion.div>
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-espresso via-espresso/45 to-espresso/70" />

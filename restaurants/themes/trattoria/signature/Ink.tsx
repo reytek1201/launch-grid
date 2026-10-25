@@ -18,6 +18,14 @@ const ART: Record<string, { viewBox: string; strokes: Stroke[] }> = {
       { d: "M15 58 L15 120" },
     ],
   },
+  rack: {
+    viewBox: "0 0 140 70",
+    strokes: [
+      { d: "M6 6 L134 6 M6 64 L134 64 M6 6 L6 64 M134 6 L134 64 M6 35 L134 35" },
+      ...[18, 40, 62, 84, 106, 128].map((x) => grape(x - 4, 20, 8)),
+      ...[18, 40, 62, 84, 106, 128].map((x) => grape(x - 4, 50, 8)),
+    ],
+  },
   grapes: {
     viewBox: "0 0 100 100",
     strokes: [

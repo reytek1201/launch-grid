@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type MotionValue, motion, useMotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { type MotionValue, motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Magnetic } from "@/components/motion/Magnetic";
@@ -99,7 +99,7 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
 
 export function CheckScene({ site }: { site: SiteData }) {
   const ref = useRef<HTMLElement>(null);
-  const reduce = !!useReducedMotion();
+  const reduce = useMedia("(prefers-reduced-motion: reduce)");
   // Pinned only where the three-column layout fits (1024px and up).
   const desktop = useMedia("(min-width: 1024px)");
   const pinned = desktop && !reduce;

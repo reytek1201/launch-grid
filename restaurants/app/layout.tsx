@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Caveat, Fraunces, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { getSiteData } from "@/lib/config";
+import { Chrome } from "@/components/site/Chrome";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { BackToTop } from "@/components/site/BackToTop";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -43,12 +44,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <PaperDefs />
         <MealProvider>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-espresso focus:px-4 focus:py-2 focus:text-cream">Skip to content</a>
-        <SiteHeader site={site} />
-        {children}
-        <SiteFooter site={site} />
-        <BackToTop />
-        <TabBar site={site} />
-        <CandleCursorLoader />
+        <Chrome
+          before={<SiteHeader site={site} />}
+          after={
+            <>
+              <SiteFooter site={site} />
+              <BackToTop />
+              <TabBar site={site} />
+              <CandleCursorLoader />
+            </>
+          }
+        >
+          {children}
+        </Chrome>
         </MealProvider>
       </body>
     </html>

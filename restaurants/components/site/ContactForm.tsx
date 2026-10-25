@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { submitInquiry } from "@/lib/inquiry";
 import { Moons } from "./Moons";
+import { TrapField } from "./TrapField";
 
 // Lines on a postcard rather than boxes.
 const line = "mt-1 w-full border-0 border-b border-espresso/40 bg-transparent px-0 py-1.5 text-base text-espresso focus:border-terracotta-deep focus:ring-0";
@@ -43,6 +44,7 @@ export function ContactForm({ name, demo = false }: { name: string; demo?: boole
 
   return (
     <form onSubmit={send} className="grid gap-8 p-6 sm:p-8 md:grid-cols-[1.25fr_1fr] md:gap-0">
+      <TrapField />
       {/* Message side: lined paper */}
       <label className="block md:border-r md:border-dashed md:border-espresso/30 md:pr-8">
         <span className="font-hand text-3xl text-terracotta-deep">Cara {name},</span>

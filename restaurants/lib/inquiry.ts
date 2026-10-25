@@ -11,6 +11,12 @@ export type Inquiry = {
 
 export type InquiryResult = { delivered: boolean };
 
+/** What the browser tells the server about how the form was filled in (see sendRequest). */
+export type Guard = { trap: string; waited: number };
+
+// When this page's script started: a person needs a few seconds to fill a form, a script does not.
+const OPENED = typeof window === "undefined" ? 0 : Date.now();
+
 /*
  * The one place a request leaves the browser. It goes to a server action (app/actions.ts), which
  * writes it to the restaurant's inbox. If the inbox is not configured or cannot be reached the result is
@@ -18,7 +24,8 @@ export type InquiryResult = { delivered: boolean };
  */
 export async function submitInquiry(inquiry: Inquiry): Promise<InquiryResult> {
   try {
-    return await sendRequest(inquiry);
+    const trap = typeof document === "undefined" ? "" : (document.querySelector<HTMLInputElement>("[data-trap]")?.value ?? "");
+    return await sendRequest(inquiry, { trap, waited: Date.now() - OPENED });
   } catch {
     return { delivered: false };
   }

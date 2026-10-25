@@ -7,6 +7,7 @@ import { mailBody, mailtoHref, submitInquiry } from "@/lib/inquiry";
 import { addDays, dateIssue, partyWord, shortDate, slotsFor, todayIn } from "@/lib/reserve";
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
+import { TrapField } from "./TrapField";
 import { Chips, LABEL, LINE, RequestSent } from "./PaperForm";
 import { useToday } from "./useToday";
 
@@ -87,6 +88,7 @@ export function ReserveSlip({ site }: { site: SiteData }) {
 
   return (
     <form onSubmit={onSubmit} noValidate={false} className="p-6 sm:p-8">
+      <TrapField />
       <div className="flex items-end justify-between gap-4 border-b border-dashed border-espresso/35 pb-3">
         <h2 className="font-hand text-4xl text-terracotta-deep sm:text-5xl">Prenotazione</h2>
         <Moons id="moon-res" className="mb-2 h-2.5 w-auto text-terracotta" />

@@ -27,7 +27,7 @@ async function prepare(file: File): Promise<File> {
 type Props = {
   action: (form: FormData) => void | Promise<void>;
   dish: string;
-  current?: { src: string; alt: string };
+  current?: { src: string; alt: string; sample?: boolean };
   alt?: string;
 };
 
@@ -77,6 +77,7 @@ export function PhotoUpload({ action, dish, current, alt }: Props) {
           <button type="button" onClick={() => picker.current?.click()} className={btn} disabled={busy}>
             {busy ? "Preparing…" : shown ? "Choose another photo" : "Choose a photo"}
           </button>
+          {current?.sample && !preview && <p className="text-xs font-medium text-espresso/80">This is a demo sample photo. Upload your own to replace it.</p>}
           <p className="text-xs text-espresso/75">On a phone this opens the camera or your photo library. It is cropped square and shrunk for you.</p>
         </div>
       </div>

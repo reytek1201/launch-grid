@@ -123,7 +123,11 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                             action={setDishPhoto.bind(null, i.id)}
                             dish={i.name}
                             alt={i.photo_alt ?? ""}
-                            current={i.photo_path ? { src: photoUrl(i.photo_path), alt: i.photo_alt || i.name } : undefined}
+                            current={
+                              i.photo_path ? { src: photoUrl(i.photo_path), alt: i.photo_alt || i.name }
+                              : i.photo && photos[i.photo] ? { src: photos[i.photo].src, alt: photos[i.photo].alt, sample: true }
+                              : undefined
+                            }
                           />
                         </div>
                         {i.photo_path && (

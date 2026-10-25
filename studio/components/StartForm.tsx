@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { startProject } from "@/app/actions";
 import { EMPTY, KINDS, NEED_MAX, TIMINGS, type FormState } from "@/lib/inquiry";
 import { Mark, type MarkHandle } from "./Mark";
+import { LaunchPass, type Draft } from "./LaunchPass";
 
 const REF_KEY = "lg-ref";
 
@@ -27,14 +28,30 @@ export function RefCapture() {
   return null;
 }
 
-export function StartForm({ initialKind = "", initialBusiness = "", copyOn = false }: { initialKind?: string; initialBusiness?: string; copyOn?: boolean }) {
+export function StartForm({ initialKind = "", initialBusiness = "", copyOn = false, ticket = false }: { initialKind?: string; initialBusiness?: string; copyOn?: boolean; ticket?: boolean }) {
   const [state, action, pending] = useActionState<FormState, FormData>(startProject, { status: "idle" });
   const opened = useRef(0);
   const waited = useRef<HTMLInputElement>(null);
   const mark = useRef<MarkHandle>(null);
   const sentBox = useRef<HTMLDivElement>(null);
   const refInput = useRef<HTMLInputElement>(null);
+  const formEl = useRef<HTMLFormElement>(null);
   const [needLen, setNeedLen] = useState(0);
+  const [draft, setDraft] = useState<Draft>({ name: "", email: "", kind: initialKind, business: initialBusiness, need: "" });
+  const touchedKind = useRef(false);
+
+  // a bay locked in above ("Pick your bay") sets the type here, unless the visitor already chose one
+  useEffect(() => {
+    const on = (ev: Event) => {
+      const k = (ev as CustomEvent<string>).detail;
+      const radio = formEl.current?.querySelector<HTMLInputElement>(`input[name="kind"][value="${k}"]`);
+      if (!radio || touchedKind.current) return;
+      radio.checked = true;
+      setDraft((d) => ({ ...d, kind: k }));
+    };
+    window.addEventListener("lg:kind", on);
+    return () => window.removeEventListener("lg:kind", on);
+  }, []);
 
   useEffect(() => { opened.current = Date.now(); }, []);
   useEffect(() => {
@@ -46,6 +63,8 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
 
   if (state.status === "sent") {
     return (
+      <>
+      {ticket && <LaunchPass d={draft} sent />}
       <div className="card" ref={sentBox} tabIndex={-1} role="status" aria-live="polite">
         <div className="sent">
           <div className="mark-box"><Mark ref={mark} armed label={null} /></div>
@@ -55,6 +74,7 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
           </div>
         </div>
       </div>
+      </>
     );
   }
 
@@ -62,8 +82,19 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
   const e = state.status === "invalid" ? state.errors : {};
   const err = (k: keyof typeof e) => (e[k] ? { "aria-invalid": true as const, "aria-describedby": `${k}-err` } : {});
 
+  const onInput = (ev: React.FormEvent<HTMLFormElement>) => {
+    const t = ev.target as HTMLInputElement;
+    if (t.name === "kind") touchedKind.current = true;
+    const f = new FormData(ev.currentTarget);
+    setDraft({ name: String(f.get("name") ?? ""), email: String(f.get("email") ?? ""), kind: String(f.get("kind") ?? ""), business: String(f.get("business") ?? ""), need: String(f.get("need") ?? "") });
+  };
+
   return (
+    <>
+    {ticket && <LaunchPass d={draft} />}
     <form
+      ref={formEl}
+      onInput={onInput}
       className="card"
       action={action}
       noValidate
@@ -141,5 +172,6 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
       <button className="btn" type="submit" disabled={pending}>{pending ? "Sending…" : "Start a project"}</button>
       <p className="help">No calls. {copyOn ? "You get an email copy of exactly what you sent." : "Everything stays in writing."} <a href="/privacy">How I use what you send</a></p>
     </form>
+    </>
   );
 }

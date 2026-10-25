@@ -62,6 +62,7 @@ export function Doors() {
     if (k === locked) return;
     window.clearTimeout(timer.current);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.dispatchEvent(new CustomEvent("lg:kind", { detail: k }));
     setLocked(k);
     setPhase(reduce ? "open" : "arming");
     if (!reduce) timer.current = window.setTimeout(() => setPhase("open"), 780);

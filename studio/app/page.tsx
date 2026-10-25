@@ -8,9 +8,11 @@ import { YearOfWork } from "@/components/YearOfWork";
 import { copyConfigured } from "@/lib/email";
 
 const FAQ = [
+  ["Who builds it?", "I do, Reytek, one person in Atlanta. You write to me and I write back, so nothing gets handed between people."],
   ["Do we ever need to get on a call?", "No. The brief, the proposal and all feedback happen in writing. If you'd rather see something walked through, I can record a short screen video."],
   ["Can I really change things from my phone?", "Yes. The back office is built for a phone screen first. Try the sample above: it is the same kind of back office you would get."],
   ["How long does it take?", "Your proposal states a launch date in writing. Most of the time goes to gathering your photos and words."],
+  ["What do I need to send you?", "To start, just the form below. Later I'll ask for your photos, words and links, in writing, a little at a time."],
 ];
 
 export default function Home() {
@@ -41,7 +43,7 @@ export default function Home() {
 
       <section className="section" aria-labelledby="faq-title">
         <div className="section-head"><span className="label">Questions</span><h2 id="faq-title">Short answers.</h2></div>
-        <div>{FAQ.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div>
+        <div className="faq">{FAQ.map(([q, a]) => <details key={q}><summary><span className="faq-cell" aria-hidden="true"><i /></span>{q}</summary><p>{a}</p></details>)}<p className="faq-more">Something else? Ask it in the form below.</p></div>
       </section>
 
       <section className="section form-grid" id="start" aria-labelledby="start-title">
@@ -50,7 +52,7 @@ export default function Home() {
           <h2 id="start-title">Tell me what you&rsquo;re launching.</h2>
           <p>A few lines is enough. I reply in writing by the next business day. No sales calls.</p>
         </div>
-        <StartForm copyOn={copyOn} />
+        <StartForm copyOn={copyOn} ticket />
       </section>
     </main>
   );

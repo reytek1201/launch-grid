@@ -27,7 +27,7 @@ export function RefCapture() {
   return null;
 }
 
-export function StartForm({ initialKind = "", copyOn = false }: { initialKind?: string; copyOn?: boolean }) {
+export function StartForm({ initialKind = "", initialBusiness = "", copyOn = false }: { initialKind?: string; initialBusiness?: string; copyOn?: boolean }) {
   const [state, action, pending] = useActionState<FormState, FormData>(startProject, { status: "idle" });
   const opened = useRef(0);
   const waited = useRef<HTMLInputElement>(null);
@@ -58,7 +58,7 @@ export function StartForm({ initialKind = "", copyOn = false }: { initialKind?: 
     );
   }
 
-  const v = state.status === "idle" ? { ...EMPTY, kind: initialKind } : state.values;
+  const v = state.status === "idle" ? { ...EMPTY, kind: initialKind, business: initialBusiness } : state.values;
   const e = state.status === "invalid" ? state.errors : {};
   const err = (k: keyof typeof e) => (e[k] ? { "aria-invalid": true as const, "aria-describedby": `${k}-err` } : {});
 

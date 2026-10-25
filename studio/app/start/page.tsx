@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function StartPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const kind = String((await searchParams).kind ?? "");
+  const sp = await searchParams;
+  const kind = String(sp.kind ?? "");
+  const business = String(sp.business ?? "").slice(0, 160);
   const copyOn = copyConfigured();
   return (
     <main className="section form-grid" style={{ borderTop: 0, paddingTop: 24 }}>
@@ -23,7 +25,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
           <li><b>{copyOn ? 3 : 2}</b><span>You get a written proposal with a price and a launch date.</span></li>
         </ol>
       </div>
-      <StartForm initialKind={kind in KINDS ? kind : ""} copyOn={copyOn} />
+      <StartForm initialKind={kind in KINDS ? kind : ""} initialBusiness={business} copyOn={copyOn} />
     </main>
   );
 }

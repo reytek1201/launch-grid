@@ -4,6 +4,7 @@ import "./globals.css";
 import { getSiteData } from "@/lib/config";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { BackToTop } from "@/components/site/BackToTop";
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { CheckTray } from "@/components/site/CheckTray";
 import { CandleCursorLoader } from "@/components/site/CandleCursorLoader";
 import { MealProvider } from "@/components/motion/Meal";
@@ -31,11 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-espresso focus:px-4 focus:py-2 focus:text-cream">Skip to content</a>
         <SiteHeader site={site} />
         {children}
-        {site.isDemo && (
-          <footer className="bg-espresso px-6 pb-24 pt-6 text-center text-sm text-cream/80 md:pb-6">
-            Demo restaurant, not a real business. Images are AI-generated.
-          </footer>
-        )}
+        <SiteFooter site={site} />
         <BackToTop />
         <CheckTray site={site} />
         <CandleCursorLoader />

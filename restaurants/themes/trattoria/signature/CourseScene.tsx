@@ -57,7 +57,7 @@ function Frame({ c, p, still }: { c: Course; p: MotionValue<number>; still: bool
   const numeralY = useTransform(p, [0, 1], ["20%", "-30%"]);
 
   return (
-    <div className={`${still ? "relative min-h-svh py-20" : "sticky top-0 h-svh"} overflow-hidden bg-espresso text-cream`}>
+    <div className={`${still ? "relative min-h-svh py-20" : "sticky top-0 h-lvh"} overflow-hidden bg-espresso text-cream`}>
       {c.backdrop && (
         <motion.div className="absolute inset-0 opacity-45" style={{ y: bgY, scale: bgScale }}>
           <PhotoSlot photo={c.backdrop} ratio="h-full w-full" sizes="100vw" className="h-full" />

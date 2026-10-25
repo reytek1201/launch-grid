@@ -133,8 +133,8 @@ export function GalleryLine({ chapters, wall }: { chapters: LineChapter[]; wall:
   return (
     <>
       {sideways ? (
-        <section ref={ref} aria-label="Photos along the line" className="relative" style={{ height: `calc(100svh + ${dist}px)` }}>
-          <div className="sticky top-0 flex h-svh flex-col justify-center overflow-hidden">
+        <section ref={ref} aria-label="Photos along the line" className="relative" style={{ height: `calc(100lvh + ${dist}px)` }}>
+          <div className="sticky top-0 flex h-lvh flex-col justify-center overflow-hidden">
             <motion.div aria-hidden className="absolute inset-y-0 left-0 w-[140%]" style={{ x: wallX, backgroundImage: wall }} />
             <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgb(255_220_160/0.35),transparent_60%),linear-gradient(180deg,rgb(40_24_14/0.25),transparent_30%,rgb(40_24_14/0.35))]" />
 

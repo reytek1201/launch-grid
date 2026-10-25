@@ -72,7 +72,7 @@ export function PourScene({ courses, wines }: { courses: PourCourse[]; wines: Re
 
   return (
     <section ref={ref} aria-labelledby="pour-title" className={reduce ? "relative" : "relative h-[230vh]"}>
-      <div className={`${reduce ? "relative min-h-svh" : "sticky top-0 h-svh"} overflow-hidden bg-[#170d0a] text-cream`}>
+      <div className={`${reduce ? "relative min-h-svh" : "sticky top-0 h-lvh"} overflow-hidden bg-[#170d0a] text-cream`}>
         {/* Wider screens: the photo sits right of centre and its left edge melts into the dark,
             so the glass and the whole bottle clear the words. The push-in is anchored on the bottle. */}
         <motion.div

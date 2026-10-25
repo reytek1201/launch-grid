@@ -39,7 +39,7 @@ function Frame({ site, p, still, show = "both" }: { site: SiteData; p: MotionVal
   const inkFarY = useTransform(p, [0.6, 1], [80, 0]);
 
   return (
-    <div className={`${still ? "relative" : "sticky top-0"} h-svh overflow-hidden bg-espresso text-cream`}>
+    <div className={`${still ? "relative" : "sticky top-0"} h-lvh overflow-hidden bg-espresso text-cream`}>
       {/* Outside */}
       <motion.div className="absolute inset-0 origin-[48%_62%] md:origin-[57%_60%]" style={{ scale: doorScale, opacity: doorOpacity }}>
         <PhotoSlot photo="sp-01" ratio="h-full w-full" sizes="100vw" hero focal="60% 50%" className="h-full" />

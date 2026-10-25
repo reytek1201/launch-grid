@@ -100,7 +100,7 @@ export function TableScene({ course }: { course: Course }) {
 
   return (
     <section ref={ref} id={`course-${course.id}`} data-course={course.id} aria-label={course.title} className="relative h-[320vh]">
-      <div className="sticky top-0 flex h-svh flex-col justify-center overflow-hidden bg-espresso text-cream">
+      <div className="sticky top-0 flex h-lvh flex-col justify-center overflow-hidden bg-espresso text-cream">
         {/* The long table, drifting slower than the tickets */}
         <motion.div aria-hidden className="absolute inset-y-0 -left-[4%] -right-[12%] opacity-45" style={{ x: bgX }}>
           <PhotoSlot photo="sp-03b" ratio="h-full w-full" sizes="100vw" focal="50% 60%" className="h-full" />

@@ -33,7 +33,7 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
   const thanks = useTransform(useRamp(p, [0.55, 0.9], [0, 1]), (v) => `inset(-30% ${100 - v * 115}% -30% -10%)`);
 
   return (
-    <div className={`${pinned ? "sticky top-0 h-svh" : "relative"} overflow-hidden bg-espresso text-cream`}>
+    <div className={`${pinned ? "sticky top-0 h-lvh" : "relative"} overflow-hidden bg-espresso text-cream`}>
       {/* Desktop: the candle photo fills the frame and melts into the dark on the left */}
       <motion.div
         aria-hidden

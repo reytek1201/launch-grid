@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/site/JsonLd";
 import { getSiteData, photos } from "@/lib/config";
+import { menuLd, siteUrl } from "@/lib/seo";
 import { MenuBook } from "@/themes/trattoria/pages/MenuBook";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import type { InkName } from "@/themes/trattoria/signature/Ink";
@@ -29,6 +31,7 @@ export default function Menu() {
 
   return (
     <main id="main" style={{ backgroundImage: WOOD }}>
+      <JsonLd data={menuLd(site, siteUrl())} />
       <PageHero kicker="Il menù" title="What's cooking" line="Pasta is rolled by hand each morning. The sauce has been going since dawn." photo="sp-09" focal="50% 50%" ink="olive" />
 
       <nav aria-label="Courses" className="sticky top-[var(--header-offset,0px)] z-20 border-y border-cream/10 bg-espresso/90 backdrop-blur transition-[top] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)]">

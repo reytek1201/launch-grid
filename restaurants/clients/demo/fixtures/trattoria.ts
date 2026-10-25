@@ -1,5 +1,7 @@
 import type { MenuSection, SiteData } from "@/lib/types";
 import { cellar } from "./cellar";
+import { events } from "./events";
+import { story } from "./story";
 import { demoConfig } from "../config";
 
 const menu: MenuSection[] = [
@@ -88,6 +90,9 @@ export const trattoria: SiteData = {
   closures: [{ date: "2026-11-26", label: "Thanksgiving Day" }],
   menu,
   cellar,
+  reservations: { maxParty: 8, lastSeatingMins: 90, leadHours: 2, daysAhead: 90 },
+  events,
+  story,
   tier: demoConfig.tier,
   isDemo: demoConfig.isDemo,
 };

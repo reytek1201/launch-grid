@@ -10,7 +10,6 @@ import type { SiteData } from "@/lib/types";
 import { Ink } from "./Ink";
 import { useScene } from "./useScene";
 
-const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 
 /*
  * La Porta. One pinned frame, four beats:
@@ -91,7 +90,7 @@ function Frame({ site, p, still, show = "both" }: { site: SiteData; p: MotionVal
         <h1 className="text-5xl leading-none md:text-7xl">{site.name}</h1>
         <p className="font-hand text-3xl md:text-4xl">{site.tagline}</p>
         <div className="mt-2 flex flex-wrap justify-center gap-3">
-          <Magnetic><a href={tel(site.phone)} className="btn btn-solid">Reserve a table</a></Magnetic>
+          <Magnetic><Link href="/reserve" className="btn btn-solid">Reserve a table</Link></Magnetic>
           <Magnetic><Link href="/menu" className="btn btn-line-light">See the menu</Link></Magnetic>
         </div>
       </motion.div>}

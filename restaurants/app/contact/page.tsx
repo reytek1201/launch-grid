@@ -6,7 +6,7 @@ import { getSiteData } from "@/lib/config";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = { title: "Contact", description: "Send Trattoria Cinque Lune a postcard: questions, parties, hellos. Or call the kitchen." };
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 

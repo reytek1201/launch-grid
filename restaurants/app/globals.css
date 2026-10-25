@@ -60,6 +60,10 @@ h1, h2, h3 { font-family: var(--font-heading); }
   .group:hover .leader, .group:focus-within .leader { transform: scaleX(1); }
 }
 
+/* Page ease-in. Fill-mode "backwards" so no transform is left behind afterwards (it would break sticky and fixed scenes). */
+@keyframes page-in { from { opacity: 0; transform: translateY(14px); } }
+.page-in { animation: page-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+@media (prefers-reduced-motion: reduce) { .page-in { animation: none; } }
 @keyframes swing { 0%,100% { transform: rotate(0) } 25% { transform: rotate(5deg) } 60% { transform: rotate(-3deg) } 85% { transform: rotate(1.5deg) } }
 .sign-swing { transform-origin: 50% -0.5rem; }
 .sign-swing:hover, .sign-swing:focus-visible { animation: swing 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }

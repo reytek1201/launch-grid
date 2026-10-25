@@ -39,6 +39,37 @@ export type HoursInterval = { open: string; close: string }; // 24h "HH:MM"
 export type DayHours = { day: 0 | 1 | 2 | 3 | 4 | 5 | 6; intervals: HoursInterval[] }; // 0 = Sunday
 export type Closure = { date: string; label: string }; // YYYY-MM-DD
 
+export type ReservationRules = {
+  /** largest party the online request accepts; bigger goes to private events */
+  maxParty: number;
+  /** last seating is this many minutes before closing */
+  lastSeatingMins: number;
+  /** earliest bookable time from now, in hours */
+  leadHours: number;
+  /** how far ahead a date can be picked */
+  daysAhead: number;
+};
+
+export type EventSpace = { id: string; name: string; capacity: string; blurb: string; photo: string; focal?: string };
+export type EventPackage = { id: string; name: string; blurb: string; /** cents per guest */ from: number; includes: string[] };
+export type EventsData = {
+  intro: string;
+  spaces: EventSpace[];
+  packages: EventPackage[];
+  steps: { title: string; text: string }[];
+  faqs: { q: string; a: string }[];
+  occasions: string[];
+};
+
+export type StoryChapter = { year: string; title: string; text: string; photo: string; focal?: string; caption: string };
+export type StoryData = {
+  headline: string;
+  intro: string;
+  chapters: StoryChapter[];
+  values: { title: string; text: string }[];
+  recipe: { title: string; lines: string[]; note: string };
+};
+
 export type SiteData = {
   name: string;
   tagline: string;
@@ -51,6 +82,9 @@ export type SiteData = {
   closures: Closure[];
   menu: MenuSection[];
   cellar: WineSection[];
+  reservations: ReservationRules;
+  events?: EventsData;
+  story?: StoryData;
   tier: Tier;
   isDemo: boolean;
 };

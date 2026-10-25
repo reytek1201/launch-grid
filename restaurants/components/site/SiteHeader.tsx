@@ -8,18 +8,20 @@ import { useHideOnScroll } from "@/components/motion/useHideOnScroll";
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
 
-const links = [
+// Pages that exist only when the client has the content for them.
+const navFor = (site: SiteData) => [
   { href: "/menu", label: "Menu" },
   { href: "/cellar", label: "Cellar" },
-  { href: "/visit", label: "Hours & location" },
+  ...(site.story ? [{ href: "/story", label: "Story" }] : []),
+  ...(site.events ? [{ href: "/events", label: "Events" }] : []),
   { href: "/gallery", label: "Gallery" },
+  { href: "/visit", label: "Visit" },
   { href: "/contact", label: "Contact" },
 ];
 
-const tel = (phone: string) => `tel:+1${phone.replace(/\D/g, "")}`;
-
 export function SiteHeader({ site }: { site: SiteData }) {
   const path = usePathname();
+  const links = navFor(site);
   const home = path === "/";
   const hidden = useHideOnScroll(path, true);
   const bar = useRef<HTMLElement>(null);
@@ -66,19 +68,19 @@ export function SiteHeader({ site }: { site: SiteData }) {
             <span className="text-[0.65rem] uppercase tracking-[0.35em] opacity-80">Trattoria</span>
             <span className="font-heading text-2xl font-semibold tracking-tight md:text-[1.7rem]">Cinque Lune</span>
           </span>
-          <Moons className={`h-3 w-auto transition-transform duration-[250ms] group-hover:scale-110 ${dark ? "text-[#f2b27a]" : "text-terracotta"}`} />
+          <Moons className={`h-3 w-auto transition-transform md:max-lg:hidden duration-[250ms] group-hover:scale-110 ${dark ? "text-[#f2b27a]" : "text-terracotta"}`} />
         </Link>
         <div className="flex items-center gap-6">
-          <nav aria-label="Main" className="-mx-4 flex gap-x-5 overflow-x-auto whitespace-nowrap px-4 text-sm sm:mx-0 sm:gap-x-7 sm:px-0 md:text-[0.95rem]">
+          <nav aria-label="Main" className="-mx-4 flex gap-x-5 overflow-x-auto whitespace-nowrap px-4 text-sm sm:mx-0 sm:px-0 md:gap-x-4 md:text-[0.9rem] lg:gap-x-7 lg:text-[0.95rem]">
             {links.map((l) => (
               <Link key={l.href} href={l.href} aria-current={path === l.href ? "page" : undefined} className={`ink py-2.5 ${path === l.href ? "bg-[length:100%_2px]" : ""}`}>
                 {l.label}
               </Link>
             ))}
           </nav>
-          <a href={tel(site.phone)} className={`btn hidden !px-5 !py-2 text-sm md:inline-block ${dark ? "btn-terra" : "btn-solid"}`}>
+          <Link href="/reserve" className={`btn hidden !px-5 !py-2 text-sm md:inline-block ${dark ? "btn-terra" : "btn-solid"}`}>
             Reserve
-          </a>
+          </Link>
         </div>
       </div>
     </header>

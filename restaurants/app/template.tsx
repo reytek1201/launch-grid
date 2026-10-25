@@ -1,17 +1,6 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 // A new template instance mounts on every navigation, so each page eases in.
+// Pure CSS on purpose: the server-rendered text is visible without waiting for JavaScript,
+// which keeps first paint fast on slow phones. (See .page-in in globals.css.)
 export default function Template({ children }: { children: React.ReactNode }) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      initial={reduce ? false : { opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.2, 0.7, 0.2, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className="page-in">{children}</div>;
 }

@@ -10,7 +10,7 @@ import { DoorSign } from "@/themes/trattoria/pages/DoorSign";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 
-export const metadata: Metadata = { title: "Hours & location" };
+export const metadata: Metadata = { title: "Hours & location", description: "Opening hours, address, parking and directions for Trattoria Cinque Lune. Look for the olive-green door." };
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 

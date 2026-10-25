@@ -7,9 +7,12 @@ import { Moons } from "./Moons";
 import { SOCIAL } from "./social";
 
 const tel = (phone: string) => `tel:+1${phone.replace(/\D/g, "")}`;
-const PAGES = [
+const pagesFor = (site: SiteData) => [
+  { href: "/reserve", label: "Reserve a table" },
   { href: "/menu", label: "Menu" },
   { href: "/cellar", label: "Wine cellar" },
+  ...(site.story ? [{ href: "/story", label: "Our story" }] : []),
+  ...(site.events ? [{ href: "/events", label: "Private events" }] : []),
   { href: "/visit", label: "Hours & location" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
@@ -37,7 +40,7 @@ export function SiteFooter({ site }: { site: SiteData }) {
             <Moons id="moon-foot" className="h-3 w-auto text-[#f2b27a]" />
           </Link>
           <p className="mt-4 max-w-xs text-cream/85">{site.tagline} {site.blurb.split(". ")[0]}.</p>
-          <a href={tel(site.phone)} className="btn btn-terra mt-6 inline-block">Call to reserve</a>
+          <Link href="/reserve" className="btn btn-terra mt-6 inline-block">Reserve a table</Link>
 
           <div className="mt-8">
             <p className="font-hand text-2xl text-[#f2b27a]">Seguici</p>
@@ -79,7 +82,7 @@ export function SiteFooter({ site }: { site: SiteData }) {
         <nav aria-label="Footer">
           <h2 className={head}>Esplora</h2>
           <ul className="mt-3 space-y-2">
-            {PAGES.map((p) => (
+            {pagesFor(site).map((p) => (
               <li key={p.href}><Link href={p.href} className="ink">{p.label}</Link></li>
             ))}
           </ul>

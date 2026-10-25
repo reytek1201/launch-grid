@@ -65,7 +65,7 @@ function Frame({ site, p, pinned }: { site: SiteData; p: MotionValue<number>; pi
             <a href={tel(site.phone)} className="ink">{site.phone}</a>
           </address>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Magnetic><a href={tel(site.phone)} className="btn btn-terra">Reserve a table</a></Magnetic>
+            <Magnetic><Link href="/reserve" className="btn btn-terra">Reserve a table</Link></Magnetic>
             <Magnetic><Link href="/visit" className="btn btn-line-light">Hours &amp; directions</Link></Magnetic>
           </div>
           <div className="mt-10 hidden items-end gap-5 lg:flex">

@@ -30,7 +30,8 @@ export function CheckTray({ site }: { site: SiteData }) {
       aria-label="Quick actions"
       className={`fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-espresso/15 bg-paper px-3 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] transition-transform duration-300 md:hidden ${hidden ? "translate-y-full" : "translate-y-0"}`}
     >
-      <a href={tel(site.phone)} className={`${btn} btn-solid`}>Call to reserve</a>
+      <Link href="/reserve" className={`${btn} btn-solid`}>Reserve</Link>
+      <a href={tel(site.phone)} className={`${btn} btn-line-dark`}>Call</a>
       <Link href="/menu" className={`${btn} btn-line-dark`}>Menu</Link>
     </aside>
   );

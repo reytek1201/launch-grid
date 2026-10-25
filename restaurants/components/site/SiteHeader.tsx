@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useHideOnScroll } from "@/components/motion/useHideOnScroll";
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
+import { isActive } from "./nav";
 
 // Pages that exist only when the client has the content for them.
 const navFor = (site: SiteData) => [
@@ -25,6 +26,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
   const home = path === "/";
   const hidden = useHideOnScroll(path, true);
   const bar = useRef<HTMLElement>(null);
+  const phoneBar = useRef<HTMLElement>(null);
   // Inner pages open on a dark hero (data-hero): float over it, turn solid once past it.
   const [overHero, setOverHero] = useState(true);
 
@@ -45,13 +47,19 @@ export function SiteHeader({ site }: { site: SiteData }) {
   const dark = home || overHero;
 
   // Publish how much of the screen the header covers, so sticky bars (the menu's course nav) sit below it.
+  // Phones: the slim bar never hides. Desktop: the full header slides away on scroll down.
   useEffect(() => {
-    const el = bar.current;
-    if (!el) return;
-    const set = () => document.documentElement.style.setProperty("--header-offset", hidden || home ? "0px" : `${el.offsetHeight}px`);
+    const desk = bar.current;
+    const phone = phoneBar.current;
+    if (!desk || !phone) return;
+    const set = () => {
+      const px = desk.offsetHeight > 0 ? (hidden ? 0 : desk.offsetHeight) : phone.offsetHeight;
+      document.documentElement.style.setProperty("--header-offset", home ? "0px" : `${px}px`);
+    };
     set();
     const ro = new ResizeObserver(set);
-    ro.observe(el);
+    ro.observe(desk);
+    ro.observe(phone);
     return () => ro.disconnect();
   }, [hidden, home]);
 
@@ -60,29 +68,49 @@ export function SiteHeader({ site }: { site: SiteData }) {
     ? "fixed inset-x-0 text-cream bg-gradient-to-b from-espresso/75 via-espresso/35 to-transparent"
     : "fixed inset-x-0 text-espresso bg-paper/95 backdrop-blur border-b border-espresso/10";
 
+  const phone = (
+    <header ref={phoneBar} className="fixed inset-x-0 top-0 z-40 border-b border-[#b88a3e]/40 bg-[#1a100b]/95 pt-[env(safe-area-inset-top)] text-cream backdrop-blur-md md:hidden">
+      <div className="flex h-14 items-center justify-between gap-3 px-4">
+        <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="flex items-center gap-2.5 whitespace-nowrap [-webkit-tap-highlight-color:transparent]">
+          <span className="flex flex-col leading-none">
+            <span className="text-[0.6rem] uppercase tracking-[0.35em] text-cream/80">Trattoria</span>
+            <span className="font-heading text-[1.35rem] font-semibold tracking-tight">Cinque Lune</span>
+          </span>
+          <Moons className="h-2.5 w-auto text-[#f2b27a]" />
+        </Link>
+        <a href={`tel:+1${site.phone.replace(/\D/g, "")}`} aria-label={`Call ${site.phone}`} className="grid h-11 w-11 place-items-center rounded-full border border-[#f2b27a]/60 text-[#f2b27a] transition-[transform,background-color] duration-[250ms] active:scale-95 active:bg-[#f2b27a]/15 [-webkit-tap-highlight-color:transparent]">
+          <svg aria-hidden viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>
+        </a>
+      </div>
+    </header>
+  );
+
   return (
-    <header ref={bar} className={`top-0 z-40 transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
-      <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 pt-3 sm:px-6 md:flex-row md:items-center md:justify-between md:gap-6 md:py-4">
+    <>
+    {phone}
+    <header ref={bar} className={`top-0 z-40 hidden md:block transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="group flex items-center gap-3 whitespace-nowrap">
           <span className="flex flex-col leading-none">
             <span className="text-[0.65rem] uppercase tracking-[0.35em] opacity-80">Trattoria</span>
-            <span className="font-heading text-2xl font-semibold tracking-tight md:text-[1.7rem]">Cinque Lune</span>
+            <span className="font-heading text-[1.7rem] font-semibold tracking-tight">Cinque Lune</span>
           </span>
-          <Moons className={`h-3 w-auto transition-transform md:max-lg:hidden duration-[250ms] group-hover:scale-110 ${dark ? "text-[#f2b27a]" : "text-terracotta"}`} />
+          <Moons className={`h-3 w-auto transition-transform max-lg:hidden duration-[250ms] group-hover:scale-110 ${dark ? "text-[#f2b27a]" : "text-terracotta"}`} />
         </Link>
         <div className="flex items-center gap-6">
-          <nav aria-label="Main" className="-mx-4 flex gap-x-5 overflow-x-auto whitespace-nowrap px-4 text-sm sm:mx-0 sm:px-0 md:gap-x-4 md:text-[0.9rem] lg:gap-x-7 lg:text-[0.95rem]">
+          <nav aria-label="Pages" className="flex gap-x-4 whitespace-nowrap text-[0.9rem] lg:gap-x-7 lg:text-[0.95rem]">
             {links.map((l) => (
-              <Link key={l.href} href={l.href} aria-current={path === l.href ? "page" : undefined} className={`ink py-2.5 ${path === l.href ? "bg-[length:100%_2px]" : ""}`}>
+              <Link key={l.href} href={l.href} aria-current={isActive(path, l.href) ? "page" : undefined} className={`ink py-2.5 ${isActive(path, l.href) ? "bg-[length:100%_2px]" : ""}`}>
                 {l.label}
               </Link>
             ))}
           </nav>
-          <Link href="/reserve" className={`btn hidden !px-5 !py-2 text-sm md:inline-block ${dark ? "btn-terra" : "btn-solid"}`}>
+          <Link href="/reserve" className={`btn !px-5 !py-2 text-sm ${dark ? "btn-terra" : "btn-solid"}`}>
             Reserve
           </Link>
         </div>
       </div>
     </header>
+    </>
   );
 }

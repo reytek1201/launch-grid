@@ -91,7 +91,7 @@ export function SiteFooter({ site }: { site: SiteData }) {
       </div>
 
       <div className="relative border-t border-cream/10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 pb-24 pt-5 text-sm text-cream/80 md:flex-row md:items-center md:justify-between md:px-8 md:pb-6">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-5 text-sm text-cream/80 md:flex-row md:items-center md:justify-between md:px-8 md:pb-6">
           <p>© {new Date().getFullYear()} {site.name}{site.isDemo ? " · Demo restaurant, not a real business. Images are AI-generated." : ""}</p>
           <p>Site by LaunchGrid Studio</p>
         </div>

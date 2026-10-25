@@ -5,7 +5,7 @@ import { getSiteData } from "@/lib/config";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { BackToTop } from "@/components/site/BackToTop";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { CheckTray } from "@/components/site/CheckTray";
+import { TabBar } from "@/components/site/TabBar";
 import { CandleCursorLoader } from "@/components/site/CandleCursorLoader";
 import { MealProvider } from "@/components/motion/Meal";
 import { PaperDefs } from "@/components/site/PaperDefs";
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   title: { default: site.name, template: `%s · ${site.name}` },
   description: `${site.tagline} ${site.blurb}`,
   applicationName: site.name,
+  appleWebApp: { capable: true, title: site.name, statusBarStyle: "black-translucent" },
   metadataBase: new URL(siteUrl()),
   alternates: { canonical: "./" },
   openGraph: { type: "website", siteName: site.name, locale: "en_US" },
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   robots: site.isDemo ? { index: false, follow: false } : { index: true, follow: true },
 };
 
-export const viewport: Viewport = { themeColor: "#2B1D14" };
+export const viewport: Viewport = { themeColor: "#1a100b", viewportFit: "cover" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -44,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <SiteFooter site={site} />
         <BackToTop />
-        <CheckTray site={site} />
+        <TabBar site={site} />
         <CandleCursorLoader />
         </MealProvider>
       </body>

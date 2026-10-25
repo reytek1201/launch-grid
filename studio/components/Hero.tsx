@@ -68,21 +68,21 @@ export function Hero() {
       x += (tx - x) * 0.08; y += (ty - y) * 0.08;
       el.style.setProperty("--tilt-x", `${y.toFixed(2)}deg`);
       el.style.setProperty("--tilt-y", `${x.toFixed(2)}deg`);
-      el.style.setProperty("--glare", `${(50 + x * 4).toFixed(1)}%`);
+      el.style.setProperty("--glare", `${(50 + x * 10).toFixed(1)}%`);
       raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.01 ? requestAnimationFrame(tick) : 0;
     };
     const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width - 0.5) * 14;
-      ty = -((e.clientY - r.top) / r.height - 0.5) * 8;
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 3.2;
+      ty = -((e.clientY - r.top) / r.height - 0.5) * 1.8;
       kick();
     };
     const onLeave = () => { tx = 0; ty = 0; kick(); };
     const onScroll = () => {
       const r = el.getBoundingClientRect();
       const p = Math.min(1, Math.max(-1, (window.innerHeight / 2 - (r.top + r.height / 2)) / window.innerHeight));
-      tx = p * 16; ty = p * -6; kick();
+      tx = p * 3.5; ty = p * -1.5; kick();
     };
     if (fine) {
       el.addEventListener("pointermove", onMove);
@@ -125,6 +125,8 @@ export function Hero() {
         onPointerCancel={() => { drag.current = null; }}>
         <div className="hx-count label" aria-hidden="true"><i />{COUNT[count]}</div>
         <div className="hx-floor" aria-hidden="true"><div className="hx-grid" /><div className="hx-pad" /></div>
+        <button type="button" className="hx-arrow hx-prev" aria-label="Previous site" onClick={() => go(front - 1)}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+        <button type="button" className="hx-arrow hx-next" aria-label="Next site" onClick={() => go(front + 1)}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
         <div className="hx-rig">
           {DEVICES.map((d, i) => {
             const pos = (["c", "r", "l"] as const)[(i - front + DEVICES.length) % DEVICES.length];

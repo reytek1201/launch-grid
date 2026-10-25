@@ -308,12 +308,12 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 /* a phone with depth */
 .dev { pointer-events: auto; --w: var(--pw); position: absolute; left: 50%; bottom: 112px; width: var(--w); aspect-ratio: 480 / 1000; margin-left: calc(var(--w) / -2); transform-style: preserve-3d; text-decoration: none; display: block; border-radius: calc(var(--w) * .17); outline-offset: 6px; }
 .dev { transition: transform .75s var(--ease-out); }
-.dev[data-pos="l"] { transform: translate3d(calc(var(--pw) * -0.88), calc(var(--pw) * 0.06), calc(var(--pw) * -0.9)) rotateY(24deg) rotateZ(-2deg); z-index: 1; }
+.dev[data-pos="l"] { transform: translate3d(calc(var(--pw) * -0.66), calc(var(--pw) * 0.06), calc(var(--pw) * -0.9)) rotateY(24deg) rotateZ(-2deg); z-index: 1; }
 .dev[data-pos="c"] { transform: translate3d(0, calc(var(--pw) * -0.04), 0) rotateY(-6deg); z-index: 3; }
-.dev[data-pos="r"] { transform: translate3d(calc(var(--pw) * 0.88), calc(var(--pw) * 0.08), calc(var(--pw) * -0.9)) rotateY(-26deg) rotateZ(2deg); z-index: 2; }
+.dev[data-pos="r"] { transform: translate3d(calc(var(--pw) * 0.66), calc(var(--pw) * 0.08), calc(var(--pw) * -0.9)) rotateY(-26deg) rotateZ(2deg); z-index: 2; }
 @media (min-width: 900px) {
-  .dev[data-pos="l"] { transform: translate3d(calc(var(--pw) * -1.0), calc(var(--pw) * 0.1), calc(var(--pw) * -0.6)) rotateY(22deg) rotateZ(-2deg); }
-  .dev[data-pos="r"] { transform: translate3d(calc(var(--pw) * 1.0), calc(var(--pw) * 0.14), calc(var(--pw) * -0.6)) rotateY(-24deg) rotateZ(2deg); }
+  .dev[data-pos="l"] { transform: translate3d(calc(var(--pw) * -0.74), calc(var(--pw) * 0.1), calc(var(--pw) * -0.6)) rotateY(22deg) rotateZ(-2deg); }
+  .dev[data-pos="r"] { transform: translate3d(calc(var(--pw) * 0.74), calc(var(--pw) * 0.14), calc(var(--pw) * -0.6)) rotateY(-24deg) rotateZ(2deg); }
 }
 @media (prefers-reduced-motion: reduce) { .dev { transition: none; } }
 .dev[data-pos="l"], .dev[data-pos="r"] { cursor: pointer; }
@@ -362,3 +362,11 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 .hx .hx-tags { animation: hx-up .6s var(--ease-out) 2.3s both; }
 @media (min-width: 900px) { .hx-tags { bottom: -8px; } .dev { bottom: 17%; } .hx-stage { padding-top: 0; } }
 @media (max-width: 899px) { .hx-tags li:not(.hx-next) span { font-size: .625rem; } .hx-floor { bottom: 70px; } }
+
+/* carousel arrows: make it obvious the phones scroll */
+.hx-arrow { position: absolute; top: 46%; z-index: 6; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--cobalt); cursor: pointer; transition: transform .2s var(--ease-out), background .2s; }
+.hx-arrow:hover { transform: scale(1.08); } .hx-arrow:active { transform: scale(.96); }
+.hx-arrow:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+.hx-prev { left: 20px; } .hx-next { right: 20px; }
+.hx .hx-arrow { animation: hx-up .6s var(--ease-out) 2.4s both; }
+@media (min-width: 900px) { .hx-prev { left: 2%; } .hx-next { right: 2%; } }

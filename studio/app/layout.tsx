@@ -46,7 +46,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>reytek@launchgrid.studio</div>
             </div>
             <nav aria-label="Footer">
-              <Link href="/#work">Work</Link>
               <Link href="/#back-office">Try the back office</Link>
               <Link href="/start">Start a project</Link>
               <Link href="/privacy">Privacy</Link>

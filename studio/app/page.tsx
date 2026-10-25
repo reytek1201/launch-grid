@@ -7,7 +7,7 @@ import { copyConfigured } from "@/lib/email";
 
 const FAQ = [
   ["Do we ever need to get on a call?", "No. The brief, the proposal and all feedback happen in writing. If you'd rather see something walked through, I can record a short screen video."],
-  ["Can I really change things from my phone?", "Yes. The back office is built for a phone screen first. Try the sample above."],
+  ["Can I really change things from my phone?", "Yes. The back office is built for a phone screen first. Try the sample above: it is the same kind of back office you would get."],
   ["How long does it take?", "Your proposal states a launch date in writing. Most of the time goes to gathering your photos and words."],
 ];
 
@@ -17,57 +17,12 @@ export default function Home() {
     <main>
       <Hero />
 
-      <section className="section" id="work" aria-labelledby="work-title">
-        <div className="section-head"><span className="label">Live work</span><h2 id="work-title">Real sites. Open them yourself.</h2></div>
-        <div className="proof">
-          <article className="proof-item">
-            <div className="phone" role="img" aria-label="Illustration of a band website on a phone: a hero photo, upcoming shows with ticket links and a book-the-band button">
-              <div className="scr"><div className="mini fh">
-                <div className="hd">Funkharp</div><div className="img" />
-                <div className="it"><span>Upcoming show</span><span className="tag">Tickets</span></div>
-                <div className="it"><span>Upcoming show</span><span className="tag">Tickets</span></div>
-                <div className="cta">Book the band</div>
-              </div></div>
-            </div>
-            <h3>Funkharp</h3>
-            <p>A band site with shows, a booking inbox, fans, music, videos and phone alerts.</p>
-            <span className="label">Illustration · live link soon</span>
-          </article>
-          <article className="proof-item">
-            <div className="phone" role="img" aria-label="Illustration of an artist website on a phone: a playable turntable and an enter-with-sound button">
-              <div className="scr"><div className="mini rk">
-                <div className="hd">Reytek</div><div className="tt" />
-                <div className="rd">33⅓ RPM · pitch ±8%</div>
-                <div>Electronic music with a memory.</div>
-                <div className="cta">Enter with sound</div>
-              </div></div>
-            </div>
-            <h3>Reytek</h3>
-            <p>My own artist site. A turntable you can scratch, an intro that starts with sound, and a back office that finds each song&rsquo;s beat.</p>
-            <a className="open" href="https://reytek1201.com/?ref=launchgrid" target="_blank" rel="noopener">Open reytek1201.com ↗</a>
-          </article>
-          <article className="proof-item">
-            <div className="phone" role="img" aria-label="Illustration of a restaurant website on a phone: a dining room photo, menu items with prices and a reserve button">
-              <div className="scr"><div className="mini tr">
-                <div className="hd">Cinque Lune</div><div className="img" />
-                <div className="it"><span>Cacio e pepe</span><span>18</span></div>
-                <div className="it"><span>Branzino al forno</span><span>29</span></div>
-                <div className="cta">Reserve a table</div>
-              </div></div>
-            </div>
-            <h3>Trattoria Cinque Lune</h3>
-            <p>Demo restaurant, not a real business. Menu, wine list, reservations and an owner back office.</p>
-            <a className="open" href="https://cinque-lune-demo.vercel.app" target="_blank" rel="noopener">Open the demo ↗</a>
-          </article>
-        </div>
+      <section className="section" id="back-office" aria-labelledby="bo-title">
+        <div className="section-head"><span className="label">The back of the house</span><h2 id="bo-title">Change it in your hand. It changes on the site.</h2><p>Every site comes with a back office built for a phone. This is a working sample: flip a switch on the left and watch the site on the right.</p></div>
+        <BackOfficeDemo />
       </section>
 
       <LaunchSequence />
-
-      <section className="section" id="back-office" aria-labelledby="bo-title">
-        <div className="section-head"><span className="label">Try it</span><h2 id="bo-title">Change the site from the back office.</h2><p>This is a working sample. Flip a switch in the back office and watch the site change. Nothing here is saved.</p></div>
-        <BackOfficeDemo />
-      </section>
 
       <section className="section" aria-labelledby="doors-title">
         <div className="section-head"><span className="label">Who it&rsquo;s for</span><h2 id="doors-title">Pick your door.</h2></div>

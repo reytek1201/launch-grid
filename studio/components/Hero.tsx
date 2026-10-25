@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 type Device = { slug: string; name: string; kind: string; src: string; href: string; alt: string; video?: string };
 
 const DEVICES: Device[] = [
-  { slug: "funkharp", name: "Funkharp", kind: "Band", src: "/work/funkharp-home.webp", href: "#work", alt: "Funkharp's home page on a phone: St. Augustine, FL, the band name in script, Hear the singles and Shows buttons, and a photo of a harmonica on piano keys", video: "/work/funkharp-clip.mp4" },
+  { slug: "funkharp", name: "Funkharp", kind: "Band", src: "/work/funkharp-home.webp", href: "#back-office", alt: "Funkharp's home page on a phone: St. Augustine, FL, the band name in script, Hear the singles and Shows buttons, and a photo of a harmonica on piano keys", video: "/work/funkharp-clip.mp4" },
   { slug: "reytek", name: "Reytek", kind: "My artist site", src: "/work/reytek-home.webp", href: "https://reytek1201.com/?ref=launchgrid", alt: "Reytek's home page on a phone: a black-and-white portrait inside a glowing cyan ring, wrapped in swirling light trails, with the name REYTEK below", video: "/work/reytek-clip.mp4" },
   { slug: "cinque-lune", name: "Cinque Lune", kind: "Demo restaurant", src: "/work/cinque-lune-home.webp", href: "https://cinque-lune-demo.vercel.app", alt: "Trattoria Cinque Lune's home page on a phone: a brick restaurant entrance with warm light in the doorway, an Open until 9 pm sign, and Reserve a table and See the menu buttons", video: "/work/cinque-lune-clip.mp4" },
 ];

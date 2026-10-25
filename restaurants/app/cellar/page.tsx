@@ -59,7 +59,7 @@ export default function Cellar() {
   };
 
   const prices = (w: Wine, light = false) => (
-    <dl className={`flex shrink-0 gap-4 text-right ${w.soldOut ? "line-through" : ""} ${light ? "text-cream" : "text-espresso"}`}>
+    <dl className={`flex shrink-0 gap-3 text-right sm:gap-4 ${w.soldOut ? "line-through" : ""} ${light ? "text-cream" : "text-espresso"}`}>
       {[["Glass", w.glass], ["Bottle", w.bottle]].map(
         ([label, cents]) =>
           typeof cents === "number" && (
@@ -77,7 +77,7 @@ export default function Cellar() {
       <PageHero kicker="La Cantina" title="The wine cellar" line="A short list, chosen by hand, all of it Italian. Ask us what is open tonight." photo="sp-13" focal="50% 55%" push />
 
       <nav aria-label="Wine list" className="sticky top-[var(--header-offset,0px)] z-20 border-y border-cream/10 bg-espresso/90 backdrop-blur transition-[top] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)]">
-        <ul className="mx-auto flex max-w-3xl justify-start gap-5 overflow-x-auto px-4 py-2 font-hand text-xl sm:justify-center sm:px-6 sm:py-3 sm:text-2xl">
+        <ul className="mx-auto flex max-w-3xl justify-start gap-5 overflow-x-auto px-4 py-2 font-hand text-xl [mask-image:linear-gradient(to_right,black_85%,transparent)] sm:px-6 sm:py-3 sm:text-2xl lg:justify-center lg:[mask-image:none]">
           {picks.length > 0 && <li><a href="#consiglio" className="ink whitespace-nowrap text-[#f2b27a]">Il Consiglio</a></li>}
           {sections.map((s) => (
             <li key={s.id}><a href={`#${s.id}`} className="ink whitespace-nowrap text-[#f2b27a]">{s.title}</a></li>
@@ -89,22 +89,22 @@ export default function Cellar() {
       {picks.length > 0 && (
         <section id="consiglio" aria-labelledby="consiglio-title" className="scroll-mt-28 px-3 pt-10 sm:px-6 md:scroll-mt-36 md:pt-16">
           <Reveal>
-            <div className="mx-auto max-w-3xl rounded-sm border-[10px] border-[#4a2e1b] shadow-[0_30px_50px_rgb(0_0_0/0.55),inset_0_0_30px_rgb(0_0_0/0.5)]" style={{ background: SLATE }}>
-              <div className="px-5 py-8 sm:px-10">
+            <div className="mx-auto max-w-3xl rounded-sm border-[8px] border-[#4a2e1b] sm:border-[10px] shadow-[0_30px_50px_rgb(0_0_0/0.55),inset_0_0_30px_rgb(0_0_0/0.5)]" style={{ background: SLATE }}>
+              <div className="px-4 py-7 sm:px-10 sm:py-8">
                 <div className="text-center">
                   <h2 id="consiglio-title" className="font-hand text-5xl text-cream">Il Consiglio</h2>
                   <p className="mt-1 font-hand text-2xl text-[#f2b27a]">what we are pouring for friends this week</p>
                 </div>
                 <ul className="mt-6 divide-y divide-dashed divide-cream/25">
                   {picks.map((w) => (
-                    <li key={w.id} className="flex items-start justify-between gap-4 py-4">
-                      <div className="min-w-0">
-                        <h3 className="font-hand text-3xl leading-tight text-cream">{w.name}</h3>
-                        <p className="text-sm uppercase tracking-[0.12em] text-cream/80">{w.producer} · {w.region}{w.vintage ? ` · ${w.vintage}` : ""}</p>
-                        {w.notes && <p className="mt-1 text-cream/90">{w.notes}</p>}
-                        {pairing(w, true)}
+                    <li key={w.id} className="py-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="min-w-0 font-hand text-[1.7rem] leading-tight text-cream sm:text-3xl">{w.name}</h3>
+                        {prices(w, true)}
                       </div>
-                      {prices(w, true)}
+                      <p className="mt-0.5 text-xs uppercase tracking-[0.12em] text-cream/80 sm:text-sm">{w.producer} · {w.region}{w.vintage ? ` · ${w.vintage}` : ""}</p>
+                      {w.notes && <p className="mt-1 text-cream/90">{w.notes}</p>}
+                      {pairing(w, true)}
                     </li>
                   ))}
                 </ul>
@@ -141,21 +141,19 @@ export default function Cellar() {
                   {s.wines.map((w) => (
                     <li key={w.id} id={w.id} className="scroll-mt-28 py-4 md:scroll-mt-36">
                       <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <h3 className={`font-heading text-lg leading-snug ${w.soldOut ? "text-espresso/70 line-through" : "text-espresso"}`}>
-                            {w.name}
-                            {w.organic && <span className="ml-2 align-middle text-[0.65rem] font-normal uppercase tracking-[0.18em] text-olive">organic</span>}
-                          </h3>
-                          <p className="mt-0.5 text-sm uppercase tracking-[0.1em] text-espresso/70">
-                            {w.producer} · {w.region}{w.vintage ? ` · ${w.vintage}` : ""}
-                          </p>
-                          {w.grape && <p className="text-sm italic text-espresso/75">{w.grape}</p>}
-                          {w.notes && <p className={`mt-1 text-[0.95rem] ${w.soldOut ? "text-espresso/70" : "text-espresso/80"}`}>{w.notes}</p>}
-                          {!w.soldOut && pairing(w)}
-                          {w.soldOut && <p className="mt-1 font-hand text-2xl text-wine">finito</p>}
-                        </div>
+                        <h3 className={`min-w-0 font-heading text-lg leading-snug ${w.soldOut ? "text-espresso/70 line-through" : "text-espresso"}`}>
+                          {w.name}
+                          {w.organic && <span className="ml-2 align-middle text-[0.65rem] font-normal uppercase tracking-[0.18em] text-olive">organic</span>}
+                        </h3>
                         {prices(w)}
                       </div>
+                      <p className="mt-0.5 text-xs uppercase tracking-[0.1em] text-espresso/70 sm:text-sm">
+                        {w.producer} · {w.region}{w.vintage ? ` · ${w.vintage}` : ""}
+                      </p>
+                      {w.grape && <p className="text-sm italic text-espresso/75">{w.grape}</p>}
+                      {w.notes && <p className={`mt-1 text-[0.95rem] ${w.soldOut ? "text-espresso/70" : "text-espresso/80"}`}>{w.notes}</p>}
+                      {!w.soldOut && pairing(w)}
+                      {w.soldOut && <p className="mt-1 font-hand text-2xl text-wine">finito</p>}
                     </li>
                   ))}
                 </ul>

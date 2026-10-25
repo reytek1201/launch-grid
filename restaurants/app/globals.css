@@ -70,6 +70,10 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .lantern-breath { animation: breath 6s ease-in-out infinite; }
 @keyframes bubble { 0% { transform: translateY(0); opacity: 0 } 15% { opacity: 1 } 100% { transform: translateY(-46px); opacity: 0 } }
 .bubble { animation: bubble 2.2s ease-in infinite; }
+.pour-photo { mask-image: linear-gradient(to bottom, black 55%, transparent); -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent); }
+@media (min-width: 768px) {
+  .pour-photo { mask-image: linear-gradient(to right, transparent 0%, black 30%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .lantern-breath, .bubble { animation: none; }

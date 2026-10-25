@@ -8,12 +8,13 @@ Read first when you need detail: `docs/restaurant-build-plan.md` (status, source
 - `restaurants/` the Next.js app (Next 16, React 19 with React Compiler, Tailwind 4, framer-motion). **`restaurants/AGENTS.md`: this is not the Next.js you know. Read `node_modules/next/dist/docs/` before relying on old habits.**
 - `restaurants/db/NNN_*.sql` numbered migrations, in order. The `new-client` script builds a client's database from these, so every schema change goes here too.
 - `restaurants/clients/<slug>/` one folder per client (`content.ts`, `images.json`, `intake.json`, `setup.sql`); `clients/demo/` is the demo; `clients/_template/intake.example.json` is the intake shape. `NEXT_PUBLIC_CLIENT` picks the folder. Demo fixtures, image log, prompts. `restaurants/qa/` the test kit. `restaurants/scripts/` build and seed scripts, `new-client.mjs`.
+- `studio/` the LaunchGrid Studio marketing site (launchgrid.studio): its own Next app, Vercel project `launchgrid-studio` (root `studio`), schema `launchgrid_site` (migrations in `studio/db/`), test kit `npm run qa`. See `studio/README.md`.
 - `docs/` plans. `.claude/commands/` slash commands: `/ship`, `/qa`, `/migration`, `/status`, `/new-client`, `/launch-check`, `/photos`, `/launch-client`, `/handoff`, `/pitch`. Playbooks for a new theme or band site: `docs/new-theme-and-band-playbooks.md`.
 
 ## Where things live
 - GitHub `reytek1201/launch-grid` (private), branch `main`. Pushing `main` deploys.
 - Vercel project `cinque-lune-demo` (team `rays-projects-a1b26797`, id `prj_JPee3QXQWNYpQGsxUfFUM6CD81ft`), public at `cinque-lune-demo.vercel.app`. Root directory `restaurants`.
-- Supabase project **Reytek1201** (`pehytilcqrmzeuoewdnk`, Pro). It also hosts the music site, so **only ever touch the `trattoria_demo` schema, the `trattoria-demo` storage bucket and their policies.** Never touch `public` tables or functions (join_transmission, place_order, music tables): those warnings in the advisors are known and left alone on purpose.
+- Supabase project **Reytek1201** (`pehytilcqrmzeuoewdnk`, Pro). It also hosts the music site, so **only ever touch the `trattoria_demo` schema, the `trattoria-demo` storage bucket and their policies.** (The studio site also owns the `launchgrid_site` schema.) Never touch `public` tables or functions (join_transmission, place_order, music tables): those warnings in the advisors are known and left alone on purpose.
 - Env vars (Vercel): `SUPABASE_URL`, `SUPABASE_ANON_KEY` (publishable key only, never service-role), `SUPABASE_SCHEMA`, `SUPABASE_BUCKET` (default `trattoria-demo`), `NEXT_PUBLIC_SITE_URL`, `SPAM_SALT`. Optional email alerts: `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_ALERTS_TO` (not set; nothing is sent without them, fine for a mock site).
 - Paths: cloud `/home/claude/launch-grid`; Reytek's Mac `/Users/keymacro/Projects/Launch Grid` (mounted as `$HOME/mnt/Launch Grid`, Downloads at `$HOME/mnt/Downloads`).
 

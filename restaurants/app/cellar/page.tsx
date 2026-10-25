@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PhotoSlot } from "@/components/PhotoSlot";
 import { Flourish } from "@/components/motion/Flourish";
 import { Reveal } from "@/components/motion/Reveal";
 import { getSiteData } from "@/lib/config";
@@ -51,7 +52,7 @@ export default function Cellar() {
 
   return (
     <main id="main" style={{ backgroundImage: STONE }}>
-      <PageHero kicker="La Cantina" title="The wine cellar" line="A short list, chosen by hand, all of it Italian. Ask us what is open tonight." photo="sp-10" focal="70% 50%" ink="bottle" inkClass="top-[30%] w-10 md:w-14" />
+      <PageHero kicker="La Cantina" title="The wine cellar" line="A short list, chosen by hand, all of it Italian. Ask us what is open tonight." photo="sp-13" focal="50% 55%" />
 
       <nav aria-label="Wine list" className="sticky top-[var(--header-offset,0px)] z-20 border-y border-cream/10 bg-espresso/90 backdrop-blur transition-[top] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)]">
         <ul className="mx-auto flex max-w-3xl justify-start gap-5 overflow-x-auto px-4 py-2 font-hand text-xl sm:justify-center sm:px-6 sm:py-3 sm:text-2xl">
@@ -90,6 +91,20 @@ export default function Cellar() {
           </Reveal>
         </section>
       )}
+
+      {/* The pour: a quiet band between the board and the book */}
+      <section aria-label="Pairing help" className="relative mt-10 overflow-hidden md:mt-16">
+        <PhotoSlot photo="sp-14" ratio="aspect-[4/3] md:aspect-[21/9]" sizes="100vw" focal="55% 50%" className="w-full" />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-[#170d0a]/90 via-[#170d0a]/35 to-transparent" />
+        <div className="absolute inset-0 flex items-center">
+          <Reveal>
+            <div className="mx-auto max-w-6xl px-5 md:px-8">
+              <p className="font-hand text-3xl text-[#f2b27a] md:text-4xl">Not sure?</p>
+              <p className="mt-1 max-w-[11.5rem] font-heading text-2xl leading-tight text-cream md:max-w-md md:text-4xl">Tell us what you are eating and we will pour you a taste.</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* The list, in the cellar book */}
       <div className="px-3 py-10 sm:px-6 md:py-16">

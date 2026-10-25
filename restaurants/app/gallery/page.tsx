@@ -6,7 +6,7 @@ import { PageHero } from "@/themes/trattoria/pages/PageHero";
 export const metadata: Metadata = { title: "Gallery" };
 
 // Room, kitchen and table. Dish shots live on the menu.
-const wall = ["sp-03", "sp-04", "sp-06", "sp-08", "sp-07", "sp-09", "sp-03b", "sp-12", "sp-10", "sp-11", "sp-05", "sp-01"];
+const wall = ["sp-03", "sp-04", "sp-06", "sp-08", "sp-07", "sp-09", "sp-03b", "sp-12", "sp-10", "sp-11", "sp-05", "sp-01", "sp-13", "sp-14"];
 
 // The limewash wall the photos are pinned to.
 const LIMEWASH =

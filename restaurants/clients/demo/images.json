@@ -206,5 +206,21 @@
     "width": 1024,
     "height": 1024,
     "focal": "50% 50%"
+  },
+  "sp-13": {
+    "id": "SP-13",
+    "src": "/demo/sp-13-cellar.jpg",
+    "alt": "A low barrel-vaulted brick wine cellar seen down its length, with dark oak racks of unlabelled bottles on both walls, small candles, two oak barrels and a glowing arched doorway at the far end",
+    "width": 1376,
+    "height": 768,
+    "focal": "50% 50%"
+  },
+  "sp-14": {
+    "id": "SP-14",
+    "src": "/demo/sp-14-pour.jpg",
+    "alt": "A hand and linen sleeve pouring red wine from a plain dark green bottle into a glass on a dark oak table, with paper lanterns glowing out of focus behind",
+    "width": 1376,
+    "height": 768,
+    "focal": "50% 50%"
   }
 }

@@ -93,3 +93,8 @@ Same template as D-09 to D-12; image 1 = SP-05, image 2 = D-12 ("Do not include 
 | ID | {DISH} as prompted |
 | --- | --- |
 | D-13 | pollo al limone: half a roasted chicken, split lengthwise, with deep golden crisp skin and glistening pan juices, the leg and the breast with its wing both visible, resting on the plate with roasted lemon halves, sprigs of rosemary and a few roasted potatoes beside it |
+
+## SP-13 Cellar and SP-14 Pour - reference generate, 16:9 (Oct 24 evening)
+**SP-13**, reference: SP-03. Prompt: wide photograph looking down a low barrel-vaulted brick wine cellar, eye level, symmetrical, stone floor; dark oak racks of plain dark green unlabelled bottles lying on their sides along both walls; at the far end two large oak barrels and a small arched doorway glowing warm; a few candles in plain glass holders; left third calm and dark. Same style tail as SP-09 (2700K, Portra 400, grain, palette) and "no people, no faces, no text, no letters, no labels, no logos".
+
+**SP-14**, references: SP-03 (room) and SP-10 (the dark green bottle and table). Prompt: close-up of red wine poured from a plain unlabelled dark green bottle into a clear wine glass on the dark oak table, stream caught mid-pour, one hand and forearm in a rolled linen sleeve holding the bottle by the base, no face; paper lanterns as bokeh; left half calm and dark. Same style tail.

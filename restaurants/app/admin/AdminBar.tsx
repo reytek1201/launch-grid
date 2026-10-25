@@ -16,6 +16,7 @@ const sections: Section[] = [
   { href: "/admin/inbox", label: "Inbox", icon: () => <Frame><path d="M3 13h5l2 3h4l2-3h5v6H3z" /><path d="M3 13 6 4h12l3 9" /></Frame> },
   { href: "/admin/menu", label: "Menu", icon: () => <Frame><path d="M6 3v6a2 2 0 0 0 4 0V3M8 11v10M17 21V3c-2.4 1.6-3.4 4-3.4 7.5H17" /></Frame> },
   { href: "/admin/cellar", label: "Cellar", icon: () => <Frame><path d="M7.5 3h9c0 5.5-1.2 8.5-4.5 8.5S7.5 8.5 7.5 3zM12 11.5V19M8 21h8" /></Frame> },
+  { href: "/admin/gallery", label: "Gallery", icon: () => <Frame><rect x="3.5" y="4.5" width="17" height="15" rx="2" /><circle cx="9" cy="10" r="1.6" /><path d="M4 18l5.5-5 4 3.5 3-2.5 3.5 3" /></Frame> },
   { href: "/admin/hours", label: "Hours", icon: () => <Frame><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></Frame> },
 ];
 

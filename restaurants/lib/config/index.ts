@@ -36,7 +36,7 @@ export const photoUrl = (path: string) => `${URL_}/storage/v1/object/public/trat
 const uploadedPhoto = (id: string, path: string, alt: string): Photo => ({ id, src: photoUrl(path), alt, width: 1200, height: 1200, focal: "50% 50%" });
 
 async function fromDatabase(): Promise<SiteData> {
-  const [settings, secs, items, wsecs, wines, hours, closures] = await Promise.all([
+  const [settings, secs, items, wsecs, wines, hours, closures, gallery] = await Promise.all([
     rows<Row>("settings", "select=*&id=eq.1"),
     rows<Row>("menu_sections", "select=*&order=sort"),
     rows<Row>("menu_items", "select=*&order=sort"),
@@ -44,6 +44,7 @@ async function fromDatabase(): Promise<SiteData> {
     rows<Row>("wines", "select=*&order=sort"),
     rows<Row>("hours_weekly", "select=*&order=day,sort"),
     rows<Row>("closures", "select=*&order=date"),
+    rows<Row>("gallery_photos", "select=*&order=sort,id"),
   ]);
   const s = settings[0];
   if (!s) throw new Error("no settings row");
@@ -125,6 +126,7 @@ async function fromDatabase(): Promise<SiteData> {
     cellar,
     banner: bannerLive ? bannerText : undefined,
     uploads,
+    gallery: gallery.map((g) => ({ id: `g:${g.id}`, src: photoUrl(g.path as string), alt: (g.alt as string | null) || (g.caption as string), width: g.width as number, height: g.height as number, focal: "50% 50%", caption: g.caption as string })),
   };
 }
 

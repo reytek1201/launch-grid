@@ -66,10 +66,10 @@ const check = (path: string, error: { message: string } | null) => {
   if (error) fail(path, error.message.includes("violates") ? "That change was not allowed. Check the values and try again." : "Could not save. Try again in a moment.");
 };
 
-type Tbl = "menu_items" | "menu_sections" | "wines" | "wine_sections";
-const TABLES: Tbl[] = ["menu_items", "menu_sections", "wines", "wine_sections"];
-const PAGE: Record<Tbl, string> = { menu_items: "/admin/menu", menu_sections: "/admin/menu", wines: "/admin/cellar", wine_sections: "/admin/cellar" };
-const PARENT: Record<Tbl, string | null> = { menu_items: "section_id", menu_sections: null, wines: "section_id", wine_sections: null };
+type Tbl = "menu_items" | "menu_sections" | "wines" | "wine_sections" | "gallery_photos";
+const TABLES: Tbl[] = ["menu_items", "menu_sections", "wines", "wine_sections", "gallery_photos"];
+const PAGE: Record<Tbl, string> = { menu_items: "/admin/menu", menu_sections: "/admin/menu", wines: "/admin/cellar", wine_sections: "/admin/cellar", gallery_photos: "/admin/gallery" };
+const PARENT: Record<Tbl, string | null> = { menu_items: "section_id", menu_sections: null, wines: "section_id", wine_sections: null, gallery_photos: null };
 const okTable = (t: string): t is Tbl => (TABLES as string[]).includes(t);
 
 /* ───────── inbox ───────── */
@@ -139,6 +139,10 @@ export async function deleteRow(table: string, id: string) {
   if (table === "menu_items" || table === "menu_sections") {
     const { data } = await supabase.from("menu_items").select("photo_path").eq(table === "menu_items" ? "id" : "section_id", id);
     files = (data ?? []).map((r: { photo_path: string | null }) => r.photo_path).filter((p): p is string => !!p);
+  }
+  if (table === "gallery_photos") {
+    const { data } = await supabase.from("gallery_photos").select("path").eq("id", id);
+    files = (data ?? []).map((r: { path: string }) => r.path);
   }
   const { error } = await supabase.from(table).delete().eq("id", id);
   check(PAGE[table], error);
@@ -273,6 +277,46 @@ export async function clearDishPhoto(id: string) {
   const old = row?.photo_path as string | null | undefined;
   if (old) await supabase.storage.from(BUCKET).remove([old]);
   done("/admin/menu");
+}
+
+/* ───────── gallery ───────── */
+
+/** Adds a photo to the gallery. The browser has already shrunk it and measured it. */
+export async function addGalleryPhoto(form: FormData) {
+  const { supabase } = await requireAdmin();
+  const back = "/admin/gallery";
+  const file = form.get("photo");
+  if (!(file instanceof File) || file.size === 0) fail(back, "Choose a photo first.");
+  const f = file as File;
+  const ext = PHOTO_TYPES[f.type];
+  if (!ext) fail(back, "Use a JPEG, PNG or WebP photo.");
+  if (f.size > MAX_PHOTO) fail(back, "That photo is too large. Try another one.");
+  const caption = str(form, "caption").slice(0, 80);
+  if (!caption) fail(back, "Write a short caption for the photo.");
+  const width = int(str(form, "width"));
+  const height = int(str(form, "height"));
+  if (!width || !height || width > 4000 || height > 4000 || width < 1 || height < 1) fail(back, "That photo could not be read. Try another one.");
+
+  const id = newId(caption);
+  const path = `gallery/${id}.${ext}`;
+  const up = await supabase.storage.from(BUCKET).upload(path, f, { contentType: f.type, cacheControl: "31536000", upsert: false });
+  if (up.error) fail(back, "Could not upload the photo. Try again in a moment.");
+  const sort = await nextSort("gallery_photos", null, null);
+  const { error } = await supabase.from("gallery_photos").insert({ id, path, caption, alt: orNull(str(form, "alt").slice(0, 300)), width, height, sort });
+  if (error) {
+    await supabase.storage.from(BUCKET).remove([path]);
+    check(back, error);
+  }
+  done(back);
+}
+
+export async function saveGalleryPhoto(id: string, form: FormData) {
+  const { supabase } = await requireAdmin();
+  const caption = str(form, "caption").slice(0, 80);
+  if (!caption) fail("/admin/gallery", "A photo needs a caption.");
+  const { error } = await supabase.from("gallery_photos").update({ caption, alt: orNull(str(form, "alt").slice(0, 300)) }).eq("id", id);
+  check("/admin/gallery", error);
+  done("/admin/gallery");
 }
 
 /* ───────── wines ───────── */

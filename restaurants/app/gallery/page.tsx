@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { photos } from "@/lib/config";
+import { getSiteData, photos } from "@/lib/config";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import { GalleryLine, type LineChapter } from "@/themes/trattoria/pages/GalleryLine";
 
@@ -55,13 +55,16 @@ const LINE: { id: string; title: string; line: string; photos: [string, string][
 const LIMEWASH =
   "radial-gradient(ellipse at 20% 10%, rgb(255 230 190 / 0.35), transparent 50%), radial-gradient(ellipse at 85% 70%, rgb(120 70 30 / 0.25), transparent 55%), url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='4'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.36 0 0 0 0 0.2 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\"), linear-gradient(180deg, #c99a63, #b9854f)";
 
-export default function Gallery() {
+export default async function Gallery() {
+  const site = await getSiteData();
   const chapters: LineChapter[] = LINE.map((c) => ({
     id: c.id,
     title: c.title,
     line: c.line,
     photos: c.photos.filter(([k]) => photos[k]).map(([k, caption]) => ({ ...photos[k], caption })),
   })).filter((c) => c.photos.length > 0);
+  // Photos the restaurant added from the admin hang on the end of the line.
+  if (site.gallery?.length) chapters.push({ id: "nuove", title: "Di recente", line: "Fresh from the room.", photos: site.gallery });
 
   return (
     <main id="main" style={{ backgroundImage: LIMEWASH }}>

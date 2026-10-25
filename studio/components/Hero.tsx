@@ -8,8 +8,8 @@ type Device = { slug: string; name: string; kind: string; src: string; href: str
 
 const DEVICES: Device[] = [
   { slug: "funkharp", name: "Funkharp", kind: "Band", src: "/work/funkharp-home.webp", href: "#work", alt: "Funkharp's home page on a phone: St. Augustine, FL, the band name in script, Hear the singles and Shows buttons, and a photo of a harmonica on piano keys" },
-  { slug: "reytek", name: "Reytek", kind: "My artist site", src: "/work/reytek-home.webp", href: "https://reytek1201.com/?ref=launchgrid", alt: "Reytek's home page on a phone: a dark screen with a ring of small text, the name REYTEK, and Enter with sound and Enter silent buttons" },
-  { slug: "cinque-lune", name: "Cinque Lune", kind: "Demo restaurant", src: "/work/cinque-lune-home.webp", href: "https://cinque-lune-demo.vercel.app", alt: "Trattoria Cinque Lune's home page on a phone: a brick corner restaurant at dusk, a specials banner, and Reserve a table and See the menu buttons" },
+  { slug: "reytek", name: "Reytek", kind: "My artist site", src: "/work/reytek-home.webp", href: "https://reytek1201.com/?ref=launchgrid", alt: "Reytek's home page on a phone: a black-and-white portrait inside a glowing cyan ring, wrapped in swirling light trails, with the name REYTEK below" },
+  { slug: "cinque-lune", name: "Cinque Lune", kind: "Demo restaurant", src: "/work/cinque-lune-home.webp", href: "https://cinque-lune-demo.vercel.app", alt: "Trattoria Cinque Lune's home page on a phone: a brick restaurant entrance with warm light in the doorway, an Open until 9 pm sign, and Reserve a table and See the menu buttons" },
 ];
 
 const COUNT = ["T−3", "T−2", "T−1", "Lift-off", "All three live"];

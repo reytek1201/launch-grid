@@ -1,0 +1,976 @@
+{
+ "menu_sections": [
+  {
+   "id": "antipasti",
+   "title": "Antipasti",
+   "note": null,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "primi",
+   "title": "Primi",
+   "note": "Pasta made by hand each morning.",
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "secondi",
+   "title": "Secondi",
+   "note": null,
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "dolci",
+   "title": "Dolci",
+   "note": null,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "bevande",
+   "title": "Bevande",
+   "note": null,
+   "sort": 4,
+   "hidden": false
+  },
+  {
+   "id": "stagionale",
+   "title": "Specials",
+   "note": "Nothing on the list this week.",
+   "sort": 5,
+   "hidden": false
+  }
+ ],
+ "menu_items": [
+  {
+   "id": "burrata",
+   "section_id": "antipasti",
+   "name": "Burrata con pomodori arrostiti",
+   "description": "Roasted cherry tomatoes, basil, olive oil",
+   "price_cents": 1400,
+   "tags": [
+    "vegetarian"
+   ],
+   "sold_out": false,
+   "photo": "d-01",
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "bruschetta",
+   "section_id": "antipasti",
+   "name": "Bruschetta al pomodoro",
+   "description": "Grilled bread, chopped tomato, garlic, basil",
+   "price_cents": 900,
+   "tags": [
+    "vegan"
+   ],
+   "sold_out": false,
+   "photo": "d-02",
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "carpaccio",
+   "section_id": "antipasti",
+   "name": "Carpaccio di manzo",
+   "description": "Rocket, shaved parmigiano",
+   "price_cents": 1600,
+   "tags": [
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": "d-12",
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "polpette",
+   "section_id": "antipasti",
+   "name": "Polpette della nonna",
+   "description": "Grandmother's meatballs in tomato",
+   "price_cents": 1200,
+   "tags": [],
+   "sold_out": false,
+   "photo": null,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "finocchio",
+   "section_id": "antipasti",
+   "name": "Insalata di finocchio e arance",
+   "description": "Shaved fennel, orange, olives",
+   "price_cents": 1100,
+   "tags": [
+    "vegan",
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": null,
+   "sort": 4,
+   "hidden": false
+  },
+  {
+   "id": "tagliatelle",
+   "section_id": "primi",
+   "name": "Tagliatelle al rag\u00f9 domenicale",
+   "description": "The Sunday sauce: slow-cooked beef and pork, parmigiano",
+   "price_cents": 2100,
+   "tags": [],
+   "sold_out": false,
+   "photo": "d-03",
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "cacio",
+   "section_id": "primi",
+   "name": "Cacio e pepe",
+   "description": "Spaghetti, pecorino romano, cracked black pepper",
+   "price_cents": 1900,
+   "tags": [
+    "vegetarian"
+   ],
+   "sold_out": false,
+   "photo": "d-04",
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "gnocchi",
+   "section_id": "primi",
+   "name": "Gnocchi al pesto di basilico",
+   "description": "Potato gnocchi, basil pesto, pine nuts",
+   "price_cents": 2000,
+   "tags": [
+    "vegetarian"
+   ],
+   "sold_out": false,
+   "photo": "d-09",
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "risotto",
+   "section_id": "primi",
+   "name": "Risotto ai funghi porcini",
+   "description": "Carnaroli rice, porcini, parmigiano",
+   "price_cents": 2300,
+   "tags": [
+    "vegetarian",
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": "d-10",
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "vongole",
+   "section_id": "primi",
+   "name": "Spaghetti alle vongole",
+   "description": "Clams, white wine, garlic, chili",
+   "price_cents": 2500,
+   "tags": [
+    "spicy"
+   ],
+   "sold_out": false,
+   "photo": "d-11",
+   "sort": 4,
+   "hidden": false
+  },
+  {
+   "id": "lasagna",
+   "section_id": "primi",
+   "name": "Lasagna della casa",
+   "description": "Layered with rag\u00f9 and b\u00e9chamel",
+   "price_cents": 2200,
+   "tags": [],
+   "sold_out": true,
+   "photo": null,
+   "sort": 5,
+   "hidden": false
+  },
+  {
+   "id": "long-name",
+   "section_id": "primi",
+   "name": "Pappardelle with slow-braised wild boar, juniper, red wine and orange zest",
+   "description": "A deliberately long name and description, to test wrapping on a phone: braised for six hours, finished with a little of the cooking liquor and a spoon of ricotta salata.",
+   "price_cents": 2600,
+   "tags": [],
+   "sold_out": false,
+   "photo": null,
+   "sort": 6,
+   "hidden": false
+  },
+  {
+   "id": "pollo",
+   "section_id": "secondi",
+   "name": "Pollo al limone",
+   "description": "Half roast chicken, lemon, rosemary",
+   "price_cents": 2400,
+   "tags": [
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": "d-13",
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "ossobuco",
+   "section_id": "secondi",
+   "name": "Ossobuco con polenta",
+   "description": "Braised veal shank, polenta, gremolata",
+   "price_cents": 3600,
+   "tags": [
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": "d-05",
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "branzino",
+   "section_id": "secondi",
+   "name": "Branzino al forno",
+   "description": "Whole roasted sea bass, lemon, rosemary",
+   "price_cents": 3200,
+   "tags": [
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": "d-06",
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "melanzane",
+   "section_id": "secondi",
+   "name": "Melanzane alla parmigiana",
+   "description": "Baked eggplant, tomato, mozzarella",
+   "price_cents": 2100,
+   "tags": [
+    "vegetarian"
+   ],
+   "sold_out": false,
+   "photo": null,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "tagliata",
+   "section_id": "secondi",
+   "name": "Tagliata di manzo",
+   "description": "Sliced sirloin, rocket, parmigiano",
+   "price_cents": 3800,
+   "tags": [
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": null,
+   "sort": 4,
+   "hidden": false
+  },
+  {
+   "id": "pesce",
+   "section_id": "secondi",
+   "name": "Pesce del giorno",
+   "description": "Ask your server what came in today",
+   "price_cents": null,
+   "tags": [],
+   "sold_out": false,
+   "photo": null,
+   "sort": 5,
+   "hidden": false
+  },
+  {
+   "id": "tiramisu",
+   "section_id": "dolci",
+   "name": "Tiramis\u00f9",
+   "description": "Mascarpone, espresso, cocoa",
+   "price_cents": 1000,
+   "tags": [
+    "vegetarian"
+   ],
+   "sold_out": false,
+   "photo": "d-07",
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "panna",
+   "section_id": "dolci",
+   "name": "Panna cotta ai frutti di bosco",
+   "description": "Vanilla, wild berry compote",
+   "price_cents": 900,
+   "tags": [
+    "vegetarian",
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": null,
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "cannoli",
+   "section_id": "dolci",
+   "name": "Cannoli siciliani",
+   "description": "Ricotta cream, pistachio",
+   "price_cents": 900,
+   "tags": [
+    "vegetarian"
+   ],
+   "sold_out": false,
+   "photo": "d-08",
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "affogato",
+   "section_id": "dolci",
+   "name": "Affogato al caff\u00e8",
+   "description": "Vanilla gelato, hot espresso",
+   "price_cents": 800,
+   "tags": [
+    "vegetarian",
+    "gluten-free"
+   ],
+   "sold_out": false,
+   "photo": null,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "spritz",
+   "section_id": "bevande",
+   "name": "Aperol spritz",
+   "description": null,
+   "price_cents": 1200,
+   "tags": [],
+   "sold_out": false,
+   "photo": null,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "house-wine",
+   "section_id": "bevande",
+   "name": "House red or white",
+   "description": "By the glass. Bottle $38",
+   "price_cents": 1000,
+   "tags": [],
+   "sold_out": false,
+   "photo": null,
+   "sort": 1,
+   "hidden": false
+  }
+ ],
+ "wine_sections": [
+  {
+   "id": "bollicine",
+   "title": "Bollicine",
+   "note": "Cold, dry and made for salty things.",
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "bianchi",
+   "title": "Bianchi",
+   "note": "Crisp and mineral, from the coast and the hills.",
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "rosati",
+   "title": "Rosato",
+   "note": null,
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "rossi",
+   "title": "Rossi",
+   "note": "From light and easy to big and serious.",
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "dolci",
+   "title": "Dolci e digestivi",
+   "note": "To finish.",
+   "sort": 4,
+   "hidden": false
+  }
+ ],
+ "wines": [
+  {
+   "id": "prosecco",
+   "section_id": "bollicine",
+   "name": "Prosecco Superiore Brut",
+   "producer": "Cantina Valdoro",
+   "region": "Veneto",
+   "grape": "Glera",
+   "vintage": null,
+   "glass_cents": 1200,
+   "bottle_cents": 4600,
+   "notes": "Green apple, white flowers, a clean dry finish.",
+   "pairs": [
+    "bruschetta",
+    "burrata"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "metodo-classico",
+   "section_id": "bollicine",
+   "name": "Metodo Classico Brut",
+   "producer": "Tenuta Ca' Lunga",
+   "region": "Lombardia",
+   "grape": "Chardonnay, Pinot Nero",
+   "vintage": 2019,
+   "glass_cents": null,
+   "bottle_cents": 8400,
+   "notes": "Brioche, citrus peel and a fine, steady bubble.",
+   "pairs": [
+    "vongole",
+    "carpaccio"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "vermentino",
+   "section_id": "bianchi",
+   "name": "Vermentino di Gallura",
+   "producer": "Podere Sole Basso",
+   "region": "Sardegna",
+   "grape": "Vermentino",
+   "vintage": 2024,
+   "glass_cents": 1100,
+   "bottle_cents": 4200,
+   "notes": "Sea breeze, lemon, a little salt on the finish.",
+   "pairs": [
+    "vongole",
+    "branzino",
+    "finocchio"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": true,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "soave",
+   "section_id": "bianchi",
+   "name": "Soave Classico",
+   "producer": "Fattoria Monte Bianco",
+   "region": "Veneto",
+   "grape": "Garganega",
+   "vintage": 2023,
+   "glass_cents": 1000,
+   "bottle_cents": 3800,
+   "notes": "Almond and white peach. Soft and easy.",
+   "pairs": [
+    "gnocchi",
+    "pollo"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "gavi",
+   "section_id": "bianchi",
+   "name": "Gavi di Gavi",
+   "producer": "Cascina Rovere",
+   "region": "Piemonte",
+   "grape": "Cortese",
+   "vintage": 2023,
+   "glass_cents": 1400,
+   "bottle_cents": 5200,
+   "notes": "Green apple and wet stone, very clean.",
+   "pairs": [
+    "burrata",
+    "branzino"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "fiano",
+   "section_id": "bianchi",
+   "name": "Fiano di Avellino",
+   "producer": "Terre del Falco",
+   "region": "Campania",
+   "grape": "Fiano",
+   "vintage": 2022,
+   "glass_cents": null,
+   "bottle_cents": 5800,
+   "notes": "Hazelnut, ripe pear and a long finish.",
+   "pairs": [
+    "pollo",
+    "cacio"
+   ],
+   "organic": true,
+   "sold_out": false,
+   "pick": false,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "cerasuolo",
+   "section_id": "rosati",
+   "name": "Cerasuolo d'Abruzzo",
+   "producer": "Masseria Due Pini",
+   "region": "Abruzzo",
+   "grape": "Montepulciano",
+   "vintage": 2024,
+   "glass_cents": 1000,
+   "bottle_cents": 3800,
+   "notes": "Cherry and strawberry, dry and bright.",
+   "pairs": [
+    "polpette",
+    "bruschetta"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "chianti",
+   "section_id": "rossi",
+   "name": "Chianti Classico",
+   "producer": "Castello di Vallecorta",
+   "region": "Toscana",
+   "grape": "Sangiovese",
+   "vintage": 2021,
+   "glass_cents": 1300,
+   "bottle_cents": 5000,
+   "notes": "Sour cherry and leather. Made for tomato sauce.",
+   "pairs": [
+    "tagliatelle",
+    "polpette",
+    "melanzane"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": true,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "barbera",
+   "section_id": "rossi",
+   "name": "Barbera d'Asti",
+   "producer": "Cantina dei Tigli",
+   "region": "Piemonte",
+   "grape": "Barbera",
+   "vintage": 2022,
+   "glass_cents": 1200,
+   "bottle_cents": 4600,
+   "notes": "Ripe plum, bright acidity, soft tannins.",
+   "pairs": [
+    "cacio",
+    "melanzane"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "montepulciano",
+   "section_id": "rossi",
+   "name": "Montepulciano d'Abruzzo",
+   "producer": "Masseria Due Pini",
+   "region": "Abruzzo",
+   "grape": "Montepulciano",
+   "vintage": 2022,
+   "glass_cents": 1000,
+   "bottle_cents": 3800,
+   "notes": "Dark fruit, round and generous.",
+   "pairs": [
+    "polpette",
+    "lasagna"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "ripasso",
+   "section_id": "rossi",
+   "name": "Valpolicella Ripasso",
+   "producer": "Fattoria Monte Bianco",
+   "region": "Veneto",
+   "grape": "Corvina",
+   "vintage": 2020,
+   "glass_cents": 1500,
+   "bottle_cents": 6400,
+   "notes": "Dried cherry, cocoa and a warm finish.",
+   "pairs": [
+    "tagliata",
+    "ossobuco"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "nero-davola",
+   "section_id": "rossi",
+   "name": "Nero d'Avola",
+   "producer": "Tenuta Sabbia Rossa",
+   "region": "Sicilia",
+   "grape": "Nero d'Avola",
+   "vintage": 2021,
+   "glass_cents": null,
+   "bottle_cents": 5400,
+   "notes": "Black plum, pepper and sun.",
+   "pairs": [
+    "tagliata",
+    "melanzane"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 4,
+   "hidden": false
+  },
+  {
+   "id": "barolo",
+   "section_id": "rossi",
+   "name": "Barolo",
+   "producer": "Cascina Rovere",
+   "region": "Piemonte",
+   "grape": "Nebbiolo",
+   "vintage": 2018,
+   "glass_cents": null,
+   "bottle_cents": 14800,
+   "notes": "Roses, tar and firm tannins. Give it time in the glass.",
+   "pairs": [
+    "ossobuco",
+    "tagliatelle"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": true,
+   "sort": 5,
+   "hidden": false
+  },
+  {
+   "id": "brunello",
+   "section_id": "rossi",
+   "name": "Brunello di Montalcino",
+   "producer": "Poggio Alto",
+   "region": "Toscana",
+   "grape": "Sangiovese",
+   "vintage": 2016,
+   "glass_cents": null,
+   "bottle_cents": 16800,
+   "notes": "Dark cherry, spice and cedar.",
+   "pairs": [],
+   "organic": false,
+   "sold_out": true,
+   "pick": false,
+   "sort": 6,
+   "hidden": false
+  },
+  {
+   "id": "amarone",
+   "section_id": "rossi",
+   "name": "Amarone della Valpolicella Classico Riserva, Vigna Vecchia dei Cinque Fratelli",
+   "producer": "Tenuta dei Cinque Fratelli",
+   "region": "Veneto",
+   "grape": "Corvina, Rondinella, Corvinone",
+   "vintage": 2015,
+   "glass_cents": null,
+   "bottle_cents": 19500,
+   "notes": "A deliberately long name, to test wrapping on a phone: raisined fruit, dark chocolate and a very long finish.",
+   "pairs": [
+    "ossobuco"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 7,
+   "hidden": false
+  },
+  {
+   "id": "vin-santo",
+   "section_id": "dolci",
+   "name": "Vin Santo del Chianti",
+   "producer": "Castello di Vallecorta",
+   "region": "Toscana",
+   "grape": "Trebbiano, Malvasia",
+   "vintage": null,
+   "glass_cents": 1400,
+   "bottle_cents": 6200,
+   "notes": "Honey, dried apricot and toasted nuts. Good with cannoli.",
+   "pairs": [
+    "cannoli",
+    "tiramisu"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "moscato",
+   "section_id": "dolci",
+   "name": "Moscato d'Asti",
+   "producer": "Cantina dei Tigli",
+   "region": "Piemonte",
+   "grape": "Moscato",
+   "vintage": null,
+   "glass_cents": 1000,
+   "bottle_cents": 3600,
+   "notes": "Lightly sparkling, peach and orange blossom.",
+   "pairs": [
+    "panna"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "amaro",
+   "section_id": "dolci",
+   "name": "Amaro della casa",
+   "producer": "House",
+   "region": "Made here",
+   "grape": null,
+   "vintage": null,
+   "glass_cents": 900,
+   "bottle_cents": null,
+   "notes": "Bitter orange, gentian and a little smoke.",
+   "pairs": [],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 2,
+   "hidden": false
+  },
+  {
+   "id": "limoncello",
+   "section_id": "dolci",
+   "name": "Limoncello",
+   "producer": "House",
+   "region": "Made here",
+   "grape": null,
+   "vintage": null,
+   "glass_cents": 800,
+   "bottle_cents": null,
+   "notes": "Served ice cold.",
+   "pairs": [],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 3,
+   "hidden": false
+  },
+  {
+   "id": "grappa",
+   "section_id": "dolci",
+   "name": "Grappa di Nebbiolo",
+   "producer": "Distilleria Monte Rosso",
+   "region": "Piemonte",
+   "grape": null,
+   "vintage": null,
+   "glass_cents": 1200,
+   "bottle_cents": null,
+   "notes": "Clear, grapey and warm. Good after the affogato.",
+   "pairs": [
+    "affogato"
+   ],
+   "organic": false,
+   "sold_out": false,
+   "pick": false,
+   "sort": 4,
+   "hidden": false
+  }
+ ],
+ "hours_weekly": [
+  {
+   "day": 0,
+   "open_at": "12:00:00",
+   "close_at": "15:00:00",
+   "sort": 0
+  },
+  {
+   "day": 0,
+   "open_at": "16:00:00",
+   "close_at": "21:00:00",
+   "sort": 1
+  },
+  {
+   "day": 2,
+   "open_at": "17:00:00",
+   "close_at": "21:30:00",
+   "sort": 0
+  },
+  {
+   "day": 3,
+   "open_at": "17:00:00",
+   "close_at": "21:30:00",
+   "sort": 0
+  },
+  {
+   "day": 4,
+   "open_at": "17:00:00",
+   "close_at": "21:30:00",
+   "sort": 0
+  },
+  {
+   "day": 5,
+   "open_at": "17:00:00",
+   "close_at": "22:30:00",
+   "sort": 0
+  },
+  {
+   "day": 6,
+   "open_at": "17:00:00",
+   "close_at": "22:30:00",
+   "sort": 0
+  }
+ ],
+ "closures": [
+  {
+   "date": "2026-11-26",
+   "label": "Thanksgiving Day"
+  }
+ ],
+ "settings": [
+  {
+   "id": 1,
+   "name": "Trattoria Cinque Lune",
+   "tagline": "Sunday sauce, every night.",
+   "blurb": "A family kitchen with five generations of recipes, a wood-fired oven and one long communal table. Come hungry. Stay a while.",
+   "street": "118 Fig Alley",
+   "city": "Anytown",
+   "state": "GA",
+   "zip": "30000",
+   "phone": "(404) 555-0142",
+   "email": "ciao@example.com",
+   "timezone": "America/New_York",
+   "max_party": 8,
+   "last_seating_mins": 90,
+   "lead_hours": 2,
+   "days_ahead": 90,
+   "banner_text": "Tonight: ossobuco with saffron risotto. Closed Thanksgiving Day.",
+   "banner_on": true,
+   "banner_until": null,
+   "order_url": null,
+   "reserve_url": null
+  }
+ ],
+ "requests": [
+  {
+   "id": "r1",
+   "kind": "reservation",
+   "summary": "Table for 4, Sat Oct 31, 7:30 pm",
+   "fields": {
+    "Name": "Maria Rossi",
+    "Date": "Sat, Oct 31",
+    "Time": "7:30 pm",
+    "Guests": "4",
+    "Phone": "(404) 555-0199",
+    "Email": "maria@example.com",
+    "Notes": "Window table if possible"
+   },
+   "status": "new",
+   "created_at": "2026-10-25T04:55:19.910Z"
+  },
+  {
+   "id": "r2",
+   "kind": "event",
+   "summary": "Birthday for 14, Sun Nov 15",
+   "fields": {
+    "Name": "Dan Lee",
+    "Occasion": "Birthday",
+    "Guests": "14",
+    "Space": "La Tavola Lunga",
+    "Email": "dan@example.com"
+   },
+   "status": "seen",
+   "created_at": "2026-10-25T00:07:19.910Z"
+  },
+  {
+   "id": "r3",
+   "kind": "contact",
+   "summary": "Message from Ana",
+   "fields": {
+    "Name": "Ana",
+    "Email": "ana@example.com",
+    "Message": "Do you have a high chair?"
+   },
+   "status": "done",
+   "created_at": "2026-10-23T23:07:19.910Z"
+  }
+ ],
+ "gallery_photos": [
+  {
+   "id": "sample-sp-01",
+   "path": "sample:sp-01",
+   "chapter": "sala",
+   "caption": "Look for the lemon trees.",
+   "alt": "Brick corner trattoria at dusk with amber arched windows",
+   "width": 1376,
+   "height": 768,
+   "sort": 0,
+   "hidden": false
+  },
+  {
+   "id": "sample-sp-03",
+   "path": "sample:sp-03",
+   "chapter": "sala",
+   "caption": "The long table, set for Sunday.",
+   "alt": "Long communal oak table set for dinner in a candlelit brick trattoria",
+   "width": 1376,
+   "height": 768,
+   "sort": 1,
+   "hidden": false
+  },
+  {
+   "id": "sample-sp-04",
+   "path": "sample:sp-04",
+   "chapter": "cucina",
+   "caption": "The oven never really goes out.",
+   "alt": "Arched brick wood-fired oven with a roaring fire",
+   "width": 896,
+   "height": 1200,
+   "sort": 2,
+   "hidden": false
+  }
+ ]
+}

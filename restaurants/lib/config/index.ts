@@ -32,7 +32,7 @@ const opt = <T,>(v: T | null | undefined) => (v === null || v === undefined ? un
 const hhmm = (t: string) => t.slice(0, 5);
 
 /** Public URL of a file in the photo bucket. Uploads are cropped square in the browser, so the size is fixed. */
-export const photoUrl = (path: string) => `${URL_}/storage/v1/object/public/trattoria-demo/${path}`;
+export const photoUrl = (path: string) => `${URL_}/storage/v1/object/public/${process.env.SUPABASE_BUCKET ?? "trattoria-demo"}/${path}`;
 const uploadedPhoto = (id: string, path: string, alt: string): Photo => ({ id, src: photoUrl(path), alt, width: 1200, height: 1200, focal: "50% 50%" });
 
 async function fromDatabase(): Promise<SiteData> {

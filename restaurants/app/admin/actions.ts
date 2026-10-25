@@ -254,7 +254,7 @@ export async function saveLinks(form: FormData) {
 
 /* ───────── dish photos ───────── */
 
-const BUCKET = "trattoria-demo";
+const BUCKET = process.env.SUPABASE_BUCKET ?? "trattoria-demo";
 const PHOTO_TYPES: Record<string, string> = { "image/webp": "webp", "image/jpeg": "jpg", "image/png": "png" };
 const MAX_PHOTO = 2 * 1024 * 1024;
 

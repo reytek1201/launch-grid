@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   images: {
     // Only for local testing against a stand-in database on localhost; never true in production.
     dangerouslyAllowLocalIP: storage?.hostname === "localhost",
-    remotePatterns: storage ? [{ protocol: storage.protocol === "http:" ? "http" : "https", hostname: storage.hostname, port: storage.port, pathname: "/storage/v1/object/public/trattoria-demo/**" }] : [],
+    remotePatterns: storage ? [{ protocol: storage.protocol === "http:" ? "http" : "https", hostname: storage.hostname, port: storage.port, pathname: `/storage/v1/object/public/${process.env.SUPABASE_BUCKET ?? "trattoria-demo"}/**` }] : [],
     // Optimized masters live in public/demo/ (npm run images).
     qualities: [75, 85],
     // AVIF first, then WebP: the photos are the heaviest thing on the page.

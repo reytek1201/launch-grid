@@ -1,0 +1,136 @@
+#!/usr/bin/env node
+// Sets up the backend for a new restaurant client and writes its onboarding checklist.
+//
+//   node scripts/new-client.mjs bella-notte --name "Bella Notte" --admin owner@bellanotte.com
+//
+// Options: --admin a@x.com,b@y.com (required: who may sign in to the admin; add your own address too if you want in)
+//          --name "Restaurant name" (required)   --phone "(404) 555-0100"   --city Atlanta   --state GA   --zip 30303
+//          --street "123 Main St"   --timezone America/New_York   --email hello@restaurant.com (public contact email)
+//
+// Writes clients/<slug>/setup.sql (run it once in the Supabase SQL editor, in the project that will hold this client)
+// and clients/<slug>/ONBOARDING.md (the rest of the steps, with this client's exact settings).
+// The SQL is built from db/*.sql, so a client always gets the same tables, rules and photo storage as the demo.
+import { randomBytes } from "node:crypto";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const die = (m) => {
+  console.error(`\n${m}\n`);
+  process.exit(1);
+};
+
+const [slug, ...rest] = process.argv.slice(2);
+if (!slug || slug.startsWith("--")) die('Usage: node scripts/new-client.mjs <slug> --name "Restaurant name" --admin owner@example.com');
+if (!/^[a-z][a-z0-9-]{1,30}[a-z0-9]$/.test(slug)) die("The slug is lowercase letters, numbers and hyphens, 3 to 32 characters, starting with a letter. Example: bella-notte");
+if (slug === "demo") die('"demo" is the Trattoria demo. Choose another slug.');
+
+const opt = {};
+for (let i = 0; i < rest.length; i += 2) {
+  if (!rest[i]?.startsWith("--") || rest[i + 1] === undefined) die(`Expected "--option value", got "${rest[i] ?? ""}".`);
+  opt[rest[i].slice(2)] = rest[i + 1];
+}
+const known = ["name", "admin", "phone", "city", "state", "zip", "street", "timezone", "email"];
+for (const k of Object.keys(opt)) if (!known.includes(k)) die(`Unknown option --${k}. Known: ${known.map((x) => `--${x}`).join(", ")}`);
+if (!opt.name) die("--name is required.");
+if (!opt.admin) die("--admin is required: the email address(es) that may sign in to the admin, separated by commas.");
+
+const admins = opt.admin.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+const EMAIL = /^[^@\s']+@[^@\s']+\.[^@\s']+$/;
+for (const a of admins) if (!EMAIL.test(a)) die(`"${a}" is not a valid email address.`);
+
+const dir = join(root, "clients", slug);
+if (existsSync(dir)) die(`clients/${slug} already exists. Nothing was changed.`);
+
+const schema = slug.replace(/-/g, "_");
+const bucket = slug;
+const q = (v) => `'${String(v).replace(/'/g, "''")}'`;
+
+// The demo's migrations, renamed for this client.
+let sql = readdirSync(join(root, "db"))
+  .filter((f) => /^\d{3}_.*\.sql$/.test(f))
+  .sort()
+  .map((f) => {
+    let s = readFileSync(join(root, "db", f), "utf8");
+    // The demo's sample gallery photos and its owner's sign-in are the demo's own.
+    s = s.replace(/insert into trattoria_demo\.gallery_photos[\s\S]*?on conflict \(id\) do nothing;\n?/g, "");
+    s = s.replace(/insert into trattoria_demo\.admin_users \(email\) values \([^)]*\);\n?/g, "");
+    return `-- ───── ${f} ─────\n${s.trim()}\n`;
+  })
+  .join("\n")
+  .replaceAll("trattoria_demo", schema)
+  .replaceAll("trattoria-demo", bucket)
+  .replaceAll("trattoria_admin_", `${schema}_admin_`)
+  .replaceAll("Trattoria Cinque Lune (demo)", opt.name)
+  .replaceAll("for the whole demo", "for the whole site")
+  .replaceAll("the demo restaurant", opt.name);
+
+const o = {
+  tagline: "Edit this tagline in the admin.",
+  blurb: "Tell guests what makes this place worth the trip. Edit this in the admin.",
+  street: opt.street ?? "123 Main Street",
+  city: opt.city ?? "Atlanta",
+  state: opt.state ?? "GA",
+  zip: opt.zip ?? "30303",
+  phone: opt.phone ?? "(404) 555-0100",
+  email: opt.email ?? admins[0],
+  timezone: opt.timezone ?? "America/New_York",
+};
+sql += `
+-- ───── this client ─────
+insert into ${schema}.settings (id, name, tagline, blurb, street, city, state, zip, phone, email, timezone, max_party, last_seating_mins, lead_hours, days_ahead)
+values (1, ${[opt.name, o.tagline, o.blurb, o.street, o.city, o.state, o.zip, o.phone, o.email, o.timezone].map(q).join(", ")}, 8, 30, 2, 60);
+
+-- Starting hours (Tuesday to Saturday, 5 to 9 pm). The owner edits them under Hours in the admin.
+insert into ${schema}.hours_weekly (day, open_at, close_at, sort) values (2,'17:00','21:00',0),(3,'17:00','21:00',0),(4,'17:00','21:00',0),(5,'17:00','21:00',0),(6,'17:00','21:00',0);
+
+insert into ${schema}.admin_users (email) values ${admins.map((a) => `(${q(a)})`).join(", ")};
+`;
+
+const salt = randomBytes(16).toString("hex");
+const md = `# Onboarding: ${opt.name}
+
+Slug \`${slug}\`, database schema \`${schema}\`, photo bucket \`${bucket}\`. Generated by \`scripts/new-client.mjs\`.
+Admins who may sign in: ${admins.join(", ")}.
+
+## 1. Database (about 5 minutes)
+1. Pick where this client lives: the LaunchGrid Supabase project (own schema, quickest) or a new Supabase project in the client's name (they own their data; best for a paying client).
+2. Open the project's **SQL editor**, paste all of \`clients/${slug}/setup.sql\`, and run it. It creates the tables, the access rules, the photo bucket and the first admin sign-ins, with a starting settings row and hours.
+3. **Settings → API → Exposed schemas**: add \`${schema}\` and save. The site cannot read the database until this is done.
+4. **Authentication → URL configuration**: add the site's address (and \`/auth/callback\`) to the redirect URLs.
+5. **Authentication → Users → Invite user** for each admin email above. Sign-in only works for people who already exist here, so this must be done once per admin.
+6. **Authentication → Sign In / Providers → Email**: turn on "Prevent use of leaked passwords".
+
+## 2. Vercel project
+1. New project from the \`reytek1201/launch-grid\` repo. **Root directory: \`restaurants\`**. Framework: Next.js.
+2. Environment variables (Production):
+
+| Name | Value |
+| --- | --- |
+| \`NEXT_PUBLIC_CLIENT\` | \`${slug}\` |
+| \`SUPABASE_URL\` | the project URL (Settings → API) |
+| \`SUPABASE_ANON_KEY\` | the **publishable** key, never the service-role key |
+| \`SUPABASE_SCHEMA\` | \`${schema}\` |
+| \`SUPABASE_BUCKET\` | \`${bucket}\` |
+| \`NEXT_PUBLIC_SITE_URL\` | the final address, e.g. \`https://www.example.com\` |
+| \`SPAM_SALT\` | \`${salt}\` |
+
+3. Optional, to email the owner on every new request: \`RESEND_API_KEY\`, \`EMAIL_FROM\`, \`EMAIL_ALERTS_TO\`.
+4. Deploy, then add the client's domain under Domains.
+
+## 3. Check it works
+- The public site loads without errors.
+- Sign in at \`/admin/login\` with an admin address and open the link from the email, on the same device.
+- Send a test reservation from the site; it appears in the admin Inbox.
+- Upload a dish photo and a gallery photo; both show on the site.
+- Switch the specials banner on and off.
+
+## 4. Still the demo's (not generated yet)
+The site's story page, private-events page, hero photos and some wording still come from the Trattoria demo files in \`clients/demo\`, and the Gallery page shows the demo's built-in photos until the client has uploaded their own. Menu, wines, hours, closures, banner, links, uploaded gallery photos and the request inbox all come from this client's own database. Before going live, replace the demo's story, events copy, hero photos and gallery for ${opt.name}.
+`;
+
+mkdirSync(dir, { recursive: true });
+writeFileSync(join(dir, "setup.sql"), sql);
+writeFileSync(join(dir, "ONBOARDING.md"), md);
+console.log(`\nCreated clients/${slug}/setup.sql and clients/${slug}/ONBOARDING.md\nNext: open clients/${slug}/ONBOARDING.md and follow it.\n`);

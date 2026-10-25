@@ -9,7 +9,8 @@
     "lint": "eslint",
     "images": "node scripts/optimize-images.mjs",
     "og": "node scripts/build-og.mjs",
-    "icons": "node scripts/build-icons.mjs"
+    "icons": "node scripts/build-icons.mjs",
+    "new-client": "node scripts/new-client.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

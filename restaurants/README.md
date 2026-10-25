@@ -11,6 +11,7 @@ npm run images             # PNG masters in clients/demo/assets/incoming -> publ
 node scripts/build-manifest.mjs   # rebuild clients/demo/images.json (alt text comes from assets/image-log.md)
 ```
 
+- New client: `npm run new-client -- bella-notte --name "Bella Notte" --admin owner@example.com` writes `clients/bella-notte/setup.sql` (their database) and `ONBOARDING.md` (the checklist).
 - Data comes from `clients/demo/fixtures/trattoria.ts` (typed `SiteData` in `lib/types.ts`).
 - Original PNGs stay out of git (`clients/*/assets/incoming/`); the site serves the optimized JPGs in `public/demo/`.
 - Image log and exact prompts: `clients/demo/assets/image-log.md`, `prompts.md`.

@@ -11,10 +11,10 @@ export default async function AdminLogin({ searchParams }: { searchParams: Promi
   }
   return (
     <main id="main" className="mx-auto flex min-h-svh max-w-sm flex-col justify-center px-6 py-16">
-      <p className="text-xs uppercase tracking-[0.35em] text-cream/70">Trattoria</p>
-      <h1 className="font-heading text-4xl font-semibold">Cinque Lune</h1>
-      <p className="mt-1 font-hand text-3xl text-[#f2b27a]">back of house</p>
-      {error && <p role="alert" className="mt-6 rounded-lg border border-[#f2b27a]/50 px-4 py-3 text-sm">That link did not work or has expired. Request a new one below.</p>}
+      <p className="text-sm uppercase tracking-[0.2em] text-terracotta-deep">Trattoria</p>
+      <h1 className="mt-2 font-heading text-5xl font-semibold leading-none text-espresso">Cinque Lune</h1>
+      <p className="mt-3 font-hand text-3xl text-terracotta-deep">back of house</p>
+      {error && <p role="alert" className="mt-6 rounded-lg border border-wine/40 bg-wine/10 px-4 py-3 text-sm text-wine">That link did not work or has expired. Request a new one below.</p>}
       <LoginForm />
     </main>
   );

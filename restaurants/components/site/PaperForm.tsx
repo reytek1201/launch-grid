@@ -47,7 +47,7 @@ export function Chips({ legend, name, options, value, onChange, required = false
 }
 
 /** What the guest sees once a request is in: a paper ticket with the details and a way to follow up. */
-export function RequestSent({ heading, rows, note, mailHref, telHref, onAgain, againLabel }: {
+export function RequestSent({ heading, rows, note, mailHref, telHref, onAgain, againLabel, delivered }: {
   heading: string;
   rows: [string, string][];
   note: string;
@@ -55,6 +55,8 @@ export function RequestSent({ heading, rows, note, mailHref, telHref, onAgain, a
   telHref: string;
   onAgain: () => void;
   againLabel: string;
+  /** true once the request reached the restaurant's inbox; false means it only exists as an email draft */
+  delivered?: boolean;
 }) {
   const h = useRef<HTMLHeadingElement>(null);
   useEffect(() => { h.current?.focus(); }, []);
@@ -72,8 +74,17 @@ export function RequestSent({ heading, rows, note, mailHref, telHref, onAgain, a
       </dl>
       <p className="mx-auto mt-5 max-w-md text-espresso/85">{note}</p>
       <div className="mt-6 flex flex-wrap justify-center gap-3">
-        <Magnetic><a href={mailHref} className="btn btn-solid">Email this request</a></Magnetic>
-        <Magnetic><a href={telHref} className="btn btn-line-dark">Call to confirm</a></Magnetic>
+        {delivered ? (
+          <>
+            <Magnetic><a href={telHref} className="btn btn-solid">Call to confirm</a></Magnetic>
+            <Magnetic><a href={mailHref} className="btn btn-line-dark">Email us a copy</a></Magnetic>
+          </>
+        ) : (
+          <>
+            <Magnetic><a href={mailHref} className="btn btn-solid">Email this request</a></Magnetic>
+            <Magnetic><a href={telHref} className="btn btn-line-dark">Call to confirm</a></Magnetic>
+          </>
+        )}
       </div>
       <button type="button" onClick={onAgain} className="ink mt-6 text-sm text-espresso/80">{againLabel}</button>
     </div>

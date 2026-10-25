@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 
-export default function Reserve() {
-  const site = getSiteData();
+export default async function Reserve() {
+  const site = await getSiteData();
   return (
     <main id="main">
       <PageHero kicker="Prenota" title="Reserve a table" line="Pick a night. We will save you a seat by the oven." photo="sp-03b" focal="50% 55%" ink="glass" />

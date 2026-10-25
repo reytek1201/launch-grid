@@ -2,25 +2,47 @@
 
 import { useState } from "react";
 import { Magnetic } from "@/components/motion/Magnetic";
+import { submitInquiry } from "@/lib/inquiry";
 import { Moons } from "./Moons";
 
 // Lines on a postcard rather than boxes.
 const line = "mt-1 w-full border-0 border-b border-espresso/40 bg-transparent px-0 py-1.5 text-base text-espresso focus:border-terracotta-deep focus:ring-0";
 
-export function ContactForm({ name }: { name: string }) {
-  const [sent, setSent] = useState(false);
+export function ContactForm({ name, demo = false }: { name: string; demo?: boolean }) {
+  const [sent, setSent] = useState<null | { delivered: boolean }>(null);
+  const [busy, setBusy] = useState(false);
+
+  async function send(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const get = (k: string) => String(f.get(k) ?? "").trim();
+    setBusy(true);
+    const res = await submitInquiry({
+      kind: "contact",
+      summary: `Message from ${get("name") || "a guest"}`,
+      fields: { Name: get("name"), Email: get("email"), Phone: get("phone"), "Party size": get("party"), Message: get("message") },
+    });
+    setBusy(false);
+    setSent({ delivered: res.delivered });
+  }
 
   if (sent) {
     return (
       <div role="status" className="relative px-8 py-14 text-center">
         <p className="font-hand text-6xl text-terracotta-deep">Grazie!</p>
-        <p className="mt-3 text-espresso/85">This is a demo postcard, so nothing was sent. On a live site it would reach the kitchen.</p>
+        <p className="mt-3 text-espresso/85">
+          {sent.delivered
+            ? demo
+              ? "Your postcard reached our demo inbox. This is a demo restaurant, so nobody will write back."
+              : "Your postcard is in. We will write back soon."
+            : "This is a demo postcard, so nothing was sent. On a live site it would reach the kitchen."}
+        </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="grid gap-8 p-6 sm:p-8 md:grid-cols-[1.25fr_1fr] md:gap-0">
+    <form onSubmit={send} className="grid gap-8 p-6 sm:p-8 md:grid-cols-[1.25fr_1fr] md:gap-0">
       {/* Message side: lined paper */}
       <label className="block md:border-r md:border-dashed md:border-espresso/30 md:pr-8">
         <span className="font-hand text-3xl text-terracotta-deep">Cara {name},</span>
@@ -47,7 +69,7 @@ export function ContactForm({ name }: { name: string }) {
           <label className="block text-sm text-espresso/75">Party size<input type="number" min={1} max={20} name="party" className={line} /></label>
         </div>
         <div className="mt-8 text-right">
-          <Magnetic><button type="submit" className="btn btn-solid">Send the postcard</button></Magnetic>
+          <Magnetic><button type="submit" disabled={busy} className="btn btn-solid disabled:opacity-60">{busy ? "Sending…" : "Send the postcard"}</button></Magnetic>
         </div>
       </div>
     </form>

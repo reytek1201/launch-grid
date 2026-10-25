@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 
-export default function Events() {
-  const site = getSiteData();
+export default async function Events() {
+  const site = await getSiteData();
   const events = site.events;
   if (!events) notFound();
 

@@ -16,8 +16,8 @@ export const metadata: Metadata = { title: "Wine cellar", description: "Italian 
 const STONE = "radial-gradient(120% 60% at 50% 0%, #3a2218 0%, transparent 70%), linear-gradient(180deg, #24150f 0%, #170d0a 100%)";
 const SLATE = "radial-gradient(90% 70% at 30% 20%, rgb(255 255 255 / 0.07), transparent 70%), #1f2b26";
 
-export default function Cellar() {
-  const site = getSiteData();
+export default async function Cellar() {
+  const site = await getSiteData();
   const sections = site.cellar.filter((s) => s.wines.length > 0);
   const dish = new Map(site.menu.flatMap((s) => s.items).map((i) => [i.id, i.name]));
   // Abbinamento: every dish some wine is listed with, in menu order, with up to two wines each.

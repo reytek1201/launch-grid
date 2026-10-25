@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 
 const VALUE_INK: InkName[] = ["bread", "lantern", "glass"];
 
-export default function Story() {
-  const site = getSiteData();
+export default async function Story() {
+  const site = await getSiteData();
   const story = site.story;
   if (!story) notFound();
 

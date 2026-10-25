@@ -14,8 +14,8 @@ export const metadata: Metadata = { title: "Hours & location", description: "Ope
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 
-export default function Visit() {
-  const site = getSiteData();
+export default async function Visit() {
+  const site = await getSiteData();
   const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address(site.address))}`;
 
   return (

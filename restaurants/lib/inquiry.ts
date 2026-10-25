@@ -1,3 +1,5 @@
+import { sendRequest } from "@/app/actions";
+
 export type InquiryKind = "reservation" | "event" | "contact";
 
 export type Inquiry = {
@@ -10,15 +12,16 @@ export type Inquiry = {
 export type InquiryResult = { delivered: boolean };
 
 /*
- * The one place a request leaves the browser.
- * Demo build: nothing is sent, the visitor gets an email/phone fallback instead.
- * Backend phase: POST the inquiry to the restaurant's inbox endpoint (Supabase or similar)
- * and return { delivered: true }. The forms already handle both outcomes.
+ * The one place a request leaves the browser. It goes to a server action (app/actions.ts), which
+ * writes it to the restaurant's inbox. If the inbox is not configured or cannot be reached the result is
+ * { delivered: false } and the forms offer "Email this request" / "Call to confirm" instead.
  */
 export async function submitInquiry(inquiry: Inquiry): Promise<InquiryResult> {
-  void inquiry;
-  await new Promise((r) => setTimeout(r, 450));
-  return { delivered: false };
+  try {
+    return await sendRequest(inquiry);
+  } catch {
+    return { delivered: false };
+  }
 }
 
 export function mailtoHref(to: string, subject: string, body: string) {

@@ -14,7 +14,7 @@ const SEATING = ["No preference", "Window booth", "Long communal table", "Bar"];
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 const time12ish = (v: string) => { const [h, m] = v.split(":").map(Number); return `${h % 12 || 12}${m ? `:${String(m).padStart(2, "0")}` : ""} ${h >= 12 ? "pm" : "am"}`; };
 
-type Done = { rows: [string, string][]; mail: string };
+type Done = { rows: [string, string][]; mail: string; delivered: boolean };
 
 // A page from the reservation book: when on the left, who on the right.
 export function ReserveSlip({ site }: { site: SiteData }) {
@@ -55,11 +55,12 @@ export function ReserveSlip({ site }: { site: SiteData }) {
       ["Seating", seating === SEATING[0] ? "" : seating], ["Phone", get("phone")], ["Email", get("email")], ["Notes", get("notes")],
     ];
     setBusy(true);
-    await submitInquiry({ kind: "reservation", summary, fields: Object.fromEntries(lines) });
+    const { delivered } = await submitInquiry({ kind: "reservation", summary, fields: Object.fromEntries(lines) });
     setBusy(false);
     setDone({
       rows: [["Name", get("name")], ["When", when], ["Guests", partyWord(party)], ...(seating !== SEATING[0] ? [["Seating", seating] as [string, string]] : [])],
       mail: mailtoHref(site.email, `Table request: ${summary}`, mailBody(lines)),
+      delivered,
     });
   }
 
@@ -68,7 +69,14 @@ export function ReserveSlip({ site }: { site: SiteData }) {
       <RequestSent
         heading="Grazie!"
         rows={done.rows}
-        note="This is a demo, so nothing was sent. On a live site this request goes straight to the host stand, and we confirm by phone or email."
+        delivered={done.delivered}
+        note={
+          done.delivered
+            ? site.isDemo
+              ? "Your request reached our demo inbox. This is a demo restaurant, so nobody will call you back."
+              : "Your request is in. We confirm by phone or email, usually within a few hours."
+            : "This is a demo, so nothing was sent. On a live site this request goes straight to the host stand, and we confirm by phone or email."
+        }
         mailHref={done.mail}
         telHref={tel(site.phone)}
         onAgain={() => { setDone(null); setTime(""); }}

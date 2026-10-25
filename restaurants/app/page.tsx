@@ -1,8 +1,8 @@
 import { getSiteData } from "@/lib/config";
 import { MealInScroll } from "@/themes/trattoria/signature/MealInScroll";
 
-export default function Home() {
-  const site = getSiteData();
+export default async function Home() {
+  const site = await getSiteData();
   return (
     <main id="main">
       <MealInScroll site={site} />

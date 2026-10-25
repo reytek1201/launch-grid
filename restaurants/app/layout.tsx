@@ -16,24 +16,26 @@ const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces" });
 const source = Source_Sans_3({ subsets: ["latin"], variable: "--font-source" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
-const site = getSiteData();
-
-export const metadata: Metadata = {
-  title: { default: site.name, template: `%s · ${site.name}` },
-  description: `${site.tagline} ${site.blurb}`,
-  applicationName: site.name,
-  appleWebApp: { capable: true, title: site.name, statusBarStyle: "black-translucent" },
-  metadataBase: new URL(siteUrl()),
-  alternates: { canonical: "./" },
-  openGraph: { type: "website", siteName: site.name, locale: "en_US" },
-  twitter: { card: "summary_large_image" },
-  // The demo stays out of search results; a live client site is indexable.
-  robots: site.isDemo ? { index: false, follow: false } : { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteData();
+  return {
+    title: { default: site.name, template: `%s · ${site.name}` },
+    description: `${site.tagline} ${site.blurb}`,
+    applicationName: site.name,
+    appleWebApp: { capable: true, title: site.name, statusBarStyle: "black-translucent" },
+    metadataBase: new URL(siteUrl()),
+    alternates: { canonical: "./" },
+    openGraph: { type: "website", siteName: site.name, locale: "en_US" },
+    twitter: { card: "summary_large_image" },
+    // The demo stays out of search results; a live client site is indexable.
+    robots: site.isDemo ? { index: false, follow: false } : { index: true, follow: true },
+  };
+}
 
 export const viewport: Viewport = { themeColor: "#1a100b", viewportFit: "cover" };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const site = await getSiteData();
   return (
     <html lang="en" className={`${fraunces.variable} ${source.variable} ${caveat.variable}`}>
       <body className="min-h-screen antialiased">

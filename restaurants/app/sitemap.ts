@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 import { getSiteData } from "@/lib/config";
 import { siteUrl } from "@/lib/seo";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const site = getSiteData();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const site = await getSiteData();
   const base = siteUrl();
   const pages: [string, number][] = [
     ["", 1],

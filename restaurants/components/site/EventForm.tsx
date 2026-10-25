@@ -10,7 +10,7 @@ import { Chips, LABEL, LINE, RequestSent } from "./PaperForm";
 import { useToday } from "./useToday";
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
-type Done = { rows: [string, string][]; mail: string };
+type Done = { rows: [string, string][]; mail: string; delivered: boolean };
 const NO_PREF = "Not sure yet";
 
 // The inquiry slip for private events: the night first, then who is asking.
@@ -37,11 +37,12 @@ export function EventForm({ site }: { site: SiteData }) {
       ["Phone", get("phone")], ["Email", get("email")], ["Notes", get("notes")],
     ];
     setBusy(true);
-    await submitInquiry({ kind: "event", summary, fields: Object.fromEntries(lines) });
+    const { delivered } = await submitInquiry({ kind: "event", summary, fields: Object.fromEntries(lines) });
     setBusy(false);
     setDone({
       rows: [["Name", get("name")], ["Occasion", occasion], ["Guests", guests], ...(date ? [["Date", date] as [string, string]] : [])],
       mail: mailtoHref(site.email, `Private event inquiry: ${summary}`, mailBody(lines)),
+      delivered,
     });
   }
 
@@ -50,7 +51,14 @@ export function EventForm({ site }: { site: SiteData }) {
       <RequestSent
         heading="Grazie mille!"
         rows={done.rows}
-        note="This is a demo, so nothing was sent. On a live site our events host calls you back within one working day."
+        delivered={done.delivered}
+        note={
+          done.delivered
+            ? site.isDemo
+              ? "Your inquiry reached our demo inbox. This is a demo restaurant, so nobody will call you back."
+              : "Your inquiry is in. Our events host calls you back within one working day."
+            : "This is a demo, so nothing was sent. On a live site our events host calls you back within one working day."
+        }
         mailHref={done.mail}
         telHref={tel(site.phone)}
         onAgain={() => setDone(null)}

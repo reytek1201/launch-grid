@@ -13,3 +13,4 @@ next-env.d.ts
 # Originals (AI image masters and rejected tries) stay out of the repo.
 # The site uses optimized copies in public/demo/ (npm run images).
 /clients/*/assets/incoming/
+!.env.example

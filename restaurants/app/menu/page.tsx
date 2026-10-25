@@ -12,8 +12,8 @@ const DIVIDER: Record<string, InkName> = { antipasti: "bread", primi: "fork", se
 const WOOD =
   "repeating-linear-gradient(90deg, rgb(255 255 255 / 0.025) 0 2px, transparent 2px 160px), linear-gradient(180deg, #3a2416 0%, #2b1d14 100%)";
 
-export default function Menu() {
-  const site = getSiteData();
+export default async function Menu() {
+  const site = await getSiteData();
   const sections = site.menu.filter((s) => s.items.length > 0);
   const dishPhotos = Object.fromEntries(sections.flatMap((s) => s.items).filter((i) => i.photo && photos[i.photo]).map((i) => [i.photo as string, photos[i.photo as string]]));
   // Reverse of the cellar's pairings: up to two wines per dish, by-the-glass first.

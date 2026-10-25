@@ -79,7 +79,8 @@ for (const d of [PHONE, DESKTOP]) {
   // back office demo: a sold-out switch changes the preview
   await page.locator("#back-office").scrollIntoViewIfNeeded();
   await page.getByRole("switch", { name: "Cacio e pepe sold out" }).click();
-  const sold = await page.locator(".pv .pill").count();
+  // the change lands on the site after the lift-off flight (under a second)
+  const sold = await page.locator(".pv .dish", { hasText: "Cacio e pepe" }).locator(".pill").waitFor({ timeout: 5000 }).then(() => 1, () => 0);
   if (sold !== 1) { bad++; console.log(`FAIL ${d.name} back office demo`); } else console.log(`ok   ${d.name.padEnd(7)} back office demo`);
   await page.locator("#back-office").screenshot({ path: `${SHOTS}/${d.name}-back-office.png` });
 }

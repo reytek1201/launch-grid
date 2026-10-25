@@ -8,7 +8,7 @@ Read first when you need detail: `docs/restaurant-build-plan.md` (status, source
 - `restaurants/` the Next.js app (Next 16, React 19 with React Compiler, Tailwind 4, framer-motion). **`restaurants/AGENTS.md`: this is not the Next.js you know. Read `node_modules/next/dist/docs/` before relying on old habits.**
 - `restaurants/db/NNN_*.sql` numbered migrations, in order. The `new-client` script builds a client's database from these, so every schema change goes here too.
 - `restaurants/clients/<slug>/` one folder per client (`content.ts`, `images.json`, `intake.json`, `setup.sql`); `clients/demo/` is the demo; `clients/_template/intake.example.json` is the intake shape. `NEXT_PUBLIC_CLIENT` picks the folder. Demo fixtures, image log, prompts. `restaurants/qa/` the test kit. `restaurants/scripts/` build and seed scripts, `new-client.mjs`.
-- `docs/` plans. `.claude/commands/` slash commands: `/ship`, `/qa`, `/migration`, `/status`, `/new-client`.
+- `docs/` plans. `.claude/commands/` slash commands: `/ship`, `/qa`, `/migration`, `/status`, `/new-client`, `/launch-check`.
 
 ## Where things live
 - GitHub `reytek1201/launch-grid` (private), branch `main`. Pushing `main` deploys.

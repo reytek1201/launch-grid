@@ -11,6 +11,7 @@
     "og": "node scripts/build-og.mjs",
     "icons": "node scripts/build-icons.mjs",
     "new-client": "node scripts/new-client.mjs",
+    "launch-check": "node scripts/launch-check.mjs",
     "qa": "bash qa/run.sh"
   },
   "dependencies": {

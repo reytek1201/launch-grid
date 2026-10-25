@@ -21,14 +21,20 @@ const navFor = (site: SiteData) => [
 ];
 
 // The specials banner: one solid line at the top of the header, so it moves and hides with it.
-function Strip({ text }: { text?: string }) {
+// Visitors can close it; it stays closed for the visit, and comes back when the message changes.
+function Strip({ text, onClose }: { text?: string; onClose: () => void }) {
   if (!text) return null;
   return (
-    <p role="status" className="bg-terracotta-deep px-4 py-1.5 text-center text-[0.8rem] font-medium leading-snug text-cream sm:text-sm">
+    <div role="status" className="relative bg-terracotta-deep py-1.5 pl-4 pr-12 text-center text-[0.8rem] font-medium leading-snug text-cream sm:text-sm">
       {text}
-    </p>
+      <button type="button" onClick={onClose} aria-label="Close this notice" className="absolute right-1 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full text-cream/90 hover:bg-cream/15 hover:text-cream">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M3 3l10 10M13 3L3 13" /></svg>
+      </button>
+    </div>
   );
 }
+
+const CLOSED_KEY = "banner-closed";
 
 export function SiteHeader({ site }: { site: SiteData }) {
   const path = usePathname();
@@ -36,6 +42,18 @@ export function SiteHeader({ site }: { site: SiteData }) {
   const home = path === "/";
   const hidden = useHideOnScroll(path, true);
   const bar = useRef<HTMLElement>(null);
+  const [closedText, setClosedText] = useState<string | null>(null);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      try { setClosedText(sessionStorage.getItem(CLOSED_KEY)); } catch { /* private mode: it just shows */ }
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+  const banner = site.banner && site.banner !== closedText ? site.banner : undefined;
+  const closeBanner = () => {
+    setClosedText(site.banner ?? null);
+    try { sessionStorage.setItem(CLOSED_KEY, site.banner ?? ""); } catch { /* ignore */ }
+  };
   const phoneBar = useRef<HTMLElement>(null);
   // Inner pages open on a dark hero (data-hero): float over it, turn solid once past it.
   const [overHero, setOverHero] = useState(true);
@@ -80,7 +98,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
 
   const phone = (
     <header ref={phoneBar} className="fixed inset-x-0 top-0 z-40 border-b border-[#b88a3e]/40 bg-[#1a100b]/95 pt-[env(safe-area-inset-top)] text-cream backdrop-blur-md md:hidden">
-      <Strip text={site.banner} />
+      <Strip text={banner} onClose={closeBanner} />
       <div className="flex h-14 items-center justify-between gap-3 px-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="flex items-center gap-2.5 whitespace-nowrap [-webkit-tap-highlight-color:transparent]">
           <span className="flex flex-col leading-none">
@@ -100,7 +118,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
     <>
     {phone}
     <header ref={bar} className={`top-0 z-40 hidden md:block transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
-      <Strip text={site.banner} />
+      <Strip text={banner} onClose={closeBanner} />
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="group flex items-center gap-3 whitespace-nowrap">
           <span className="flex flex-col leading-none">

@@ -48,7 +48,7 @@ export async function sendRequest(inquiry: Inquiry, guard?: Guard): Promise<Inqu
 
   const h = await headers();
   const ip = (h.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
-  const client = createHash("sha256").update(`${ip}|${process.env.SPAM_SALT ?? "cinque-lune"}`).digest("hex").slice(0, 32);
+  const client = createHash("sha256").update(`${ip}|${process.env.SPAM_SALT ?? process.env.NEXT_PUBLIC_CLIENT ?? "site"}`).digest("hex").slice(0, 32);
 
   try {
     const res = await fetch(`${url}/rest/v1/rpc/submit_request`, {

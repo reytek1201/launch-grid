@@ -12,6 +12,7 @@ import { price } from "@/lib/format";
 import type { MenuItem, MenuSection, Photo } from "@/lib/types";
 import type { InkName } from "../signature/Ink";
 import { InkOnView } from "./InkOnView";
+import { brandOf } from "@/lib/brand";
 
 type Diet = "vegetarian" | "vegan" | "gluten-free";
 type WineLink = { id: string; name: string };
@@ -34,7 +35,9 @@ export function MenuBook({
   photos,
   wines,
   dividers,
+  name,
 }: {
+  name: string;
   sections: MenuSection[];
   photos: Record<string, Photo>;
   wines: Record<string, WineLink[]>;
@@ -107,8 +110,8 @@ export function MenuBook({
           <div aria-hidden className="paper-flat absolute inset-0" />
           <div className="relative px-5 pb-12 pt-10 sm:px-12 md:px-16">
             <header className="text-center">
-              <p className="text-[0.7rem] uppercase tracking-[0.4em] text-espresso/70">Trattoria</p>
-              <p className="font-heading text-4xl text-espresso md:text-5xl">Cinque Lune</p>
+              {brandOf(name).kicker && <p className="text-[0.7rem] uppercase tracking-[0.4em] text-espresso/70">{brandOf(name).kicker}</p>}
+              <p className="font-heading text-4xl text-espresso md:text-5xl">{brandOf(name).main}</p>
               <p className="mt-3 text-sm text-espresso/75">
                 <abbr title="vegetarian">V</abbr> vegetarian · <abbr title="vegan">VG</abbr> vegan · <abbr title="gluten-free">GF</abbr> gluten-free · MP market price
               </p>

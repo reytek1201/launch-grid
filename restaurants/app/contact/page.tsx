@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { Reveal } from "@/components/motion/Reveal";
 import { ContactForm } from "@/components/site/ContactForm";
 import { RusticCard } from "@/components/site/RusticCard";
 import { getSiteData } from "@/lib/config";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
+import { brandOf } from "@/lib/brand";
 
-export const metadata: Metadata = { title: "Contact", description: "Send Trattoria Cinque Lune a postcard: questions, parties, hellos. Or call the kitchen." };
+export const generateMetadata = pageMeta("Contact", "contact", (n) => `Get in touch with ${n}: questions, parties, hellos. Or call.`);
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 
@@ -18,7 +19,7 @@ export default async function Contact() {
       <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-[1.6fr_1fr]">
         <Reveal>
           <RusticCard flat className="-rotate-[0.6deg]" pad="p-0">
-            <ContactForm name={site.name.replace("Trattoria ", "")} demo={site.isDemo} />
+            <ContactForm name={brandOf(site.name).main} demo={site.isDemo} />
           </RusticCard>
         </Reveal>
         <Reveal delay={0.1}>

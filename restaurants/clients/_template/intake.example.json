@@ -1,0 +1,43 @@
+{
+  "name": "Bella Notte",
+  "tagline": "Wood-fired pizza and handmade pasta.",
+  "blurb": "A neighborhood kitchen in Decatur. Two ovens, one long bar, and a menu that changes with the market.",
+  "phone": "(404) 555-0100",
+  "email": "hello@bellanotte.example",
+  "address": { "street": "123 Main Street", "city": "Decatur", "state": "GA", "zip": "30030" },
+  "timezone": "America/New_York",
+  "admins": ["owner@bellanotte.example"],
+  "links": { "order": "https://order.toasttab.com/online/bella-notte", "reserve": "" },
+  "reservations": { "maxParty": 8, "lastSeatingMins": 30, "leadHours": 2, "daysAhead": 60 },
+  "hours": {
+    "tue": ["17:00-21:30"], "wed": ["17:00-21:30"], "thu": ["17:00-21:30"],
+    "fri": ["17:00-22:30"], "sat": ["17:00-22:30"],
+    "sun": ["12:00-15:00", "16:00-21:00"]
+  },
+  "closures": [{ "date": "2026-11-26", "label": "Thanksgiving Day" }],
+  "menu": [
+    {
+      "title": "Antipasti",
+      "items": [
+        { "name": "Burrata", "description": "Roasted tomatoes, basil, olive oil", "price": 14, "tags": ["vegetarian"] },
+        { "name": "Carpaccio", "description": "Rocket, shaved parmigiano", "price": 16, "tags": ["gluten-free"] }
+      ]
+    },
+    {
+      "title": "Primi",
+      "note": "Pasta made by hand each morning.",
+      "items": [
+        { "name": "Cacio e pepe", "description": "Spaghetti, pecorino, black pepper", "price": 19, "tags": ["vegetarian"] },
+        { "name": "Catch of the day", "description": "Ask your server", "price": "MP" }
+      ]
+    }
+  ],
+  "wines": [
+    {
+      "title": "Rossi",
+      "wines": [
+        { "name": "Chianti Classico", "producer": "Fontodi", "region": "Tuscany", "grape": "Sangiovese", "vintage": 2021, "glass": 14, "bottle": 56, "notes": "Cherry, leather, a little smoke", "pick": true }
+      ]
+    }
+  ]
+}

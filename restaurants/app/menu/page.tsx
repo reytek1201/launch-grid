@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { JsonLd } from "@/components/site/JsonLd";
 import { getSiteData, photos } from "@/lib/config";
 import type { Photo } from "@/lib/types";
@@ -7,7 +7,7 @@ import { MenuBook } from "@/themes/trattoria/pages/MenuBook";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import type { InkName } from "@/themes/trattoria/signature/Ink";
 
-export const metadata: Metadata = { title: "Menu", description: "Antipasti, primi, secondi and dolci at Trattoria Cinque Lune." };
+export const generateMetadata = pageMeta("Menu", "menu", (n) => `The menu at ${n}.`);
 
 const DIVIDER: Record<string, InkName> = { antipasti: "bread", primi: "fork", secondi: "plate", dolci: "cup", bevande: "glass" };
 const WOOD =
@@ -51,7 +51,7 @@ export default async function Menu() {
         </div>
       )}
 
-      <MenuBook sections={sections} photos={dishPhotos} wines={wines} dividers={DIVIDER} />
+      <MenuBook name={site.name} sections={sections} photos={dishPhotos} wines={wines} dividers={DIVIDER} />
     </main>
   );
 }

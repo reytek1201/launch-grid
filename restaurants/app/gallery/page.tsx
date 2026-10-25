@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { getSiteData, photos } from "@/lib/config";
 import { CHAPTERS } from "@/lib/gallery";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import { GalleryLine, type LineChapter } from "@/themes/trattoria/pages/GalleryLine";
 
-export const metadata: Metadata = { title: "Gallery", description: "The room, the kitchen, the cellar and the table at Trattoria Cinque Lune." };
+export const generateMetadata = pageMeta("Gallery", "gallery", (n) => `Photos of the room, the kitchen and the table at ${n}.`);
 
 // A short walk through the restaurant, hung on a line. Dish shots live on the menu.
 const LINE: { id: string; title: string; line: string; photos: [string, string][] }[] = [

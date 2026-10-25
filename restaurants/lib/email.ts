@@ -3,11 +3,11 @@ import "server-only";
 /**
  * Email through Resend's REST API (no extra package), same setup as Funkharp.
  *   RESEND_API_KEY   required; without it nothing is sent and nothing breaks
- *   EMAIL_FROM       "Trattoria Cinque Lune <requests@yourdomain.com>" once the domain is verified in Resend.
+ *   EMAIL_FROM       "Your Restaurant <requests@yourdomain.com>" once the domain is verified in Resend.
  *                    Until then Resend's test sender works, but only to the Resend account owner.
  *   EMAIL_ALERTS_TO  who is told about each new request (comma-separated list allowed). Nothing is sent without it.
  */
-const FALLBACK_FROM = "Trattoria Cinque Lune <onboarding@resend.dev>";
+const FALLBACK_FROM = "Website requests <onboarding@resend.dev>";
 
 export const alertsConfigured = () => Boolean(process.env.RESEND_API_KEY && process.env.EMAIL_ALERTS_TO);
 

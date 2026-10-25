@@ -5,6 +5,7 @@ import type { SiteData } from "@/lib/types";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { Moons } from "./Moons";
 import { SOCIAL } from "./social";
+import { brandOf } from "@/lib/brand";
 
 const tel = (phone: string) => `tel:+1${phone.replace(/\D/g, "")}`;
 const pagesFor = (site: SiteData) => [
@@ -34,8 +35,8 @@ export function SiteFooter({ site }: { site: SiteData }) {
         <div>
           <Link href="/" className="inline-flex items-center gap-3">
             <span className="flex flex-col leading-none">
-              <span className="text-[0.65rem] uppercase tracking-[0.35em] text-cream/80">Trattoria</span>
-              <span className="font-heading text-3xl font-semibold tracking-tight">Cinque Lune</span>
+              {brandOf(site.name).kicker && <span className="text-[0.65rem] uppercase tracking-[0.35em] text-cream/80">{brandOf(site.name).kicker}</span>}
+              <span className="font-heading text-3xl font-semibold tracking-tight">{brandOf(site.name).main}</span>
             </span>
             <Moons id="moon-foot" className="h-3 w-auto text-[#f2b27a]" />
           </Link>

@@ -6,7 +6,7 @@ import { GlowStrip } from "@/components/site/GlowStrip";
 import { usePassing } from "./useScene";
 
 // A breath between the door and the first course: the five moons, drifting.
-export function LanternStrip() {
+export function LanternStrip({ text }: { text: string }) {
   const { ref, progress } = usePassing();
   const y = useTransform(progress, [0, 1], ["-14%", "14%"]);
   const textX = useTransform(progress, [0, 1], ["12%", "-12%"]);
@@ -21,7 +21,7 @@ export function LanternStrip() {
             className="absolute inset-x-0 bottom-[10%] px-4 text-center font-hand text-3xl text-cream drop-shadow md:whitespace-nowrap md:text-6xl"
             style={{ x: textX }}
           >
-            Cinque lune, una tavola lunga.
+            {text}
           </motion.p>
         </div>
       </GlowStrip>

@@ -9,6 +9,7 @@ import { OpenSign } from "@/components/site/OpenSign";
 import type { SiteData } from "@/lib/types";
 import { Ink } from "./Ink";
 import { useScene } from "./useScene";
+import { brandOf } from "@/lib/brand";
 
 
 /*
@@ -70,7 +71,7 @@ function Frame({ site, p, still, show = "both" }: { site: SiteData; p: MotionVal
         className="pointer-events-none absolute bottom-[8%] left-0 whitespace-nowrap font-heading text-[26vw] leading-none text-transparent [-webkit-text-stroke:1.5px_var(--color-cream)] md:text-[18vw]"
         style={{ x: ghostX, opacity: ghostOpacity }}
       >
-        Cinque Lune
+        {brandOf(site.name).main}
       </motion.p>
 
       {/* Foreground ink, moving faster than the photo */}

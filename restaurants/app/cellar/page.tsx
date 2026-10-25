@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { Flourish } from "@/components/motion/Flourish";
 import { Reveal } from "@/components/motion/Reveal";
@@ -8,10 +8,11 @@ import type { Wine } from "@/lib/types";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import { type PourCourse, PourScene, type PourWine } from "@/themes/trattoria/pages/PourScene";
+import { brandOf } from "@/lib/brand";
 
 const KIND: Record<string, PourWine["kind"]> = { bollicine: "sparkling", bianchi: "white", rosati: "rose", rossi: "red", dolci: "sweet" };
 
-export const metadata: Metadata = { title: "Wine cellar", description: "Italian wines by the glass and by the bottle at Trattoria Cinque Lune." };
+export const generateMetadata = pageMeta("Wine cellar", "cellar", (n) => `The wine list at ${n}, by the glass and by the bottle.`);
 
 const STONE = "radial-gradient(120% 60% at 50% 0%, #3a2218 0%, transparent 70%), linear-gradient(180deg, #24150f 0%, #170d0a 100%)";
 const SLATE = "radial-gradient(90% 70% at 30% 20%, rgb(255 255 255 / 0.07), transparent 70%), #1f2b26";
@@ -125,7 +126,7 @@ export default async function Cellar() {
           <div className="relative px-5 pb-12 pt-10 sm:px-12 md:px-16">
             <header className="text-center">
               <p className="text-[0.7rem] uppercase tracking-[0.4em] text-espresso/70">Libro dei vini</p>
-              <p className="font-heading text-4xl text-espresso md:text-5xl">Cinque Lune</p>
+              <p className="font-heading text-4xl text-espresso md:text-5xl">{brandOf(site.name).main}</p>
               <p className="mt-3 text-sm text-espresso/75">Glass 5 oz · Bottle 750 ml · All wines Italian</p>
             </header>
 

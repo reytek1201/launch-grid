@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { Reveal } from "@/components/motion/Reveal";
@@ -9,10 +9,7 @@ import { getSiteData } from "@/lib/config";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 
-export const metadata: Metadata = {
-  title: "Reserve a table",
-  description: "Request a table at Trattoria Cinque Lune: pick a date, a time and how many of you are coming.",
-};
+export const generateMetadata = pageMeta("Reserve a table", "reserve", (n) => `Request a table at ${n}: pick a date, a time and how many of you are coming.`);
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 

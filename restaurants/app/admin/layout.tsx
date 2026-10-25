@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { getSiteData } from "@/lib/config";
 import { getAdmin } from "@/lib/admin";
 import { AdminBar } from "./AdminBar";
+import { brandOf } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: { default: "Admin", template: "%s · Admin" },
@@ -19,7 +20,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   ]);
   return (
     <div className="min-h-svh bg-cream pb-28 text-espresso md:pb-0">
-      <AdminBar name={site.name.replace("Trattoria ", "")} newCount={count ?? 0} />
+      <AdminBar name={brandOf(site.name).main} newCount={count ?? 0} />
       {children}
     </div>
   );

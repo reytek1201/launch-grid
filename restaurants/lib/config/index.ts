@@ -1,9 +1,10 @@
 import type { Closure, DayHours, MenuItem, MenuSection, Photo, SiteData, Wine, WineSection } from "@/lib/types";
-import { trattoria } from "@/clients/demo/fixtures/trattoria";
-import images from "@/clients/demo/images.json";
 
-// One deploy per client: set NEXT_PUBLIC_CLIENT. Only "demo" exists so far.
+// One deploy per client: set NEXT_PUBLIC_CLIENT to the folder name under clients/. Each client folder has a content.ts
+// exporting `site` (the fallback and the copy the database does not hold: story, events, meta) and `images` (its photo list).
 export const CLIENT = process.env.NEXT_PUBLIC_CLIENT ?? "demo";
+const content = (await import(`@/clients/${CLIENT}/content`)) as { site: SiteData; images: Record<string, Photo> };
+const trattoria: SiteData = content.site; // the client's own fixtures
 
 /*
  * Where the restaurant's content lives.
@@ -146,7 +147,7 @@ export async function getSiteData(): Promise<SiteData> {
   }
 }
 
-export const photos = images as Record<string, Photo>;
+export const photos = content.images;
 
 export function getPhoto(key: string | undefined): Photo | undefined {
   return key ? photos[key.toLowerCase()] : undefined;

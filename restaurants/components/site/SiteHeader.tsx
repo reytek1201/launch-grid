@@ -8,6 +8,7 @@ import { useHideOnScroll } from "@/components/motion/useHideOnScroll";
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
 import { isActive } from "./nav";
+import { brandOf } from "@/lib/brand";
 
 // Pages that exist only when the client has the content for them.
 const navFor = (site: SiteData) => [
@@ -39,6 +40,7 @@ const CLOSED_KEY = "banner-closed";
 export function SiteHeader({ site }: { site: SiteData }) {
   const path = usePathname();
   const links = navFor(site);
+  const brand = brandOf(site.name);
   const home = path === "/";
   const hidden = useHideOnScroll(path, true);
   const bar = useRef<HTMLElement>(null);
@@ -102,8 +104,8 @@ export function SiteHeader({ site }: { site: SiteData }) {
       <div className="flex h-14 items-center justify-between gap-3 px-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="flex items-center gap-2.5 whitespace-nowrap [-webkit-tap-highlight-color:transparent]">
           <span className="flex flex-col leading-none">
-            <span className="text-[0.6rem] uppercase tracking-[0.35em] text-cream/80">Trattoria</span>
-            <span className="font-heading text-[1.35rem] font-semibold tracking-tight">Cinque Lune</span>
+            {brand.kicker && <span className="text-[0.6rem] uppercase tracking-[0.35em] text-cream/80">{brand.kicker}</span>}
+            <span className="font-heading text-[1.35rem] font-semibold tracking-tight">{brand.main}</span>
           </span>
           <Moons className="h-2.5 w-auto text-[#f2b27a]" />
         </Link>
@@ -122,8 +124,8 @@ export function SiteHeader({ site }: { site: SiteData }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="group flex items-center gap-3 whitespace-nowrap">
           <span className="flex flex-col leading-none">
-            <span className="text-[0.65rem] uppercase tracking-[0.35em] opacity-80">Trattoria</span>
-            <span className="font-heading text-[1.7rem] font-semibold tracking-tight">Cinque Lune</span>
+            {brand.kicker && <span className="text-[0.65rem] uppercase tracking-[0.35em] opacity-80">{brand.kicker}</span>}
+            <span className="font-heading text-[1.7rem] font-semibold tracking-tight">{brand.main}</span>
           </span>
           <Moons className={`h-3 w-auto transition-transform max-lg:hidden duration-[250ms] group-hover:scale-110 ${dark ? "text-[#f2b27a]" : "text-terracotta"}`} />
         </Link>

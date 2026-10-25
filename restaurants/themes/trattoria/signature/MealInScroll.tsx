@@ -41,7 +41,7 @@ export function MealInScroll({ site }: { site: SiteData }) {
   return (
     <>
       <DoorScene site={site} />
-      <LanternStrip />
+      <LanternStrip text={site.motto ?? site.tagline} />
       {courses.length === 0 ? (
         <section className="px-6 py-20 text-center"><Link href="/menu" className="ink text-xl font-semibold text-terracotta-deep">See the menu</Link></section>
       ) : (

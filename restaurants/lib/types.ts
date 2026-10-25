@@ -94,6 +94,10 @@ export type SiteData = {
   uploads?: Record<string, Photo>;
   events?: EventsData;
   story?: StoryData;
+  /** the handwritten line drifting over the lantern photo on the home page (falls back to the tagline) */
+  motto?: string;
+  /** per-page search descriptions that replace the generic ones (keys: menu, cellar, story, visit, events, gallery, contact, reserve) */
+  meta?: Partial<Record<string, string>>;
   tier: Tier;
   isDemo: boolean;
 };

@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getSiteData } from "@/lib/config";
+import { brandOf } from "@/lib/brand";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const site = await getSiteData();
   return {
     name: site.name,
-    short_name: "Cinque Lune",
+    short_name: brandOf(site.name).main,
     description: site.tagline,
     start_url: "/",
     display: "standalone",

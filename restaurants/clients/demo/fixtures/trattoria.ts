@@ -93,6 +93,17 @@ export const trattoria: SiteData = {
   reservations: { maxParty: 8, lastSeatingMins: 90, leadHours: 2, daysAhead: 90 },
   events,
   story,
+  motto: "Cinque lune, una tavola lunga.",
+  meta: {
+    story: "Five generations, one Sunday sauce: how a pantry in the hills became Trattoria Cinque Lune.",
+    visit: "Opening hours, address, parking and directions for Trattoria Cinque Lune. Look for the olive-green door.",
+    cellar: "Italian wines by the glass and by the bottle at Trattoria Cinque Lune.",
+    events: "Birthdays, rehearsal dinners and team dinners at Trattoria Cinque Lune: a long table, a wood-fired oven and a menu built around your night.",
+    menu: "Antipasti, primi, secondi and dolci at Trattoria Cinque Lune.",
+    gallery: "The room, the kitchen, the cellar and the table at Trattoria Cinque Lune.",
+    contact: "Send Trattoria Cinque Lune a postcard: questions, parties, hellos. Or call the kitchen.",
+    reserve: "Request a table at Trattoria Cinque Lune: pick a date, a time and how many of you are coming.",
+  },
   tier: demoConfig.tier,
   isDemo: demoConfig.isDemo,
 };

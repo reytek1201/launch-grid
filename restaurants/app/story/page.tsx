@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Magnetic } from "@/components/motion/Magnetic";
@@ -11,10 +11,7 @@ import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 import { StoryTimeline } from "@/themes/trattoria/pages/StoryTimeline";
 
-export const metadata: Metadata = {
-  title: "Our story",
-  description: "Five generations, one Sunday sauce: how a pantry in the hills became Trattoria Cinque Lune.",
-};
+export const generateMetadata = pageMeta("Our story", "story", (n) => `The story of ${n}: where it began and what the table stands for.`);
 
 const VALUE_INK: InkName[] = ["bread", "lantern", "glass"];
 

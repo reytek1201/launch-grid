@@ -5,6 +5,7 @@
 //
 // Options: --admin a@x.com,b@y.com (required: who may sign in to the admin; add your own address too if you want in)
 //          --name "Restaurant name" (required)   --phone "(404) 555-0100"   --city Atlanta   --state GA   --zip 30303
+//          --intake clients/bella-notte/intake.json   everything above plus menu, wines, hours, closures, links (see clients/_template/intake.example.json); flags override it
 //          --street "123 Main St"   --timezone America/New_York   --email hello@restaurant.com (public contact email)
 //
 // Writes clients/<slug>/setup.sql (run it once in the Supabase SQL editor, in the project that will hold this client)
@@ -14,6 +15,7 @@ import { randomBytes } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { contentTs, readIntake, seedSql } from "./intake.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const die = (m) => {
@@ -31,21 +33,35 @@ for (let i = 0; i < rest.length; i += 2) {
   if (!rest[i]?.startsWith("--") || rest[i + 1] === undefined) die(`Expected "--option value", got "${rest[i] ?? ""}".`);
   opt[rest[i].slice(2)] = rest[i + 1];
 }
-const known = ["name", "admin", "phone", "city", "state", "zip", "street", "timezone", "email"];
+const known = ["intake", "name", "admin", "phone", "city", "state", "zip", "street", "timezone", "email"];
 for (const k of Object.keys(opt)) if (!known.includes(k)) die(`Unknown option --${k}. Known: ${known.map((x) => `--${x}`).join(", ")}`);
-if (!opt.name) die("--name is required.");
-if (!opt.admin) die("--admin is required: the email address(es) that may sign in to the admin, separated by commas.");
 
-const admins = opt.admin.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
-const EMAIL = /^[^@\s']+@[^@\s']+\.[^@\s']+$/;
-for (const a of admins) if (!EMAIL.test(a)) die(`"${a}" is not a valid email address.`);
+// Everything about the restaurant comes from one object: the intake file if given, else the flags.
+let raw = {};
+if (opt.intake) {
+  try { raw = JSON.parse(readFileSync(opt.intake, "utf8")); } catch (e) { die(`Cannot read ${opt.intake}: ${e.message}`); }
+}
+const flag = { name: opt.name, phone: opt.phone, email: opt.email, timezone: opt.timezone, admins: opt.admin };
+for (const [k, v] of Object.entries(flag)) if (v !== undefined) raw[k] = v;
+raw.address = { ...(raw.address ?? {}), ...Object.fromEntries(["street", "city", "state", "zip"].filter((k) => opt[k] !== undefined).map((k) => [k, opt[k]])) };
+if (!opt.intake) {
+  // Without an intake file, fill what the flags leave out with obvious placeholders to edit later in the admin.
+  raw.phone ??= "(404) 555-0100";
+  raw.address = { street: "123 Main Street", city: "Atlanta", state: "GA", zip: "30303", ...raw.address };
+  raw.email ??= String(raw.admins ?? "").split(",")[0].trim();
+  raw.hours ??= { tue: ["17:00-21:00"], wed: ["17:00-21:00"], thu: ["17:00-21:00"], fri: ["17:00-21:00"], sat: ["17:00-21:00"] };
+}
+const parsed = readIntake(raw);
+if (parsed.errors.length) die(`The intake has ${parsed.errors.length} problem(s). Nothing was changed:\n  - ${parsed.errors.join("\n  - ")}`);
+const D = parsed.data;
+opt.name = D.name;
+const admins = D.admins;
 
 const dir = join(root, "clients", slug);
 if (existsSync(dir)) die(`clients/${slug} already exists. Nothing was changed.`);
 
 const schema = slug.replace(/-/g, "_");
 const bucket = slug;
-const q = (v) => `'${String(v).replace(/'/g, "''")}'`;
 
 // The demo's migrations, renamed for this client.
 let sql = readdirSync(join(root, "db"))
@@ -66,27 +82,9 @@ let sql = readdirSync(join(root, "db"))
   .replaceAll("for the whole demo", "for the whole site")
   .replaceAll("the demo restaurant", opt.name);
 
-const o = {
-  tagline: "Edit this tagline in the admin.",
-  blurb: "Tell guests what makes this place worth the trip. Edit this in the admin.",
-  street: opt.street ?? "123 Main Street",
-  city: opt.city ?? "Atlanta",
-  state: opt.state ?? "GA",
-  zip: opt.zip ?? "30303",
-  phone: opt.phone ?? "(404) 555-0100",
-  email: opt.email ?? admins[0],
-  timezone: opt.timezone ?? "America/New_York",
-};
 sql += `
 -- ───── this client ─────
-insert into ${schema}.settings (id, name, tagline, blurb, street, city, state, zip, phone, email, timezone, max_party, last_seating_mins, lead_hours, days_ahead)
-values (1, ${[opt.name, o.tagline, o.blurb, o.street, o.city, o.state, o.zip, o.phone, o.email, o.timezone].map(q).join(", ")}, 8, 30, 2, 60);
-
--- Starting hours (Tuesday to Saturday, 5 to 9 pm). The owner edits them under Hours in the admin.
-insert into ${schema}.hours_weekly (day, open_at, close_at, sort) values (2,'17:00','21:00',0),(3,'17:00','21:00',0),(4,'17:00','21:00',0),(5,'17:00','21:00',0),(6,'17:00','21:00',0);
-
-insert into ${schema}.admin_users (email) values ${admins.map((a) => `(${q(a)})`).join(", ")};
-`;
+${seedSql(schema, D)}`;
 
 const salt = randomBytes(16).toString("hex");
 const md = `# Onboarding: ${opt.name}
@@ -126,11 +124,17 @@ Admins who may sign in: ${admins.join(", ")}.
 - Upload a dish photo and a gallery photo; both show on the site.
 - Switch the specials banner on and off.
 
-## 4. Still the demo's (not generated yet)
-The site's story page, private-events page, hero photos and some wording still come from the Trattoria demo files in \`clients/demo\`, and the Gallery page shows the demo's built-in photos until the client has uploaded their own. Menu, wines, hours, closures, banner, links, uploaded gallery photos and the request inbox all come from this client's own database. Before going live, replace the demo's story, events copy, hero photos and gallery for ${opt.name}.
+## 4. Still to do for ${opt.name}
+- **Photos.** The site shows the template's sample photos until \`clients/${slug}/images.json\` lists this restaurant's own (files go in \`public/${slug}/\`). Run \`/launch-check\` before going live; it flags sample photos.
+- **Story and private-events pages.** They are off until \`clients/${slug}/content.ts\` has \`story\` and \`events\` (copy them from \`clients/demo/fixtures\` as a shape guide and write the client's own).
+- **Wording and look.** The Trattoria theme's own copy ("Libro dei vini", "Cinque lune, una tavola lunga") is Italian-restaurant flavor; a different cuisine needs its own theme.
+- Menu, wines, hours, closures, links, banner, uploaded gallery photos and the request inbox come from this client's own database and are already seeded from the intake.
 `;
 
 mkdirSync(dir, { recursive: true });
 writeFileSync(join(dir, "setup.sql"), sql);
+writeFileSync(join(dir, "content.ts"), contentTs(slug, D));
+writeFileSync(join(dir, "images.json"), "{}\n");
+writeFileSync(join(dir, "intake.json"), JSON.stringify(raw, null, 2) + "\n");
 writeFileSync(join(dir, "ONBOARDING.md"), md);
-console.log(`\nCreated clients/${slug}/setup.sql and clients/${slug}/ONBOARDING.md\nNext: open clients/${slug}/ONBOARDING.md and follow it.\n`);
+console.log(`\nCreated clients/${slug}/ (setup.sql, content.ts, images.json, intake.json, ONBOARDING.md)\nNext: open clients/${slug}/ONBOARDING.md and follow it.\n`);

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { Reveal } from "@/components/motion/Reveal";
@@ -10,7 +10,7 @@ import { DoorSign } from "@/themes/trattoria/pages/DoorSign";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 
-export const metadata: Metadata = { title: "Hours & location", description: "Opening hours, address, parking and directions for Trattoria Cinque Lune. Look for the olive-green door." };
+export const generateMetadata = pageMeta("Hours & location", "visit", (n) => `Opening hours, address and directions for ${n}.`);
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 

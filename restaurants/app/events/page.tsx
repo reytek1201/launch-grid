@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { notFound } from "next/navigation";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Magnetic } from "@/components/motion/Magnetic";
@@ -10,10 +10,7 @@ import { price } from "@/lib/format";
 import { InkOnView } from "@/themes/trattoria/pages/InkOnView";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
 
-export const metadata: Metadata = {
-  title: "Private events",
-  description: "Birthdays, rehearsal dinners and team dinners at Trattoria Cinque Lune: a long table, a wood-fired oven and a menu built around your night.",
-};
+export const generateMetadata = pageMeta("Private events", "events", (n) => `Birthdays, rehearsal dinners and team dinners at ${n}: ask about a private table or room.`);
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 

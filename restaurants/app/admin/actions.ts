@@ -208,6 +208,20 @@ export async function addItem(sectionId: string, form: FormData) {
   done("/admin/menu");
 }
 
+/* ───────── specials banner ───────── */
+
+export async function saveBanner(form: FormData) {
+  const { supabase } = await requireAdmin();
+  const text = str(form, "text").slice(0, 140);
+  const on = form.get("on") === "on";
+  const until = str(form, "until");
+  if (on && !text) fail("/admin", "Write the banner message first, or switch it off.");
+  if (until && !/^\d{4}-\d{2}-\d{2}$/.test(until)) fail("/admin", "That date was not understood.");
+  const { error } = await supabase.from("settings").update({ banner_text: orNull(text), banner_on: on, banner_until: orNull(until) }).eq("id", 1);
+  check("/admin", error);
+  done("/admin");
+}
+
 /* ───────── dish photos ───────── */
 
 const BUCKET = "trattoria-demo";

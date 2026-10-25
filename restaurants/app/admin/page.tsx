@@ -3,16 +3,16 @@ import { getAdmin } from "@/lib/admin";
 import { getSiteData } from "@/lib/config";
 import { openStatus } from "@/lib/hours";
 import { redirect } from "next/navigation";
-import { setSoldOut, signOut } from "./actions";
+import { saveBanner, setSoldOut, signOut } from "./actions";
 import { ago, KIND, type Req } from "./ago";
 import { Submit } from "./submit";
-import { btn, Card } from "./ui";
+import { Banner, btn, btnPrimary, Card, Field, input } from "./ui";
 
 export const dynamic = "force-dynamic";
 
 function Tile({ href, label, value, note, hot = false }: { href: string; label: string; value: string; note: string; hot?: boolean }) {
   return (
-    <Link href={href} className={`group block min-w-0 rounded-2xl border p-4transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgb(43_29_20/0.12)] active:scale-[0.99] ${hot ? "border-terracotta/40 bg-[linear-gradient(150deg,#fff7ea,#f6e4cf)]" : "border-espresso/10 bg-paper"}`}>
+    <Link href={href} className={`group block min-w-0 rounded-2xl border p-4 transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgb(43_29_20/0.12)] active:scale-[0.99] ${hot ? "border-terracotta/40 bg-[linear-gradient(150deg,#fff7ea,#f6e4cf)]" : "border-espresso/10 bg-paper"}`}>
       <p className="text-xs uppercase tracking-[0.18em] text-espresso/65">{label}</p>
       <p className="mt-2 break-words font-heading text-2xl font-semibold leading-tight text-espresso sm:text-3xl">{value}</p>
       <p className="mt-2 text-sm text-espresso/75">{note}</p>
@@ -20,7 +20,7 @@ function Tile({ href, label, value, note, hot = false }: { href: string; label: 
   );
 }
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const me = await getAdmin();
   if (!me) redirect("/admin/login");
   if (!me.isAdmin) {
@@ -33,13 +33,16 @@ export default async function Home() {
     );
   }
   const { supabase } = me;
+  const { error } = await searchParams;
   const site = await getSiteData();
-  const [reqs, newCount, dishes, wines] = await Promise.all([
+  const [reqs, newCount, dishes, wines, banner] = await Promise.all([
     supabase.from("requests").select("*").order("created_at", { ascending: false }).limit(5),
     supabase.from("requests").select("id", { count: "exact", head: true }).eq("status", "new"),
     supabase.from("menu_items").select("id,name").eq("sold_out", true).order("name"),
     supabase.from("wines").select("id,name").eq("sold_out", true).order("name"),
+    supabase.from("settings").select("banner_text,banner_on,banner_until").eq("id", 1).single(),
   ]);
+  const b = (banner.data ?? {}) as { banner_text: string | null; banner_on: boolean; banner_until: string | null };
   const latest = (reqs.data ?? []) as Req[];
   const fresh = newCount.count ?? 0;
   const out = [
@@ -65,7 +68,28 @@ export default async function Home() {
         <Tile href="/admin/hours" label="Next closure" value={upcoming ? upcoming.label : "None"} note={upcoming ? upcoming.date : "No holidays set"} />
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <Banner error={error} />
+
+      <Card className="mt-6">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-heading text-xl font-semibold">Specials banner</h2>
+          <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${site.banner ? "bg-olive/15 text-olive" : "bg-espresso/10 text-espresso/80"}`}>{site.banner ? "Showing on the site" : "Not showing"}</span>
+        </div>
+        <p className="mt-1 text-sm text-espresso/75">One short line across the top of every page: tonight&apos;s special, a holiday notice, a private event.</p>
+        <form action={saveBanner} className="mt-3 grid gap-3 sm:grid-cols-2">
+          <Field label="Message (up to 140 characters)" className="sm:col-span-2">
+            <textarea name="text" defaultValue={b.banner_text ?? ""} rows={2} maxLength={140} placeholder="Tonight: ossobuco with saffron risotto. Closed Thanksgiving Day." className={`${input} field-sizing-content min-h-20`} />
+          </Field>
+          <Field label="Hide it after (optional)"><input type="date" name="until" defaultValue={b.banner_until ?? ""} className={input} /></Field>
+          <label className="flex min-h-11 cursor-pointer items-center gap-3 self-end rounded-xl border border-espresso/25 bg-white/50 px-3.5 text-espresso has-[:checked]:border-terracotta-deep has-[:checked]:bg-terracotta/10">
+            <input type="checkbox" name="on" defaultChecked={b.banner_on} className="h-5 w-5 accent-[#9A3F20]" />
+            Show it on the site
+          </label>
+          <div className="sm:col-span-2"><Submit className={btnPrimary}>Save banner</Submit></div>
+        </form>
+      </Card>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <Card>
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-heading text-xl font-semibold">Latest requests</h2>

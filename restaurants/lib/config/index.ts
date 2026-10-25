@@ -94,6 +94,10 @@ async function fromDatabase(): Promise<SiteData> {
       })),
   }));
 
+  const todayLocal = new Intl.DateTimeFormat("en-CA", { timeZone: s.timezone as string }).format(new Date());
+  const bannerText = ((s.banner_text as string | null) ?? "").trim();
+  const bannerLive = Boolean(s.banner_on) && bannerText !== "" && (!s.banner_until || (s.banner_until as string) >= todayLocal);
+
   const week: DayHours[] = ([0, 1, 2, 3, 4, 5, 6] as const).map((day) => ({
     day,
     intervals: hours.filter((h) => h.day === day).map((h) => ({ open: hhmm(h.open_at as string), close: hhmm(h.close_at as string) })),
@@ -119,6 +123,7 @@ async function fromDatabase(): Promise<SiteData> {
     closures: closed,
     menu,
     cellar,
+    banner: bannerLive ? bannerText : undefined,
     uploads,
   };
 }

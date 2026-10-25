@@ -20,6 +20,16 @@ const navFor = (site: SiteData) => [
   { href: "/contact", label: "Contact" },
 ];
 
+// The specials banner: one solid line at the top of the header, so it moves and hides with it.
+function Strip({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <p role="status" className="bg-terracotta-deep px-4 py-1.5 text-center text-[0.8rem] font-medium leading-snug text-cream sm:text-sm">
+      {text}
+    </p>
+  );
+}
+
 export function SiteHeader({ site }: { site: SiteData }) {
   const path = usePathname();
   const links = navFor(site);
@@ -70,6 +80,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
 
   const phone = (
     <header ref={phoneBar} className="fixed inset-x-0 top-0 z-40 border-b border-[#b88a3e]/40 bg-[#1a100b]/95 pt-[env(safe-area-inset-top)] text-cream backdrop-blur-md md:hidden">
+      <Strip text={site.banner} />
       <div className="flex h-14 items-center justify-between gap-3 px-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="flex items-center gap-2.5 whitespace-nowrap [-webkit-tap-highlight-color:transparent]">
           <span className="flex flex-col leading-none">
@@ -89,6 +100,7 @@ export function SiteHeader({ site }: { site: SiteData }) {
     <>
     {phone}
     <header ref={bar} className={`top-0 z-40 hidden md:block transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${hidden ? "-translate-y-full" : "translate-y-0"} ${skin}`}>
+      <Strip text={site.banner} />
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
         <Link href="/" onClick={(e) => { if (path === "/") { e.preventDefault(); scrollToTop(); } }} className="group flex items-center gap-3 whitespace-nowrap">
           <span className="flex flex-col leading-none">

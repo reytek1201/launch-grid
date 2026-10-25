@@ -84,6 +84,8 @@ export type SiteData = {
   menu: MenuSection[];
   cellar: WineSection[];
   reservations: ReservationRules;
+  /** one line shown at the top of every page while the specials banner is on */
+  banner?: string;
   /** photos uploaded in the admin, by the key a dish's `photo` points to */
   uploads?: Record<string, Photo>;
   events?: EventsData;

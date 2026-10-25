@@ -219,12 +219,17 @@ export function MenuBook({
               animate={{ opacity: 1, x: 0 }}
               exit={calm ? undefined : { opacity: 0, x: -40 * dir }}
               transition={{ duration: 0.3, ease: EASE }}
-              className="grid overflow-hidden bg-[#f4ead3] shadow-[0_30px_60px_rgb(0_0_0/0.6)] md:grid-cols-[1.15fr_1fr]"
+              className="relative mt-5 drop-shadow-[0_30px_50px_rgb(0_0_0/0.6)]"
             >
-              <div className="relative aspect-square md:aspect-auto md:min-h-[30rem]">
+              {/* Aged paper with torn edges, taped down, like the menu card itself */}
+              <div aria-hidden className="paper absolute inset-0" />
+              <span aria-hidden className="tape" />
+              <span aria-hidden className="tape !left-auto !right-6 !translate-x-0 !rotate-[6deg] max-md:hidden" />
+              <div className="relative grid p-3 md:grid-cols-[1.15fr_1fr] md:p-4">
+              <div className="paper-photo relative aspect-square overflow-hidden md:aspect-auto md:min-h-[30rem]">
                 <Image src={currentPhoto.src} alt={currentPhoto.alt} draggable={false} fill sizes="(min-width: 768px) 520px, 94vw" quality={85} className="object-cover" style={{ objectPosition: currentPhoto.focal }} />
               </div>
-              <div className="flex flex-col p-6 md:p-8">
+              <div className="flex flex-col px-3 pb-3 pt-5 md:px-7 md:py-5">
                 <p className="font-hand text-2xl text-terracotta-deep">{current.course}</p>
                 <h2 className="mt-1 font-heading text-3xl leading-tight">
                   {current.item.name}
@@ -248,6 +253,7 @@ export function MenuBook({
                   <button type="button" autoFocus onClick={() => setOpen(null)} className="ml-auto rounded-full bg-espresso px-5 py-2 text-sm text-cream">Close</button>
                 </div>
                 <p className="mt-3 text-xs text-espresso/70">{(open ?? 0) + 1} of {viewable.length} · swipe or use the arrow keys</p>
+              </div>
               </div>
             </motion.div>
           </AnimatePresence>

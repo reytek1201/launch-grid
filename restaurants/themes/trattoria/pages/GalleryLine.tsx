@@ -222,9 +222,11 @@ export function GalleryLine({ chapters, wall }: { chapters: LineChapter[]; wall:
               exit={reduce ? undefined : { opacity: 0, x: -50 * dir }}
               transition={{ duration: 0.3, ease: EASE }}
             >
-              <div className="relative mx-auto bg-[#f4ead3] p-2.5 pb-3 shadow-[0_30px_60px_rgb(0_0_0/0.6)] sm:p-3" style={{ maxWidth: `min(100%, calc(78svh * ${cur.width / cur.height}))` }}>
-                <Image src={cur.src} alt={cur.alt} width={cur.width} height={cur.height} sizes="96vw" quality={85} draggable={false} className="h-auto w-full" />
-                <figcaption className="mt-2 flex items-baseline justify-between gap-4 px-1 text-espresso">
+              <div className="relative mx-auto mt-5 p-2.5 pb-3 drop-shadow-[0_30px_50px_rgb(0_0_0/0.6)] sm:p-3" style={{ maxWidth: `min(100%, calc(76svh * ${cur.width / cur.height}))` }}>
+                <div aria-hidden className="paper absolute inset-0" />
+                <span aria-hidden className="tape" />
+                <Image src={cur.src} alt={cur.alt} width={cur.width} height={cur.height} sizes="96vw" quality={85} draggable={false} className="paper-photo relative h-auto w-full" />
+                <figcaption className="relative mt-2 flex items-baseline justify-between gap-4 px-1 text-espresso">
                   <span className="font-hand text-2xl leading-tight sm:text-3xl">{cur.caption}</span>
                   <span className="shrink-0 font-hand text-xl text-terracotta-deep">{cur.chapter}</span>
                 </figcaption>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BackOfficeDemo } from "@/components/BackOfficeDemo";
 import { LaunchSequence } from "@/components/LaunchSequence";
-import { HeroMark } from "@/components/Mark";
+import { Hero } from "@/components/Hero";
 import { StartForm } from "@/components/StartForm";
 import { copyConfigured } from "@/lib/email";
 
@@ -15,18 +15,7 @@ export default function Home() {
   const copyOn = copyConfigured();
   return (
     <main>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="plate"><div className="mark-box"><HeroMark /></div></div>
-        <div>
-          <span className="label">Atlanta · websites with a back office</span>
-          <h1 id="hero-title">A website you run from your phone.</h1>
-          <p className="lede">I build custom sites for bands, restaurants and small businesses, with a back office you run from your phone. Everything happens in writing.</p>
-          <div className="row">
-            <Link className="btn" href="/start">Start a project</Link>
-            <a className="btn btn-ghost" href="#back-office">Try the back office</a>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       <section className="section" id="work" aria-labelledby="work-title">
         <div className="section-head"><span className="label">Live work</span><h2 id="work-title">Real sites. Open them yourself.</h2></div>

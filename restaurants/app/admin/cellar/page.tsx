@@ -1,6 +1,7 @@
 import { requireAdmin } from "@/lib/admin";
 import { addSection, addWine, deleteRow, saveSection, saveWine, setPick, setSoldOut } from "../actions";
 import { Arrows, HideButton } from "../controls";
+import { CloseDetails } from "../CloseDetails";
 import { Submit } from "../submit";
 import { Banner, btn, btnDanger, btnPrimary, Card, Field, input, PageHead, SwitchLabel } from "../ui";
 
@@ -94,6 +95,7 @@ export default async function CellarAdmin({ searchParams }: { searchParams: Prom
                   <p className="mt-2 text-sm text-wine">This also deletes its {list.length} {list.length === 1 ? "wine" : "wines"}.</p>
                   <form action={deleteRow.bind(null, "wine_sections", s.id)} className="mt-2"><Submit busy="…" className={btnDanger}>Delete {s.title} for good</Submit></form>
                 </details>
+                <div className="mt-4 flex justify-end"><CloseDetails /></div>
               </details>
 
               <ul className="mt-4 divide-y divide-dashed divide-espresso/20">
@@ -128,6 +130,7 @@ export default async function CellarAdmin({ searchParams }: { searchParams: Prom
                         <summary className="cursor-pointer text-sm text-espresso/75">Delete wine…</summary>
                         <form action={deleteRow.bind(null, "wines", w.id)} className="mt-2"><Submit busy="…" className={btnDanger}>Delete for good</Submit></form>
                       </details>
+                      <div className="mt-4 flex justify-end"><CloseDetails /></div>
                     </details>
                   </li>
                 ))}
@@ -140,6 +143,7 @@ export default async function CellarAdmin({ searchParams }: { searchParams: Prom
                   <WineFields dishes={dishes} />
                   <Submit busy="Adding…" className={btnPrimary}>Add wine</Submit>
                 </form>
+                <div className="mt-4 flex justify-end"><CloseDetails /></div>
               </details>
             </Card>
           );

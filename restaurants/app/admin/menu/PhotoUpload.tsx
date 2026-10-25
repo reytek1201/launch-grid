@@ -88,7 +88,7 @@ export function PhotoUpload({ action, dish, current, alt }: Props) {
         <>
           <label className="block text-sm text-espresso/80">
             What does it show? (optional, read aloud for blind visitors)
-            <input name="alt" defaultValue={alt ?? ""} maxLength={160} placeholder={`${dish}, on a white plate`} className={input} />
+            <textarea name="alt" defaultValue={alt ?? ""} rows={5} maxLength={300} placeholder={`${dish}, on a white plate`} className={`${input} field-sizing-content min-h-32`} />
           </label>
           <Submit busy="Uploading…" className={btnPrimary}>Save photo</Submit>
         </>

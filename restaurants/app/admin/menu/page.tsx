@@ -1,7 +1,8 @@
 import { photos, photoUrl } from "@/lib/config";
 import { requireAdmin } from "@/lib/admin";
-import { addItem, addSection, clearDishPhoto, deleteRow, saveItem, saveSection, setDishPhoto, setSoldOut } from "../actions";
+import { addItem, addSection, clearDishPhoto, deleteRow, saveDishAlt, saveItem, saveSection, setDishPhoto, setSoldOut } from "../actions";
 import { Arrows, HideButton } from "../controls";
+import { CloseDetails } from "../CloseDetails";
 import { Submit } from "../submit";
 import { PhotoUpload } from "./PhotoUpload";
 import { Banner, btn, btnDanger, btnPrimary, Card, Field, input, PageHead, SwitchLabel } from "../ui";
@@ -92,6 +93,7 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                   <p className="mt-2 text-sm text-wine">This also deletes its {list.length} {list.length === 1 ? "dish" : "dishes"}.</p>
                   <form action={deleteRow.bind(null, "menu_sections", s.id)} className="mt-2"><Submit busy="…" className={btnDanger}>Delete {s.title} for good</Submit></form>
                 </details>
+                <div className="mt-4 flex justify-end"><CloseDetails /></div>
               </details>
 
               <ul className="mt-4 divide-y divide-dashed divide-espresso/20">
@@ -131,7 +133,16 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                           />
                         </div>
                         {i.photo_path && (
-                          <form action={clearDishPhoto.bind(null, i.id)} className="mt-2">
+                          <form action={saveDishAlt.bind(null, i.id)} className="mt-3 space-y-2">
+                            <label className="block text-sm text-espresso/80">
+                              Photo description (read aloud for blind visitors)
+                              <textarea name="alt" defaultValue={i.photo_alt ?? ""} rows={5} maxLength={300} className={`${input} field-sizing-content min-h-32`} />
+                            </label>
+                            <Submit busy="Saving…" className={btn}>Save description</Submit>
+                          </form>
+                        )}
+                        {i.photo_path && (
+                          <form action={clearDishPhoto.bind(null, i.id)} className="mt-3">
                             <Submit busy="Removing…" className={btnDanger}>Remove this photo</Submit>
                           </form>
                         )}
@@ -144,6 +155,7 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                         <summary className="cursor-pointer text-sm text-espresso/75">Delete dish…</summary>
                         <form action={deleteRow.bind(null, "menu_items", i.id)} className="mt-2"><Submit busy="…" className={btnDanger}>Delete for good</Submit></form>
                       </details>
+                      <div className="mt-4 flex justify-end"><CloseDetails /></div>
                     </details>
                   </li>
                 ))}
@@ -157,6 +169,7 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                   <p className="text-sm text-espresso/75">Add the dish first, then open it to upload its photo.</p>
                   <Submit busy="Adding…" className={btnPrimary}>Add dish</Submit>
                 </form>
+                <div className="mt-4 flex justify-end"><CloseDetails /></div>
               </details>
             </Card>
           );

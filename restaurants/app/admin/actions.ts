@@ -230,7 +230,7 @@ export async function setDishPhoto(id: string, form: FormData) {
   const up = await supabase.storage.from(BUCKET).upload(path, f, { contentType: f.type, cacheControl: "31536000", upsert: false });
   if (up.error) fail("/admin/menu", "Could not upload the photo. Try again in a moment.");
 
-  const alt = str(form, "alt").slice(0, 160);
+  const alt = str(form, "alt").slice(0, 300);
   const { error } = await supabase.from("menu_items").update({ photo_path: path, photo_alt: orNull(alt) }).eq("id", id);
   if (error) {
     await supabase.storage.from(BUCKET).remove([path]);
@@ -239,6 +239,14 @@ export async function setDishPhoto(id: string, form: FormData) {
   // The new photo is saved; clear out the one it replaces.
   const old = row?.photo_path as string | null | undefined;
   if (old && old !== path) await supabase.storage.from(BUCKET).remove([old]);
+  done("/admin/menu");
+}
+
+/** Changes only the description of a dish's uploaded photo. */
+export async function saveDishAlt(id: string, form: FormData) {
+  const { supabase } = await requireAdmin();
+  const { error } = await supabase.from("menu_items").update({ photo_alt: orNull(str(form, "alt").slice(0, 300)) }).eq("id", id).not("photo_path", "is", null);
+  check("/admin/menu", error);
   done("/admin/menu");
 }
 

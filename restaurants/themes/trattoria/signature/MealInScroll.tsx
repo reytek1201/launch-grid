@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { SiteData } from "@/lib/types";
+import { photos } from "@/lib/config";
+import { CellarScene } from "./CellarScene";
 import { CheckScene } from "./CheckScene";
 import { type Course, CourseScene } from "./CourseScene";
 import { CourseTracker } from "./CourseTracker";
@@ -28,6 +30,14 @@ export function MealInScroll({ site }: { site: SiteData }) {
       return { id: s.id, title: s.title, numeral: NUMERALS[i] ?? String(i + 1), line: style.line, backdrop: style.backdrop, ink: style.ink, dishes: withPhotos };
     });
 
+  // Three wines the house wants to talk about; the real cellar photo (sp-13) replaces the candle once it exists.
+  const picks = site.cellar
+    .flatMap((s) => s.wines)
+    .filter((w) => w.pick && !w.soldOut)
+    .slice(0, 3)
+    .map((w) => ({ id: w.id, name: w.name, where: `${w.region}${w.vintage ? ` · ${w.vintage}` : ""}`, glass: w.glass, bottle: w.bottle }));
+  const cellarPhoto = photos["sp-13"] ? "sp-13" : "sp-10";
+
   return (
     <>
       <DoorScene site={site} />
@@ -37,6 +47,7 @@ export function MealInScroll({ site }: { site: SiteData }) {
       ) : (
         courses.map((c) => (STYLE[c.id]?.sideways ? <TableScene key={c.id} course={c} /> : <CourseScene key={c.id} course={c} />))
       )}
+      {picks.length > 0 && <CellarScene photo={cellarPhoto} picks={picks} />}
       <CheckScene site={site} />
       <CourseTracker stops={[...courses.map((c) => ({ id: c.id, label: c.title })), { id: "conto", label: "Il conto" }]} />
     </>

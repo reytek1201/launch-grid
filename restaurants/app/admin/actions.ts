@@ -134,8 +134,15 @@ export async function moveRow(table: string, id: string, dir: -1 | 1) {
 export async function deleteRow(table: string, id: string) {
   if (!okTable(table)) return;
   const { supabase } = await requireAdmin();
+  // Photos of the dishes about to go (a section takes its dishes with it).
+  let files: string[] = [];
+  if (table === "menu_items" || table === "menu_sections") {
+    const { data } = await supabase.from("menu_items").select("photo_path").eq(table === "menu_items" ? "id" : "section_id", id);
+    files = (data ?? []).map((r: { photo_path: string | null }) => r.photo_path).filter((p): p is string => !!p);
+  }
   const { error } = await supabase.from(table).delete().eq("id", id);
   check(PAGE[table], error);
+  if (files.length) await supabase.storage.from(BUCKET).remove(files);
   done(PAGE[table]);
 }
 
@@ -198,6 +205,51 @@ export async function addItem(sectionId: string, form: FormData) {
   const sort = await nextSort("menu_items", "section_id", sectionId);
   const { error } = await supabase.from("menu_items").insert({ id: newId(f.name), section_id: sectionId, sort, ...f });
   check("/admin/menu", error);
+  done("/admin/menu");
+}
+
+/* ───────── dish photos ───────── */
+
+const BUCKET = "trattoria-demo";
+const PHOTO_TYPES: Record<string, string> = { "image/webp": "webp", "image/jpeg": "jpg", "image/png": "png" };
+const MAX_PHOTO = 2 * 1024 * 1024;
+
+/** Adds or replaces a dish's photo. The browser has already cropped it square and shrunk it. */
+export async function setDishPhoto(id: string, form: FormData) {
+  const { supabase } = await requireAdmin();
+  const file = form.get("photo");
+  if (!(file instanceof File) || file.size === 0) fail("/admin/menu", "Choose a photo first.");
+  const f = file as File;
+  const ext = PHOTO_TYPES[f.type];
+  if (!ext) fail("/admin/menu", "Use a JPEG, PNG or WebP photo.");
+  if (f.size > MAX_PHOTO) fail("/admin/menu", "That photo is too large. Try another one.");
+
+  const { data: row } = await supabase.from("menu_items").select("photo_path").eq("id", id).single();
+  if (!row) fail("/admin/menu", "That dish no longer exists.");
+  const path = `dishes/${id}-${Date.now().toString(36)}.${ext}`;
+  const up = await supabase.storage.from(BUCKET).upload(path, f, { contentType: f.type, cacheControl: "31536000", upsert: false });
+  if (up.error) fail("/admin/menu", "Could not upload the photo. Try again in a moment.");
+
+  const alt = str(form, "alt").slice(0, 160);
+  const { error } = await supabase.from("menu_items").update({ photo_path: path, photo_alt: orNull(alt) }).eq("id", id);
+  if (error) {
+    await supabase.storage.from(BUCKET).remove([path]);
+    check("/admin/menu", error);
+  }
+  // The new photo is saved; clear out the one it replaces.
+  const old = row?.photo_path as string | null | undefined;
+  if (old && old !== path) await supabase.storage.from(BUCKET).remove([old]);
+  done("/admin/menu");
+}
+
+/** Takes the uploaded photo off a dish (a sample photo picked in the list, if any, shows again). */
+export async function clearDishPhoto(id: string) {
+  const { supabase } = await requireAdmin();
+  const { data: row } = await supabase.from("menu_items").select("photo_path").eq("id", id).single();
+  const { error } = await supabase.from("menu_items").update({ photo_path: null, photo_alt: null }).eq("id", id);
+  check("/admin/menu", error);
+  const old = row?.photo_path as string | null | undefined;
+  if (old) await supabase.storage.from(BUCKET).remove([old]);
   done("/admin/menu");
 }
 

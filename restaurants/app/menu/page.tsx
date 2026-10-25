@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/site/JsonLd";
 import { getSiteData, photos } from "@/lib/config";
+import type { Photo } from "@/lib/types";
 import { menuLd, siteUrl } from "@/lib/seo";
 import { MenuBook } from "@/themes/trattoria/pages/MenuBook";
 import { PageHero } from "@/themes/trattoria/pages/PageHero";
@@ -15,7 +16,8 @@ const WOOD =
 export default async function Menu() {
   const site = await getSiteData();
   const sections = site.menu.filter((s) => s.items.length > 0);
-  const dishPhotos = Object.fromEntries(sections.flatMap((s) => s.items).filter((i) => i.photo && photos[i.photo]).map((i) => [i.photo as string, photos[i.photo as string]]));
+  const library: Record<string, Photo> = { ...photos, ...site.uploads };
+  const dishPhotos = Object.fromEntries(sections.flatMap((s) => s.items).filter((i) => i.photo && library[i.photo]).map((i) => [i.photo as string, library[i.photo as string]]));
   // Reverse of the cellar's pairings: up to two wines per dish, by-the-glass first.
   const cellarWines = site.cellar.flatMap((s) => s.wines).filter((w) => !w.soldOut);
   const wines = Object.fromEntries(

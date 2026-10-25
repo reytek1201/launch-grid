@@ -1,14 +1,15 @@
-import { photos } from "@/lib/config";
+import { photos, photoUrl } from "@/lib/config";
 import { requireAdmin } from "@/lib/admin";
-import { addItem, addSection, deleteRow, saveItem, saveSection, setSoldOut } from "../actions";
+import { addItem, addSection, clearDishPhoto, deleteRow, saveItem, saveSection, setDishPhoto, setSoldOut } from "../actions";
 import { Arrows, HideButton } from "../controls";
 import { Submit } from "../submit";
+import { PhotoUpload } from "./PhotoUpload";
 import { Banner, btn, btnDanger, btnPrimary, Card, Field, input, PageHead, SwitchLabel } from "../ui";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Menu" };
 
-type Item = { id: string; section_id: string; name: string; description: string | null; price_cents: number | null; tags: string[]; sold_out: boolean; hidden: boolean; photo: string | null };
+type Item = { id: string; section_id: string; name: string; description: string | null; price_cents: number | null; tags: string[]; sold_out: boolean; hidden: boolean; photo: string | null; photo_path: string | null; photo_alt: string | null };
 type Section = { id: string; title: string; note: string | null; hidden: boolean };
 
 const TAGS = ["vegetarian", "vegan", "gluten-free", "spicy"];
@@ -21,9 +22,9 @@ function DishFields({ item }: { item?: Item }) {
       <Field label="Name" className="sm:col-span-2"><input required name="name" defaultValue={item?.name} className={input} maxLength={120} /></Field>
       <Field label="Description" className="sm:col-span-2"><textarea name="description" defaultValue={item?.description ?? ""} rows={2} className={input} maxLength={400} /></Field>
       <Field label="Price in dollars (leave empty for market price)"><input name="price" inputMode="decimal" defaultValue={dollars(item?.price_cents ?? null)} placeholder="18" className={input} /></Field>
-      <Field label="Photo">
+      <Field label="Sample photo (demo library)">
         <select name="photo" defaultValue={item?.photo ?? ""} className={input}>
-          <option value="">No photo</option>
+          <option value="">None</option>
           {photoKeys.map(([k, p]) => <option key={k} value={k}>{k} · {p.alt.slice(0, 48)}</option>)}
         </select>
       </Field>
@@ -115,7 +116,23 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                     </div>
                     <details className="mt-3 rounded-xl border border-espresso/10 bg-white/40 p-3">
                       <summary className="cursor-pointer text-sm font-medium text-terracotta-deep">Edit {i.name}</summary>
-                      <form action={saveItem.bind(null, i.id)} className="mt-3 space-y-3">
+                      <div className="mt-3 rounded-xl border border-espresso/10 bg-paper p-3">
+                        <h3 className="font-heading text-base font-semibold">Photo</h3>
+                        <div className="mt-2">
+                          <PhotoUpload
+                            action={setDishPhoto.bind(null, i.id)}
+                            dish={i.name}
+                            alt={i.photo_alt ?? ""}
+                            current={i.photo_path ? { src: photoUrl(i.photo_path), alt: i.photo_alt || i.name } : undefined}
+                          />
+                        </div>
+                        {i.photo_path && (
+                          <form action={clearDishPhoto.bind(null, i.id)} className="mt-2">
+                            <Submit busy="Removing…" className={btnDanger}>Remove this photo</Submit>
+                          </form>
+                        )}
+                      </div>
+                      <form action={saveItem.bind(null, i.id)} className="mt-4 space-y-3">
                         <DishFields item={i} />
                         <Submit className={btnPrimary}>Save dish</Submit>
                       </form>
@@ -133,6 +150,7 @@ export default async function MenuAdmin({ searchParams }: { searchParams: Promis
                 <summary className="cursor-pointer text-sm font-medium text-terracotta-deep">+ Add a dish to {s.title}</summary>
                 <form action={addItem.bind(null, s.id)} className="mt-3 space-y-3">
                   <DishFields />
+                  <p className="text-sm text-espresso/75">Add the dish first, then open it to upload its photo.</p>
                   <Submit busy="Adding…" className={btnPrimary}>Add dish</Submit>
                 </form>
               </details>

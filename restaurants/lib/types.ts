@@ -10,7 +10,8 @@ export type MenuItem = {
   price: number | null;
   tags?: ("vegetarian" | "vegan" | "gluten-free" | "spicy")[];
   soldOut?: boolean;
-  photo?: string; // key into images.json
+  /** key into images.json, or "up:<id>" for a photo uploaded in the admin (see SiteData.uploads) */
+  photo?: string;
 };
 
 export type MenuSection = { id: string; title: string; note?: string; items: MenuItem[] };
@@ -83,6 +84,8 @@ export type SiteData = {
   menu: MenuSection[];
   cellar: WineSection[];
   reservations: ReservationRules;
+  /** photos uploaded in the admin, by the key a dish's `photo` points to */
+  uploads?: Record<string, Photo>;
   events?: EventsData;
   story?: StoryData;
   tier: Tier;

@@ -31,6 +31,10 @@ type Row = Record<string, unknown>;
 const opt = <T,>(v: T | null | undefined) => (v === null || v === undefined ? undefined : v);
 const hhmm = (t: string) => t.slice(0, 5);
 
+/** Public URL of a file in the photo bucket. Uploads are cropped square in the browser, so the size is fixed. */
+export const photoUrl = (path: string) => `${URL_}/storage/v1/object/public/trattoria-demo/${path}`;
+const uploadedPhoto = (id: string, path: string, alt: string): Photo => ({ id, src: photoUrl(path), alt, width: 1200, height: 1200, focal: "50% 50%" });
+
 async function fromDatabase(): Promise<SiteData> {
   const [settings, secs, items, wsecs, wines, hours, closures] = await Promise.all([
     rows<Row>("settings", "select=*&id=eq.1"),
@@ -44,21 +48,27 @@ async function fromDatabase(): Promise<SiteData> {
   const s = settings[0];
   if (!s) throw new Error("no settings row");
 
+  const uploads: Record<string, Photo> = {};
   const menu: MenuSection[] = secs.map((sec) => ({
     id: sec.id as string,
     title: sec.title as string,
     note: opt(sec.note as string | null),
     items: items
       .filter((i) => i.section_id === sec.id)
-      .map((i): MenuItem => ({
+      .map((i): MenuItem => {
+        const path = opt(i.photo_path as string | null);
+        const key = path ? `up:${i.id}` : undefined;
+        if (key && path) uploads[key] = uploadedPhoto(key, path, (i.photo_alt as string | null) || (i.name as string));
+        return {
         id: i.id as string,
         name: i.name as string,
         description: opt(i.description as string | null),
         price: (i.price_cents as number | null) ?? null,
         tags: (i.tags as MenuItem["tags"]) ?? [],
         soldOut: i.sold_out ? true : undefined,
-        photo: opt(i.photo as string | null),
-      })),
+        photo: key ?? opt(i.photo as string | null),
+        };
+      }),
   }));
 
   const cellar: WineSection[] = wsecs.map((sec) => ({
@@ -109,6 +119,7 @@ async function fromDatabase(): Promise<SiteData> {
     closures: closed,
     menu,
     cellar,
+    uploads,
   };
 }
 

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-type Device = { slug: string; name: string; kind: string; src: string; href: string; alt: string };
+type Device = { slug: string; name: string; kind: string; src: string; href: string; alt: string; video?: string };
 
 const DEVICES: Device[] = [
   { slug: "funkharp", name: "Funkharp", kind: "Band", src: "/work/funkharp-home.webp", href: "#work", alt: "Funkharp's home page on a phone: St. Augustine, FL, the band name in script, Hear the singles and Shows buttons, and a photo of a harmonica on piano keys" },
@@ -12,9 +12,24 @@ const DEVICES: Device[] = [
   { slug: "cinque-lune", name: "Cinque Lune", kind: "Demo restaurant", src: "/work/cinque-lune-home.webp", href: "https://cinque-lune-demo.vercel.app", alt: "Trattoria Cinque Lune's home page on a phone: a brick restaurant entrance with warm light in the doorway, an Open until 9 pm sign, and Reserve a table and See the menu buttons" },
 ];
 
+// Short silent clips go here when recorded (e.g. video: "/work/reytek-clip.mp4"). Until then the still screenshot shows.
 const COUNT = ["T−3", "T−2", "T−1", "Lift-off", "All three live"];
 
 const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function ScreenVideo({ src, active, hovered }: { src: string; active: boolean; hovered: boolean }) {
+  const v = useRef<HTMLVideoElement>(null);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const el = v.current;
+    if (!el) return;
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const play = active && (!fine || hovered);
+    if (play && !reduced()) { el.play().catch(() => {}); }
+    else { el.pause(); }
+  }, [active, hovered]);
+  return <video ref={v} className="dev-video" data-ready={ready} onPlaying={() => setReady(true)} onPause={() => setReady(false)} src={src} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1} />;
+}
 
 /**
  * The home hero. Three real sites stand on the launch grid as phones with depth. On load the grid draws in,
@@ -25,6 +40,11 @@ export function Hero() {
   const stage = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<"idle" | "go" | "done">("idle");
   const [count, setCount] = useState(COUNT.length - 1);
+  const [front, setFront] = useState(1); // Reytek in front by default
+  const [hover, setHover] = useState(-1);
+  const swiped = useRef(false);
+  const drag = useRef<{ x: number; y: number; moved: boolean } | null>(null);
+  const go = (n: number) => setFront(((n % DEVICES.length) + DEVICES.length) % DEVICES.length);
 
   useEffect(() => {
     const timers: number[] = [];
@@ -93,17 +113,36 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="hx-stage" ref={stage}>
+      <div className="hx-stage" ref={stage} role="group" aria-roledescription="carousel" aria-label="Sites built with LaunchGrid. Swipe or use the arrow keys to choose one." tabIndex={0}
+        onKeyDown={(e) => { if (e.key === "ArrowLeft") { e.preventDefault(); go(front - 1); } if (e.key === "ArrowRight") { e.preventDefault(); go(front + 1); } }}
+        onPointerDown={(e) => { drag.current = { x: e.clientX, y: e.clientY, moved: false }; }}
+        onPointerUp={(e) => {
+          const d = drag.current; drag.current = null;
+          if (!d) return;
+          const dx = e.clientX - d.x, dy = e.clientY - d.y;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { go(front + (dx < 0 ? 1 : -1)); d.moved = true; drag.current = null; swiped.current = true; setTimeout(() => { swiped.current = false; }, 50); }
+        }}
+        onPointerCancel={() => { drag.current = null; }}>
         <div className="hx-count label" aria-hidden="true"><i />{COUNT[count]}</div>
         <div className="hx-floor" aria-hidden="true"><div className="hx-grid" /><div className="hx-pad" /></div>
         <div className="hx-rig">
-          {DEVICES.map((d, i) => (
-            <a key={d.slug} href={d.href} className={`dev dev-${i}`} style={{ ["--i" as string]: i }} {...(d.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})} aria-label={`${d.name}, ${d.kind.toLowerCase()}${d.href.startsWith("http") ? ", opens in a new tab" : ""}`}>
+          {DEVICES.map((d, i) => {
+            const pos = (["c", "r", "l"] as const)[(i - front + DEVICES.length) % DEVICES.length];
+            const isFront = pos === "c";
+            const ext = d.href.startsWith("http");
+            return (
+            <a key={d.slug} href={d.href} draggable={false} onDragStart={(e) => e.preventDefault()} data-pos={pos} className={`dev dev-${i}`} style={{ ["--i" as string]: i }}
+              {...(isFront && ext ? { target: "_blank", rel: "noopener" } : {})}
+              aria-label={isFront ? `${d.name}, ${d.kind.toLowerCase()}${ext ? ", opens in a new tab" : ""}` : `Show ${d.name} in front`}
+              aria-current={isFront ? "true" : undefined}
+              onClick={(e) => { if (swiped.current || !isFront) { e.preventDefault(); if (!isFront && !swiped.current) go(i); } }}
+              onPointerEnter={() => setHover(i)} onPointerLeave={() => setHover(-1)}>
               <span className="dev-body">
                 <span className="dev-side" aria-hidden="true" />
                 <span className="dev-btn dev-btn-a" aria-hidden="true" /><span className="dev-btn dev-btn-b" aria-hidden="true" /><span className="dev-btn dev-btn-c" aria-hidden="true" />
                 <span className="dev-screen">
-                  <Image src={d.src} alt={d.alt} fill sizes="(max-width: 760px) 200px, 260px" priority={i === 1} />
+                  <Image src={d.src} alt={d.alt} fill sizes="(max-width: 760px) 200px, 260px" priority={i === 1} draggable={false} />
+                  {d.video && <ScreenVideo src={d.video} active={isFront && phase === "done"} hovered={hover === i} />}
                   <span className="dev-island" aria-hidden="true" />
                   <span className="dev-glare" aria-hidden="true" />
                 </span>
@@ -111,10 +150,11 @@ export function Hero() {
               <span className="dev-shadow" aria-hidden="true" />
               <span className="dev-trail" aria-hidden="true" />
             </a>
-          ))}
+            );
+          })}
         </div>
         <ul className="hx-tags" aria-label="Sites on the grid">
-          {DEVICES.map((d) => <li key={d.slug}><b>{d.name}</b><span>{d.kind}</span></li>)}
+          {DEVICES.map((d, i) => <li key={d.slug}><button type="button" aria-pressed={front === i} onClick={() => go(i)}><b>{d.name}</b><span>{d.kind}</span></button></li>)}
           <li className="hx-next"><Link href="/start"><b>Yours</b><span>Next on the grid</span></Link></li>
         </ul>
       </div>

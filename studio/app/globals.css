@@ -303,17 +303,28 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 .hx .hx-pad { animation: hx-up .5s var(--ease-out) 1.3s both; }
 @keyframes hx-floor { from { opacity: 0; transform: scale(.6); } to { opacity: .55; transform: none; } }
 
-.hx-rig { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
+.hx-rig { pointer-events: none; position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
 
 /* a phone with depth */
-.dev { --w: var(--pw); position: absolute; left: 50%; bottom: 112px; width: var(--w); aspect-ratio: 480 / 1000; margin-left: calc(var(--w) / -2); transform-style: preserve-3d; text-decoration: none; display: block; border-radius: calc(var(--w) * .17); outline-offset: 6px; }
-.dev-0 { transform: translate3d(calc(var(--pw) * -0.88), calc(var(--pw) * 0.06), calc(var(--pw) * -0.9)) rotateY(24deg) rotateZ(-2deg); z-index: 1; }
-.dev-1 { transform: translate3d(0, calc(var(--pw) * -0.04), 0) rotateY(-6deg); z-index: 3; }
-.dev-2 { transform: translate3d(calc(var(--pw) * 0.88), calc(var(--pw) * 0.08), calc(var(--pw) * -0.9)) rotateY(-26deg) rotateZ(2deg); z-index: 2; }
+.dev { pointer-events: auto; --w: var(--pw); position: absolute; left: 50%; bottom: 112px; width: var(--w); aspect-ratio: 480 / 1000; margin-left: calc(var(--w) / -2); transform-style: preserve-3d; text-decoration: none; display: block; border-radius: calc(var(--w) * .17); outline-offset: 6px; }
+.dev { transition: transform .75s var(--ease-out); }
+.dev[data-pos="l"] { transform: translate3d(calc(var(--pw) * -0.88), calc(var(--pw) * 0.06), calc(var(--pw) * -0.9)) rotateY(24deg) rotateZ(-2deg); z-index: 1; }
+.dev[data-pos="c"] { transform: translate3d(0, calc(var(--pw) * -0.04), 0) rotateY(-6deg); z-index: 3; }
+.dev[data-pos="r"] { transform: translate3d(calc(var(--pw) * 0.88), calc(var(--pw) * 0.08), calc(var(--pw) * -0.9)) rotateY(-26deg) rotateZ(2deg); z-index: 2; }
 @media (min-width: 900px) {
-  .dev-0 { transform: translate3d(calc(var(--pw) * -1.0), calc(var(--pw) * 0.1), calc(var(--pw) * -0.6)) rotateY(22deg) rotateZ(-2deg); }
-  .dev-2 { transform: translate3d(calc(var(--pw) * 1.0), calc(var(--pw) * 0.14), calc(var(--pw) * -0.6)) rotateY(-24deg) rotateZ(2deg); }
+  .dev[data-pos="l"] { transform: translate3d(calc(var(--pw) * -1.0), calc(var(--pw) * 0.1), calc(var(--pw) * -0.6)) rotateY(22deg) rotateZ(-2deg); }
+  .dev[data-pos="r"] { transform: translate3d(calc(var(--pw) * 1.0), calc(var(--pw) * 0.14), calc(var(--pw) * -0.6)) rotateY(-24deg) rotateZ(2deg); }
 }
+@media (prefers-reduced-motion: reduce) { .dev { transition: none; } }
+.dev[data-pos="l"], .dev[data-pos="r"] { cursor: pointer; }
+.dev[data-pos="l"] .dev-screen, .dev[data-pos="r"] .dev-screen { filter: brightness(.82); transition: filter .5s; }
+.dev-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s; }
+.dev-video[data-ready="true"] { opacity: 1; }
+.hx-stage { cursor: grab; } .hx-stage:focus-visible { outline: 2px solid var(--cobalt); outline-offset: -4px; }
+.hx-tags button { all: unset; display: grid; text-align: center; cursor: pointer; padding: 4px 8px; min-height: 40px; box-sizing: border-box; border-radius: 10px; }
+.hx-tags button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+.hx-tags button[aria-pressed="true"] b { color: var(--cobalt); }
+.hx-tags button[aria-pressed="true"] span { color: var(--ink); }
 .dev-body { position: absolute; inset: 0; border-radius: inherit; transform-style: preserve-3d; padding: calc(var(--w) * .035);
   background: linear-gradient(145deg, #aab0bd, #4a4e5a 18%, #1a1c22 42%, #6a6f7c 72%, #262830);
   box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.42), inset 0 0 0 calc(var(--w) * .012) #05060a, 0 0 0 1px rgba(150,165,255,.4), 0 0 22px -2px color-mix(in srgb, var(--cobalt) 55%, transparent), 0 30px 60px -20px rgba(10,12,20,.55), 0 12px 24px -12px rgba(10,12,20,.4); }

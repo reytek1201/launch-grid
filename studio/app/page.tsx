@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Doors } from "@/components/Doors";
 import { BackOfficeDemo } from "@/components/BackOfficeDemo";
 import { LaunchSequence } from "@/components/LaunchSequence";
 import { Hero } from "@/components/Hero";
@@ -28,12 +28,8 @@ export default function Home() {
       <YearOfWork />
 
       <section className="section" aria-labelledby="doors-title">
-        <div className="section-head"><span className="label">Who it&rsquo;s for</span><h2 id="doors-title">Pick your door.</h2></div>
-        <div className="grid3">
-          <Link className="door" href="/start?kind=band"><h3>Bands and artists</h3><p>Shows, music, videos, a booking inbox and your fan list.</p><span className="go">Start a band project →</span></Link>
-          <Link className="door" href="/start?kind=restaurant"><h3>Restaurants</h3><p>Menu, specials, hours, reservations and photos you change yourself.</p><span className="go">Start a restaurant project →</span></Link>
-          <Link className="door" href="/start?kind=other"><h3>Other small businesses</h3><p>The same build and back office, shaped to what you sell. I&rsquo;ll reply with the nearest fit.</p><span className="go">Tell me what you run →</span></Link>
-        </div>
+        <div className="section-head"><span className="label">Who it&rsquo;s for</span><h2 id="doors-title">Pick your door.</h2><p>Each one opens onto a different kind of site.</p></div>
+        <Doors />
       </section>
 
       <section className="section" aria-labelledby="how-title">

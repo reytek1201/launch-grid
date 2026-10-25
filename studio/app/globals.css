@@ -694,3 +694,75 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
   .yr-stop[data-lit="true"] .yr-eq i, .yr-stop[data-lit="true"] .yr-glow, .yr-stop[data-lit="true"] .yr-node::after { animation: none; }
   .yr-node i { transition: none; }
 }
+
+/* ---------- Pick your door: three real doors, each opening onto its own world ---------- */
+.dr { display: grid; gap: 14px; text-decoration: none; color: inherit; border-radius: 18px; outline-offset: 6px; }
+.dr-frame { position: relative; display: block; height: clamp(250px, 70vw, 290px); perspective: 1100px; border-radius: 14px 14px 4px 4px; padding: 10px 10px 0; background: var(--sunk); box-shadow: inset 0 0 0 1px var(--line); }
+.dr-room, .dr-panel { position: absolute; inset: 10px 10px 0; border-radius: 8px 8px 0 0; overflow: hidden; display: block; }
+.dr-room img { object-fit: cover; }
+.dr-panel { overflow: visible; transform-origin: 0 50%; transform-style: preserve-3d; z-index: 2; transition: transform 1.1s var(--ease-launch); box-shadow: 0 0 0 1px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.06); }
+.dr[data-seen="true"] .dr-panel { transform: rotateY(14deg); }
+.dr:hover .dr-panel, .dr:focus-visible .dr-panel { transform: rotateY(80deg); }
+@media (hover: none), (max-width: 759px) { .dr[data-open="true"] .dr-panel { transform: rotateY(80deg); } }
+.dr-knob { position: absolute; right: 9%; top: 52%; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #F4E3B0, #B08A3A 60%, #6E5420); box-shadow: 0 2px 4px rgba(0,0,0,.4); }
+.dr-spill { position: absolute; left: 10px; right: 10px; bottom: -22px; height: 22px; z-index: 0; clip-path: polygon(0 0, 100% 0, 112% 100%, -12% 100%); opacity: 0; transition: opacity .9s .15s; }
+.dr:hover .dr-spill, .dr:focus-visible .dr-spill { opacity: 1; }
+@media (hover: none), (max-width: 759px) { .dr[data-open="true"] .dr-spill { opacity: 1; } }
+.dr-copy { display: grid; gap: 6px; padding: 18px 4px 0; }
+.dr-copy p { color: var(--muted); }
+.dr .go { font-family: var(--font-mono); font-size: .75rem; color: var(--cobalt); letter-spacing: .06em; text-transform: uppercase; padding-block: 8px; }
+.dr:hover h3 { color: var(--cobalt); }
+
+/* band: a steel stage door; behind it, the harp under moving spotlights */
+.dr-panel-band { background: linear-gradient(90deg, #22252c, #2f333c 50%, #1e2027); }
+.dr-panel-band::before { content: ""; position: absolute; inset: 8px; border: 2px solid rgba(255,255,255,.06); border-radius: 4px; background-image: radial-gradient(circle, #555a66 1.6px, transparent 2px); background-size: 100% 22px; background-position: 4px 6px; background-repeat: repeat-y; }
+.dr-stencil { position: absolute; left: 0; right: 0; top: 18%; text-align: center; font-family: var(--font-mono); font-weight: 700; font-size: .9375rem; letter-spacing: .25em; text-transform: uppercase; color: #E9C46A; opacity: .9; }
+.dr-bar { position: absolute; left: 12%; right: 12%; top: 48%; height: 12px; border-radius: 6px; background: linear-gradient(#9aa0ab, #5d626d); box-shadow: 0 3px 6px rgba(0,0,0,.4); }
+.dr-panel-band .dr-knob { display: none; }
+.dr-room-band { background: #0d0e12; }
+.dr-room-band img { opacity: .55; scale: 1.08; }
+.dr-beam { position: absolute; top: -10%; width: 70%; height: 130%; background: conic-gradient(from 168deg at 50% 0, transparent 0, rgba(255,236,190,.45) 12deg, transparent 24deg); mix-blend-mode: screen; transform-origin: 50% 0; }
+.dr-beam.b1 { left: -10%; } .dr-beam.b2 { right: -10%; filter: hue-rotate(150deg); }
+.dr-eq { position: absolute; left: 12%; right: 12%; bottom: 10px; height: 34px; display: flex; align-items: flex-end; gap: 4px; }
+.dr-eq i { flex: 1; height: 30%; border-radius: 2px; background: #1F8A7C; }
+.dr-band .dr-spill { background: linear-gradient(rgba(255,236,190,.35), transparent); }
+.dr-band[data-seen="true"] .dr-beam.b1 { animation: dr-sway 3.4s ease-in-out infinite alternate; }
+.dr-band[data-seen="true"] .dr-beam.b2 { animation: dr-sway 2.8s ease-in-out infinite alternate-reverse; }
+.dr-band[data-seen="true"] .dr-eq i { animation: yr-eq .9s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -.13s); }
+@keyframes dr-sway { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+
+/* restaurant: a wood door with an Open sign; behind it, the candlelit trattoria */
+.dr-panel-restaurant { background: repeating-linear-gradient(90deg, #6b3a22 0 7px, #5c3019 7px 9px, #73412a 9px 15px), #6b3a22; display: grid; grid-template-rows: 1fr 1fr; gap: 10%; padding: 14% 14% 18%; }
+.dr-inset { display: block; border-radius: 3px; box-shadow: inset 0 0 0 2px rgba(0,0,0,.25), inset 2px 2px 0 3px rgba(255,255,255,.06); }
+.dr-sign { position: absolute; left: 50%; top: 40%; translate: -50% 0; font-family: var(--font-display); font-weight: 700; font-size: .875rem; padding: 3px 12px; border-radius: 4px; background: #F6EEDD; color: #9A3F20; box-shadow: 0 3px 8px rgba(0,0,0,.35); rotate: -3deg; }
+.dr-sign::before { content: ""; position: absolute; left: 20%; right: 20%; top: -12px; height: 12px; border: 1px solid #c9b48a; border-bottom: 0; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+.dr-room-rest { background: #2B1D14; }
+.dr-candle { position: absolute; inset: 0; background: radial-gradient(60% 50% at 50% 75%, rgba(242,178,122,.5), transparent 70%); mix-blend-mode: screen; }
+.dr-restaurant[data-seen="true"] .dr-candle { animation: yr-flicker 3s ease-in-out infinite; }
+.dr-restaurant .dr-spill { background: linear-gradient(rgba(242,178,122,.45), transparent); }
+
+/* other: a door drawn as a blueprint; behind it, the grid with the lift-off cell */
+.dr-panel-other { background: #1F3FFF; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 14px 14px; }
+.dr-draw { position: absolute; inset: 16% 20% 0; border: 1.5px solid rgba(255,255,255,.85); border-bottom: 0; }
+.dr-draw::after { content: ""; position: absolute; right: 10%; top: 52%; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #fff; }
+.dr-dim { position: absolute; font-family: var(--font-mono); font-size: 10px; color: #fff; letter-spacing: .06em; }
+.dr-dim.w { top: 7%; left: 0; right: 0; text-align: center; }
+.dr-dim.w::before, .dr-dim.w::after { content: ""; position: absolute; top: 50%; width: 16%; height: 1px; background: rgba(255,255,255,.7); }
+.dr-dim.w::before { left: 20%; } .dr-dim.w::after { right: 20%; }
+.dr-dim.h { left: 4%; top: 50%; writing-mode: vertical-rl; rotate: 180deg; translate: 0 -50%; }
+.dr-stamp { position: absolute; left: 50%; bottom: 12%; translate: -50% 0; white-space: nowrap; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; border: 1.5px solid #fff; padding: 3px 7px; border-radius: 3px; rotate: -4deg; }
+.dr-panel-other .dr-knob { display: none; }
+.dr-room-other { background: #0B0D14; background-image: linear-gradient(rgba(123,144,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(123,144,255,.14) 1px, transparent 1px); background-size: 18px 18px; display: grid; place-items: center; }
+.dr-grid { display: grid; grid-template-columns: repeat(3, 26px); gap: 6px; }
+.dr-grid i { width: 26px; height: 26px; border-radius: 5px; background: #F2F0EA; }
+.dr-grid i.lift { background: #7B90FF; box-shadow: 0 0 18px rgba(123,144,255,.8); }
+.dr-other:hover .dr-grid i.lift, .dr-other:focus-visible .dr-grid i.lift { animation: dr-lift 1.6s var(--ease-launch) .4s infinite; }
+@media (hover: none), (max-width: 759px) { .dr-other[data-open="true"] .dr-grid i.lift { animation: dr-lift 1.6s var(--ease-launch) .4s infinite; } }
+@keyframes dr-lift { 0%, 15% { transform: none; opacity: 1; } 70% { transform: translate(26px, -30px); opacity: 0; } 71% { transform: none; opacity: 0; } 100% { opacity: 1; } }
+.dr-other .dr-spill { background: linear-gradient(rgba(123,144,255,.4), transparent); }
+
+@media (min-width: 760px) { .dr-frame { height: 300px; } }
+@media (prefers-reduced-motion: reduce) {
+  .dr-panel { transition: none; } .dr[data-seen="true"] .dr-panel, .dr-panel { transform: rotateY(30deg); }
+  .dr-beam, .dr-eq i, .dr-candle, .dr-grid i.lift { animation: none !important; }
+}

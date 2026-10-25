@@ -205,8 +205,8 @@ p { margin: 0; }
 .boh-back .ph { transform: perspective(1200px) rotateY(calc(8deg + var(--px) * 3deg)) rotateX(calc(4deg - var(--py) * 2deg)) rotateZ(-2deg); }
 .boh-site .ph { transform: perspective(1200px) rotateY(calc(-7deg + var(--px) * 3deg)) rotateX(calc(2deg - var(--py) * 2deg)); }
 @media (min-width: 760px) {
-  .boh-back .ph { transform: perspective(1200px) rotateY(calc(16deg + var(--px) * 3deg)) rotateX(calc(6deg - var(--py) * 2deg)) rotateZ(-3deg) translateY(18px); }
-  .boh-site .ph { transform: perspective(1200px) rotateY(calc(-12deg + var(--px) * 3deg)) rotateX(calc(3deg - var(--py) * 2deg)) scale(1.04); }
+  .boh-back .ph { transform: perspective(1200px) rotateY(calc(16deg + var(--px) * 3deg)) rotateX(calc(6deg - var(--py) * 2deg)) rotateZ(-3deg); }
+  .boh-site .ph { transform: perspective(1200px) rotateY(calc(-12deg + var(--px) * 3deg)) rotateX(calc(3deg - var(--py) * 2deg)); }
 }
 .ph::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 8px; pointer-events: none;
   background: linear-gradient(115deg, transparent calc(45% + var(--px) * 12%), rgba(255,255,255,.7) calc(55% + var(--px) * 12%), transparent calc(68% + var(--px) * 12%));
@@ -482,5 +482,5 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 .inline { display: flex; gap: 8px; flex-wrap: wrap; }
 .inline input { flex: 1 1 100px; min-width: 0; }
 @media (max-width: 759px) { .bo-t1 { display: none; } .pv .dish { font-size: 12.5px; } }
-@media (min-width: 760px) { .boh-back figcaption { margin-top: 34px; } .sign { top: 46px; } }
+@media (min-width: 760px) { .boh { align-items: flex-start; } .boh-col figcaption { margin-top: 26px; } .sign { top: 46px; } }
 #back-office { overflow-x: clip; }

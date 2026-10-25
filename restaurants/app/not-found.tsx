@@ -12,7 +12,7 @@ export default function NotFound() {
     <main id="main">
       <section data-hero className="relative isolate flex min-h-svh items-center overflow-hidden bg-espresso text-cream">
         <div aria-hidden className="absolute inset-0 -z-10 opacity-45">
-          <PhotoSlot photo="sp-03" ratio="h-full w-full" sizes="100vw" focal="50% 55%" className="h-full" />
+          <PhotoSlot photo="sp-03" ratio="h-full w-full" sizes="100vw" hero focal="50% 55%" className="h-full" />
         </div>
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-espresso via-espresso/55 to-espresso/80" />
         <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-5 py-32 md:grid-cols-[1.4fr_1fr] md:px-8">

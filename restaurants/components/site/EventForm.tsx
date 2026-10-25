@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { mailBody, mailtoHref, submitInquiry } from "@/lib/inquiry";
-import { shortDate, todayIn } from "@/lib/reserve";
+import { shortDate } from "@/lib/reserve";
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
 import { Chips, LABEL, LINE, RequestSent } from "./PaperForm";
+import { useToday } from "./useToday";
 
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
 type Done = { rows: [string, string][]; mail: string };
@@ -21,7 +22,7 @@ export function EventForm({ site }: { site: SiteData }) {
   const [flexible, setFlexible] = useState(false);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<Done | null>(null);
-  const today = todayIn(site.timezone).date;
+  const today = useToday(site.timezone);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -75,7 +76,7 @@ export function EventForm({ site }: { site: SiteData }) {
             <label className={LABEL}>Guests<input required type="number" inputMode="numeric" min={2} max={80} name="guests" className={LINE} /></label>
             <label className={LABEL}>
               Date
-              <input type="date" name="date" min={today} disabled={flexible} required={!flexible} suppressHydrationWarning className={`${LINE} disabled:opacity-40`} />
+              <input type="date" name="date" min={today} disabled={flexible} required={!flexible} className={`${LINE} disabled:opacity-40`} />
             </label>
           </div>
           <label className="flex items-center gap-3 text-sm text-espresso/85">

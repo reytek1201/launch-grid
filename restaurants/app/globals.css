@@ -91,8 +91,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
 
 /* Rustic paper (RusticCard) */
 @layer components {
-  .paper {
-    filter: url(#torn-edge);
+  .paper, .paper-flat {
     background-color: #efe2c4;
     background-image:
       radial-gradient(ellipse at 78% 18%, rgb(160 110 50 / 0.18), transparent 38%),
@@ -100,6 +99,14 @@ h1, h2, h3 { font-family: var(--font-heading); }
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.24 0 0 0 0 0.12 0 0 0 0.22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     box-shadow: inset 0 0 22px rgb(110 70 30 / 0.45), inset 0 0 3px rgb(90 55 20 / 0.6);
   }
+  /* Hand-torn edge by SVG filter: lovely, but iPhone Safari cannot draw a filter (or a big clip-path mask)
+     on anything very tall; a phone-width menu is 4000px+. Use .paper for small cards. .paper-flat is for tall or
+     long ones: a plain sheet with torn strips only along the top and bottom, which are tiny elements. */
+  .paper { filter: url(#torn-edge); }
+  .paper-flat { border-radius: 2px; }
+  .paper-flat::before, .paper-flat::after { content: ""; position: absolute; left: 0; right: 0; height: 11px; background: #efe2c4; }
+  .paper-flat::before { top: -9px; clip-path: polygon(0% 100%, 0.0% 54%, 2.8% 31%, 5.6% 62%, 8.3% 37%, 11.1% 65%, 13.9% 59%, 16.7% 68%, 19.4% 62%, 22.2% 56%, 25.0% 48%, 27.8% 16%, 30.6% 68%, 33.3% 44%, 36.1% 64%, 38.9% 30%, 41.7% 56%, 44.4% 18%, 47.2% 25%, 50.0% 22%, 52.8% 38%, 55.6% 45%, 58.3% 70%, 61.1% 30%, 63.9% 39%, 66.7% 49%, 69.4% 21%, 72.2% 51%, 75.0% 30%, 77.8% 15%, 80.6% 61%, 83.3% 28%, 86.1% 41%, 88.9% 32%, 91.7% 26%, 94.4% 70%, 97.2% 64%, 100.0% 39%, 100% 100%); }
+  .paper-flat::after { bottom: -9px; clip-path: polygon(0% 0%, 0.0% 40%, 2.8% 78%, 5.6% 81%, 8.3% 34%, 11.1% 38%, 13.9% 69%, 16.7% 69%, 19.4% 58%, 22.2% 38%, 25.0% 38%, 27.8% 30%, 30.6% 85%, 33.3% 30%, 36.1% 43%, 38.9% 79%, 41.7% 43%, 44.4% 40%, 47.2% 85%, 50.0% 40%, 52.8% 48%, 55.6% 50%, 58.3% 42%, 61.1% 64%, 63.9% 73%, 66.7% 70%, 69.4% 43%, 72.2% 41%, 75.0% 74%, 77.8% 42%, 80.6% 54%, 83.3% 49%, 86.1% 31%, 88.9% 53%, 91.7% 56%, 94.4% 40%, 97.2% 39%, 100.0% 46%, 100% 0%); }
   .paper-photo { box-shadow: 0 0 0 1px rgb(60 40 20 / 0.25); filter: sepia(0.08) saturate(1.05); }
   .tape {
     position: absolute; top: -0.7rem; left: 50%; width: 5.5rem; height: 1.6rem; translate: -50% 0; rotate: -3deg;

@@ -118,8 +118,10 @@ export default function Cellar() {
 
       {/* The list, in the cellar book */}
       <div className="px-3 py-10 sm:px-6 md:py-16">
-        <article className="relative mx-auto max-w-3xl drop-shadow-[0_30px_50px_rgb(0_0_0/0.55)]">
-          <div aria-hidden className="paper absolute inset-0" />
+        <article className="relative mx-auto max-w-3xl">
+          {/* Tall page: no CSS filters here (see .paper-flat in globals.css) */}
+          <div aria-hidden className="absolute inset-[3px] shadow-[0_30px_50px_rgb(0_0_0/0.55)]" />
+          <div aria-hidden className="paper-flat absolute inset-0" />
           <div className="relative px-5 pb-12 pt-10 sm:px-12 md:px-16">
             <header className="text-center">
               <p className="text-[0.7rem] uppercase tracking-[0.4em] text-espresso/70">Libro dei vini</p>

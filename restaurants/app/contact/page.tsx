@@ -17,7 +17,7 @@ export default function Contact() {
       <PageHero kicker="Scrivici" title="Send us a postcard" line="Reservations, parties, questions, hellos." photo="sp-08" focal="50% 55%" ink="cup" />
       <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-[1.6fr_1fr]">
         <Reveal>
-          <RusticCard className="-rotate-[0.6deg]" pad="p-0">
+          <RusticCard flat className="-rotate-[0.6deg]" pad="p-0">
             <ContactForm name={site.name.replace("Trattoria ", "")} />
           </RusticCard>
         </Reveal>

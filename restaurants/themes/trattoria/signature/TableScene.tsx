@@ -72,7 +72,7 @@ export function TableScene({ course }: { course: Course }) {
   if (!sideways) {
     // Phones and reduced motion: the same rail, swiped sideways by hand.
     return (
-      <section id={`course-${course.id}`} data-course={course.id} aria-label={course.title} className="relative overflow-hidden bg-espresso py-14 text-cream">
+      <section ref={ref} id={`course-${course.id}`} data-course={course.id} aria-label={course.title} className="relative overflow-hidden bg-espresso py-14 text-cream">
         <div aria-hidden className="absolute inset-0 opacity-35">
           <PhotoSlot photo="sp-03b" ratio="h-full w-full" sizes="100vw" focal="50% 60%" className="h-full" />
         </div>

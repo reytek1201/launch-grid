@@ -104,7 +104,7 @@ export default function Events() {
       <section aria-labelledby="faq" className="mx-auto max-w-3xl px-5 pb-16 md:px-8 md:pb-24">
         <h2 id="faq" className="font-hand text-5xl text-terracotta-deep md:text-6xl">Domande</h2>
         <Reveal>
-          <RusticCard className="mt-8 rotate-[0.3deg]" pad="px-5 py-3 sm:px-8">
+          <RusticCard flat className="mt-8 rotate-[0.3deg]" pad="px-5 py-3 sm:px-8">
             <div className="divide-y divide-dashed divide-espresso/30">
               {events.faqs.map((f) => (
                 <details key={f.q} className="group py-4">
@@ -124,7 +124,7 @@ export default function Events() {
       <section id="inquiry" aria-labelledby="inquiry-title" className="scroll-mt-24 bg-espresso/[0.04] px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-5xl">
           <Reveal>
-            <RusticCard className="-rotate-[0.4deg]" pad="p-0">
+            <RusticCard flat className="-rotate-[0.4deg]" pad="p-0">
               <EventForm site={site} />
             </RusticCard>
           </Reveal>

@@ -8,6 +8,7 @@ import { addDays, dateIssue, partyWord, shortDate, slotsFor, todayIn } from "@/l
 import type { SiteData } from "@/lib/types";
 import { Moons } from "./Moons";
 import { Chips, LABEL, LINE, RequestSent } from "./PaperForm";
+import { useToday } from "./useToday";
 
 const SEATING = ["No preference", "Window booth", "Long communal table", "Bar"];
 const tel = (p: string) => `tel:+1${p.replace(/\D/g, "")}`;
@@ -26,16 +27,17 @@ export function ReserveSlip({ site }: { site: SiteData }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<Done | null>(null);
 
-  const today = todayIn(site.timezone).date;
-  const max = addDays(today, site.reservations.daysAhead);
+  const today = useToday(site.timezone);
+  const max = today ? addDays(today, site.reservations.daysAhead) : undefined;
   // Slots only exist once a date is chosen, so nothing here depends on the clock during server render.
   const issue = useMemo(() => (date ? dateIssue(site, date) : null), [site, date]);
   const slots = useMemo(() => (date ? slotsFor(site, date) : []), [site, date]);
   const nextOpen = useMemo(() => {
     if (!issue) return null;
-    for (let i = 1; i <= 14; i++) { const d = addDays(date > today ? date : today, i); if (!dateIssue(site, d)) return d; }
+    const now = todayIn(site.timezone).date;
+    for (let i = 1; i <= 14; i++) { const d = addDays(date > now ? date : now, i); if (!dateIssue(site, d)) return d; }
     return null;
-  }, [issue, site, date, today]);
+  }, [issue, site, date]);
 
   const pick = (d: string) => { setDate(d); setTime(""); setError(""); };
 
@@ -95,7 +97,6 @@ export function ReserveSlip({ site }: { site: SiteData }) {
               min={today}
               max={max}
               onChange={(e) => pick(e.target.value)}
-              suppressHydrationWarning
               aria-describedby="res-date-note"
               className={LINE}
             />

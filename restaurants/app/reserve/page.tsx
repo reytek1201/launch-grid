@@ -22,8 +22,8 @@ export default function Reserve() {
     <main id="main">
       <PageHero kicker="Prenota" title="Reserve a table" line="Pick a night. We will save you a seat by the oven." photo="sp-03b" focal="50% 55%" ink="glass" />
       <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-[1.7fr_1fr]">
-        <Reveal>
-          <RusticCard className="-rotate-[0.4deg]" pad="p-0">
+        <Reveal className="min-w-0">
+          <RusticCard flat className="-rotate-[0.4deg]" pad="p-0">
             <ReserveSlip site={site} />
           </RusticCard>
         </Reveal>

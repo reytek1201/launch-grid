@@ -25,7 +25,7 @@ function Moon({ phase, className = "" }: { phase: number; className?: string }) 
   );
 }
 
-function Row({ c, i, last }: { c: StoryChapter; i: number; last: boolean }) {
+function Row({ c, i }: { c: StoryChapter; i: number }) {
   const ref = useRef<HTMLLIElement>(null);
   const reduce = useReducedMotion();
   // The moon lights as its chapter reaches the middle of the screen.
@@ -51,7 +51,7 @@ function Row({ c, i, last }: { c: StoryChapter; i: number; last: boolean }) {
       </div>
 
       <motion.div
-        className={`${flip ? "md:order-1 md:pr-4" : "md:pl-4"} ${last ? "" : ""}`}
+        className={flip ? "md:order-1 md:pr-4" : "md:pl-4"}
         initial={reduce ? false : { opacity: 0, y: 36 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -82,7 +82,7 @@ export function StoryTimeline({ chapters }: { chapters: StoryChapter[] }) {
         style={{ scaleY: reduce ? 1 : scrollYProgress }}
       />
       <ol className="relative">
-        {chapters.map((c, i) => <Row key={c.year} c={c} i={i} last={i === chapters.length - 1} />)}
+        {chapters.map((c, i) => <Row key={c.year} c={c} i={i} />)}
       </ol>
     </div>
   );

@@ -175,7 +175,7 @@ export function GalleryLine({ chapters, wall }: { chapters: LineChapter[]; wall:
           </div>
         </section>
       ) : (
-        <div className="py-12" style={{ backgroundImage: wall }}>
+        <section ref={ref} aria-label="Photos along the lines" className="py-12" style={{ backgroundImage: wall }}>
           {chapters.map((c) => (
             <section key={c.id} aria-labelledby={`ch-${c.id}`} className="mb-10">
               <div className="px-5">
@@ -194,7 +194,7 @@ export function GalleryLine({ chapters, wall }: { chapters: LineChapter[]; wall:
             </section>
           ))}
           <p aria-hidden className="px-5 font-hand text-2xl text-espresso/70">swipe along each line →</p>
-        </div>
+        </section>
       )}
 
       <dialog

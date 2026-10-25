@@ -101,8 +101,10 @@ export function MenuBook({
 
       {/* The printed menu, on aged paper, lying on the table */}
       <div className="px-3 pb-10 pt-4 sm:px-6 md:pb-16">
-        <article className="relative mx-auto max-w-3xl drop-shadow-[0_30px_50px_rgb(0_0_0/0.55)]">
-          <div aria-hidden className="paper absolute inset-0" />
+        <article className="relative mx-auto max-w-3xl">
+          {/* Tall page: no CSS filters here (see .paper-flat in globals.css) */}
+          <div aria-hidden className="absolute inset-[3px] shadow-[0_30px_50px_rgb(0_0_0/0.55)]" />
+          <div aria-hidden className="paper-flat absolute inset-0" />
           <div className="relative px-5 pb-12 pt-10 sm:px-12 md:px-16">
             <header className="text-center">
               <p className="text-[0.7rem] uppercase tracking-[0.4em] text-espresso/70">Trattoria</p>
@@ -219,10 +221,11 @@ export function MenuBook({
               animate={{ opacity: 1, x: 0 }}
               exit={calm ? undefined : { opacity: 0, x: -40 * dir }}
               transition={{ duration: 0.3, ease: EASE }}
-              className="relative mt-5 drop-shadow-[0_30px_50px_rgb(0_0_0/0.6)]"
+              className="relative mt-5"
             >
               {/* Aged paper with torn edges, taped down, like the menu card itself */}
-              <div aria-hidden className="paper absolute inset-0" />
+              <div aria-hidden className="absolute inset-[3px] shadow-[0_30px_50px_rgb(0_0_0/0.6)]" />
+              <div aria-hidden className="paper-flat absolute inset-0" />
               <span aria-hidden className="tape" />
               <span aria-hidden className="tape !left-auto !right-6 !translate-x-0 !rotate-[6deg] max-md:hidden" />
               <div className="relative grid p-3 md:grid-cols-[1.15fr_1fr] md:p-4">

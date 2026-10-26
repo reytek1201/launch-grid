@@ -58,7 +58,7 @@ async function check(page, route, expect = 200) {
 
 for (const d of [PHONE, DESKTOP]) {
   const page = await (await ctx(d)).newPage();
-  for (const [r, s] of [["/", 200], ["/start", 200], ["/start?kind=restaurant", 200], ["/privacy", 200], ["/no-such-page", 404]]) {
+  for (const [r, s] of [["/", 200], ["/start", 200], ["/start?kind=restaurant", 200], ["/musicians", 200], ["/privacy", 200], ["/no-such-page", 404]]) {
     const x = await check(page, r, s);
     if (!x.ok) bad++;
     console.log(`${x.ok ? "ok  " : "FAIL"} ${d.name.padEnd(7)} ${r}`, x.ok ? "" : JSON.stringify(x));

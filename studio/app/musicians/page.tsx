@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MusiciansHero } from "@/components/MusiciansHero";
 import { RtDeck } from "@/components/deck/RtDeck";
 import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
-import { ShowsDesk } from "@/components/funkharp/ShowsDesk";
-import { fhDisplay, fhSans, fhSerif } from "./fonts";
+import { KaesoDesk } from "@/components/kaeso/KaesoDesk";
+import { fhDisplay, fhSans, fhSerif, kvDisplay, kvSans } from "./fonts";
 
 export const metadata: Metadata = {
   title: "For bands and artists",
@@ -35,14 +35,14 @@ export default function Musicians() {
         <FunkharpDesk />
       </section>
 
-      <section className={`section fh bs ${fhDisplay.variable} ${fhSerif.variable} ${fhSans.variable}`} id="backstage" aria-labelledby="bs-title">
-        <div className="fh-head">
-          <span className="lbl">Backstage · what the band changes themselves</span>
+      <section className={`section kv ${kvDisplay.variable} ${kvSans.variable}`} id="backstage" aria-labelledby="bs-title">
+        <div className="kv-head">
+          <span className="lbl">Backstage · Kaeso Vance, a demo artist <em>(not a real artist)</em></span>
           <h2 id="bs-title">Add a show from your phone. It&rsquo;s on the site before you put it away.</h2>
-          <p>This is Funkharp&rsquo;s back office and their Shows page. Add a date on the phone: the ticket prints onto the site, and the soonest date becomes the big &ldquo;Next show&rdquo;. No developer, no waiting.</p>
+          <p>Every artist gets their own look and the same back office. Here it&rsquo;s a hip-hop artist&rsquo;s Tour page: add a date on his phone and the flyer drops onto his site. The soonest date becomes the headliner. No developer, no waiting.</p>
         </div>
-        <ShowsDesk />
-        <p className="fh-demo" style={{ color: "rgb(243 239 230 / .7)" }}>Demo with sample dates and venues. Nothing is saved.</p>
+        <KaesoDesk />
+        <p className="kv-demo">Demo artist with sample dates and venues. Nothing is saved.</p>
       </section>
 
       <section className="section fw" id="fair" aria-labelledby="fw-title">

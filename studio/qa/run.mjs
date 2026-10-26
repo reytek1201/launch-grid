@@ -146,7 +146,7 @@ for (const d of [PHONE, DESKTOP]) {
   const form = page.locator("#backstage form");
   await form.getByLabel("Venue").fill("QA Hall");
   await form.getByRole("button", { name: "Add show" }).click();
-  const okShow = await page.locator(".bs-site .bs-ticket").first().filter({ hasText: "QA Hall" }).waitFor({ timeout: 6000 }).then(() => true, () => false);
+  const okShow = await page.locator(".bs-site .kv-flyer").first().filter({ hasText: "QA Hall" }).waitFor({ timeout: 6000 }).then(() => true, () => false);
   if (!okShow) bad++;
   console.log(`${okShow ? "ok  " : "FAIL"} ${d.name.padEnd(7)} added show becomes the next show on the site`);
 }

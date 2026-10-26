@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 
 /**
@@ -12,6 +13,7 @@ import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } fr
 type Show = { id: string; isoDate: string; venue: string; city: string; art: number; fresh?: boolean };
 
 const ARTIST = "Kaeso Vance";
+const ART = ["/kaeso/flyer-skyline.webp", "/kaeso/flyer-mic.webp", "/kaeso/flyer-chrome.webp"];
 
 function fmt(iso: string) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -65,7 +67,7 @@ export function KaesoDesk() {
           <div className="fh-phone bs-phone kv-phone">
             <div className="fh-screen kv-screen">
               <div className="fh-status kv-status" aria-hidden="true"><span>9:41</span><span className="fh-island" /><span className="fh-bars"><i /><i /><i /><i /></span></div>
-              <div className="kv-top" aria-hidden="true"><b>KAESO VANCE</b><span>Admin</span><i>Site</i></div>
+              <div className="kv-top" aria-hidden="true"><Image className="kv-top-mark" src="/kaeso/kaeso-emblem-160.webp" alt="" width={22} height={22} /><b>KAESO VANCE</b><span>Admin</span><i>Site</i></div>
               <div className="bs-scroll kv-scroll">
                 <p className="kv-over">Manage</p>
                 <p className="kv-h">Shows</p>
@@ -82,7 +84,7 @@ export function KaesoDesk() {
                 <p className="kv-over kv-books" aria-hidden="true">On the books <span>{shows.length}</span></p>
                 <ul className="kv-rows" aria-hidden="true">
                   {sorted.map((s) => (
-                    <li key={s.id}><span className={`kv-thumb art-${s.art}`} /><span><i>{fmt(s.isoDate).date}</i><b>{s.venue}</b></span></li>
+                    <li key={s.id}><span className="kv-thumb"><Image src={ART[s.art]} alt="" fill sizes="54px" /></span><span><i>{fmt(s.isoDate).date}</i><b>{s.venue}</b></span></li>
                   ))}
                 </ul>
               </div>
@@ -100,7 +102,12 @@ export function KaesoDesk() {
         <div className="bs-browser kv-browser" aria-label={`${ARTIST}'s Tour page, as fans see it`} role="region">
           <div className="bs-chrome kv-chrome" aria-hidden="true"><i /><i /><i /><span>{ARTIST} · Tour</span><b data-on={stamp > 0}>{stamp ? "Updated just now" : "Live"}</b></div>
           <div className="kv-page">
-            <p className="kv-word" aria-hidden="true">KAESO VANCE</p>
+            <Image className="kv-watermark" src="/kaeso/kaeso-emblem-512.webp" alt="" width={512} height={512} aria-hidden="true" />
+            <div className="kv-banner" aria-hidden="true"><Image src="/kaeso/silhouette.webp" alt="" fill sizes="(min-width: 1024px) 760px, 100vw" /></div>
+            <div className="kv-brand">
+              <Image className="kv-mark" src="/kaeso/kaeso-emblem-160.webp" alt="" width={160} height={160} />
+              <p className="kv-word" aria-hidden="true">KAESO VANCE</p>
+            </div>
             <p className="kv-title">On the road.</p>
             <LayoutGroup>
               <div className="kv-list">
@@ -132,7 +139,7 @@ function Flyer({ show, head = false, reduce }: { show: Show; head?: boolean; red
       transition={{ type: "spring", stiffness: 150, damping: 17 }}
       className={`kv-flyer art-${show.art}${head ? " head" : ""}${show.fresh ? " fresh" : ""}`}
     >
-      <span className="kv-art" aria-hidden="true"><i /><b /></span>
+      <span className="kv-art" aria-hidden="true"><Image src={ART[show.art]} alt="" fill sizes="(min-width: 640px) 280px, 100vw" /><i /></span>
       <span className="kv-date"><small>{d.dow}</small><strong>{d.day}</strong><small>{d.month}</small></span>
       <span className="kv-info">
         <span className="kv-k">{head ? "Next up" : "Live"}</span>

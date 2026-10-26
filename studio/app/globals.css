@@ -1296,3 +1296,28 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 .console-go { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
 .console-more { display: inline-flex; align-items: center; min-height: 44px; color: #F2F0EA; font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: rgba(123,144,255,.8); }
 .console-more:focus-visible { outline: 2px solid #F2F0EA; outline-offset: 2px; }
+.kv-top { align-items: center; }
+.kv-top-mark { width: 22px; height: 22px; filter: drop-shadow(0 0 6px rgba(255,46,136,.45)); }
+.kv-page { position: relative; isolation: isolate; overflow: hidden; }
+.kv-watermark { position: absolute; z-index: -1; right: -14%; top: 8%; width: min(78%, 560px); height: auto; opacity: .07; pointer-events: none; transform: rotate(-8deg); }
+.kv-brand { display: flex; align-items: center; gap: clamp(10px, 2vw, 18px); }
+.kv-mark { flex: none; width: clamp(54px, 11vw, 92px); height: auto; filter: drop-shadow(0 0 18px rgba(255,46,136,.35)) drop-shadow(0 0 10px rgba(198,255,58,.18)); animation: kv-float 6s ease-in-out infinite alternate; }
+@keyframes kv-float { from { transform: translateY(-3px) rotate(-3deg); } to { transform: translateY(3px) rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) { .kv-mark { animation: none; } }
+.bs-desk > *, .bs-site, .bs-browser { min-width: 0; }
+.kv-brand { min-width: 0; }
+.kv-word { min-width: 0; font-size: clamp(2rem, 9vw, 4.8rem); overflow-wrap: anywhere; }
+.kv-top b { white-space: nowrap; }
+/* Kaeso's generated art (Fal): flyer backgrounds, tour banner */
+.kv-art img, .kv-thumb img, .kv-banner img { object-fit: cover; }
+.kv-thumb { position: relative; overflow: hidden; background: #1A1A1F; }
+.kv-flyer .kv-art { background: #000; }
+.kv-flyer.art-1 .kv-art img { object-position: 50% 30%; }
+.kv-art i { z-index: 1; opacity: .55; }
+.kv-flyer .kv-art::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 40%, rgba(18,18,22,.75)); }
+@media (min-width: 640px) { .kv-flyer .kv-art::after { background: linear-gradient(90deg, transparent 55%, rgba(18,18,22,.9)); } }
+.kv-banner { position: absolute; left: 0; right: 0; top: 0; height: clamp(220px, 42vw, 320px); z-index: -1; opacity: .9; }
+.kv-banner img { object-position: 50% 42%; }
+.kv-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,14,.25) 0%, rgba(11,11,14,.55) 55%, #0B0B0E 100%), linear-gradient(90deg, rgba(11,11,14,.7), transparent 60%); }
+.kv-page { padding-top: clamp(120px, 24vw, 190px); }
+.kv-top { gap: 6px; } .kv-top b { font-size: 1.05rem; } .kv-top span { display: none; } @media (min-width: 400px) { .kv-top span { display: inline; } }

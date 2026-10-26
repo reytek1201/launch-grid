@@ -1175,3 +1175,35 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 .fh-grain { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.11  0 0 0 0 0.09  0 0 0 0 0.07  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; }
 .fh-perforation { background-image: radial-gradient(circle, var(--cloud) 3px, transparent 3.5px); background-size: 100% 14px; }
 @media (prefers-reduced-motion: reduce) { .bs-chrome b[data-on="true"]::before, .bs-ticket.fresh > span { animation: none; } }
+
+/* ---------- Musicians: Fair warning (the honest template note) and Encore ---------- */
+.fw-rider { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }
+@media (min-width: 720px) { .fw-rider { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .fw-rider { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fw-rider li { position: relative; display: grid; align-content: start; gap: 6px; padding: 20px 18px 18px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
+.fw-rider li::before { content: ""; position: absolute; left: 18px; right: 18px; top: 0; height: 3px; border-radius: 0 0 3px 3px; background: var(--line); }
+.fw-k { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.fw-rider b { font-family: var(--font-display); font-size: 1.45rem; letter-spacing: -.02em; line-height: 1.1; }
+.fw-p { font-weight: 600; font-size: 1.05rem; }
+.fw-p small { display: block; font-weight: 400; font-size: .85rem; color: var(--muted); }
+.fw-n { color: var(--muted); font-size: .95rem; line-height: 1.45; }
+.fw-rider .fw-me { background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: 0 24px 50px -24px rgba(31,63,255,.6); }
+.fw-rider .fw-me::before { background: var(--cobalt); }
+.fw-rider .fw-me .fw-k, .fw-rider .fw-me .fw-n { color: #C4C8D4; }
+.fw-src { margin: 4px 0 0; font-size: .85rem; line-height: 1.5; color: var(--muted); max-width: 70ch; }
+.fw-src a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.encore { position: relative; isolation: isolate; overflow: clip; margin-inline: calc(50% - 50vw); padding: clamp(110px, 18vh, 170px) 16px clamp(80px, 12vh, 120px); text-align: center; color: #EDEBE6;
+  background: radial-gradient(90% 60% at 50% 100%, #10142a 0%, #07080d 60%, #050608 100%); }
+.en-beam { position: absolute; left: 50%; top: -10px; z-index: -1; width: min(900px, 120vw); height: 120%; transform: translateX(-50%) rotate(0deg); transform-origin: 50% 0; pointer-events: none; mix-blend-mode: screen;
+  clip-path: polygon(48% 0, 52% 0, 82% 100%, 18% 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent); mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+  background: linear-gradient(to bottom, rgba(123,144,255,.55), rgba(123,144,255,.16) 55%, rgba(123,144,255,0) 92%); animation: en-sway 9s ease-in-out infinite alternate; }
+@keyframes en-sway { from { transform: translateX(-50%) rotate(-2.5deg); } to { transform: translateX(-50%) rotate(2.5deg); } }
+.en-pool { position: absolute; left: 50%; bottom: 4%; z-index: -1; width: min(760px, 110vw); height: 34%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(123,144,255,.32), rgba(123,144,255,.08) 60%, transparent); pointer-events: none; }
+.en-in { display: grid; justify-items: center; gap: 18px; max-width: 34rem; margin: 0 auto; }
+.en-label { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .24em; text-transform: uppercase; color: #9FB0FF; }
+.encore h2 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 8vw, 4.6rem); line-height: .98; letter-spacing: -.04em; color: #F2F0EA; text-wrap: balance; }
+.encore p { margin: 0; color: #B6B9C4; font-size: 1.1rem; line-height: 1.5; max-width: 32ch; }
+.en-btn { margin-top: 6px; min-height: 52px; padding-inline: 24px; box-shadow: 0 0 0 1px rgba(123,144,255,.4), 0 16px 50px -8px rgba(31,63,255,.85); }
+.encore a:focus-visible { outline: 2px solid #EDEBE6; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .en-beam { animation: none; } }

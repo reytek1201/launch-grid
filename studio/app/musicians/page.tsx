@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { MusiciansHero } from "@/components/MusiciansHero";
 import { RtDeck } from "@/components/deck/RtDeck";
 import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
@@ -42,6 +43,52 @@ export default function Musicians() {
         </div>
         <ShowsDesk />
         <p className="fh-demo" style={{ color: "rgb(243 239 230 / .7)" }}>Demo with sample dates and venues. Nothing is saved.</p>
+      </section>
+
+      <section className="section fw" id="fair" aria-labelledby="fw-title">
+        <div className="section-head">
+          <span className="label">Fair warning</span>
+          <h2 id="fw-title">If a template is enough, use one.</h2>
+          <p>Plenty of bands are fine with a template, and they cost less than a custom build. Hire me when you want a site nobody else has, with a back office shaped around how your band works.</p>
+        </div>
+        <ol className="fw-rider">
+          <li>
+            <span className="fw-k">Links in one place</span>
+            <b>Linktree</b>
+            <span className="fw-p">Free plan</span>
+            <span className="fw-n">A single page of links you set up yourself.</span>
+          </li>
+          <li>
+            <span className="fw-k">Band site builder</span>
+            <b>Bandzoogle</b>
+            <span className="fw-p">From $9.16/mo <small>billed yearly · $11 monthly</small></span>
+            <span className="fw-n">Templates made for musicians. You build it.</span>
+          </li>
+          <li>
+            <span className="fw-k">General site builder</span>
+            <b>Squarespace</b>
+            <span className="fw-p">From $19/mo <small>billed yearly · $25 monthly</small></span>
+            <span className="fw-n">Polished templates for any kind of site. You build it.</span>
+          </li>
+          <li className="fw-me">
+            <span className="fw-k">Custom, built with you</span>
+            <b>LaunchGrid</b>
+            <span className="fw-p">A fixed price in writing</span>
+            <span className="fw-n">Designed around your band, with a back office on your phone. I build it.</span>
+          </li>
+        </ol>
+        <p className="fw-src">Prices from each company&rsquo;s pricing page, checked Oct 25, 2026, and they change: <a href="https://linktr.ee/s/pricing" target="_blank" rel="noopener">Linktree<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://bandzoogle.com/pricing" target="_blank" rel="noopener">Bandzoogle<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace<span className="sr-only"> (opens in a new tab)</span></a>. Lowest plan shown.</p>
+      </section>
+
+      <section className="encore" id="encore" aria-labelledby="en-title">
+        <span className="en-beam" aria-hidden="true" />
+        <span className="en-pool" aria-hidden="true" />
+        <div className="en-in">
+          <span className="en-label">Encore</span>
+          <h2 id="en-title">Your band, next on the setlist.</h2>
+          <p>Tell me about the band in a few lines. I reply in writing by the next business day.</p>
+          <Link className="btn en-btn" href="/start?kind=band">Start a band project <span aria-hidden="true">→</span></Link>
+        </div>
       </section>
     </main>
   );

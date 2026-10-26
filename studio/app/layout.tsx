@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono, Public_Sans } from "next/font/google";
 import Link from "next/link";
+import { ShyHeader } from "@/components/ShyHeader";
 import { Mark } from "@/components/Mark";
 import { RefCapture } from "@/components/StartForm";
 import { Wordmark } from "@/components/Wordmark";
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <RefCapture />
         <div className="wrap">
-          <header className="site-header">
+          <ShyHeader>
             <Link className="brand" href="/" aria-label="LaunchGrid Studio, home">
               <span className="mark-box"><Mark label={null} /></span>
               <span className="brand-word"><Wordmark /></span>
@@ -42,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link className="hdr-link" href="/restaurants"><span className="hdr-long">For restaurants</span><span className="hdr-short">Restaurants</span></Link>
               <Link className="hdr-cta" href="/start"><span className="hdr-long">Start a project</span><span className="hdr-short">Start</span></Link>
             </nav>
-          </header>
+          </ShyHeader>
           {children}
           <footer className="site-footer">
             <div>

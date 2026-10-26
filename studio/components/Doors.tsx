@@ -119,7 +119,10 @@ export function Doors() {
           {cur ? <><span className="mono">Bay {cur.n} · {cur.short} · {phase === "open" ? "Locked in" : "Opening"}</span><b>{cur.title}</b><span className="txt">{cur.text}</span></>
                : <><span className="mono">All bays shut</span><b>Tap a bay to lock it in.</b><span className="txt">Bands, restaurants, or any other small business.</span></>}
         </p>
-        <Link className="btn" href={cur ? `/start?kind=${cur.kind}` : "/start"}>{cur ? cur.go : "Start a project"} <span aria-hidden="true">→</span></Link>
+        <div className="console-go">
+          <Link className="btn" href={cur ? `/start?kind=${cur.kind}` : "/start"}>{cur ? cur.go : "Start a project"} <span aria-hidden="true">→</span></Link>
+          {cur?.kind === "band" && phase === "open" ? <Link className="console-more" href="/musicians">See the band sites</Link> : null}
+        </div>
       </div>
     </div>
   );

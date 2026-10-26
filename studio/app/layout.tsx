@@ -37,7 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="mark-box"><Mark label={null} /></span>
               <Wordmark />
             </Link>
-            <Link className="hdr-cta" href="/start">Start a project</Link>
+            <nav className="hdr-nav" aria-label="Main">
+              <Link className="hdr-link" href="/musicians">For bands</Link>
+              <Link className="hdr-cta" href="/start"><span className="hdr-long">Start a project</span><span className="hdr-short">Start</span></Link>
+            </nav>
           </header>
           {children}
           <footer className="site-footer">
@@ -46,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>reytek@launchgrid.studio</div>
             </div>
             <nav aria-label="Footer">
+              <Link href="/musicians">For bands</Link>
               <Link href="/#back-office">Try the back office</Link>
               <Link href="/start">Start a project</Link>
               <Link href="/privacy">Privacy</Link>

@@ -35,10 +35,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <header className="site-header">
             <Link className="brand" href="/" aria-label="LaunchGrid Studio, home">
               <span className="mark-box"><Mark label={null} /></span>
-              <Wordmark />
+              <span className="brand-word"><Wordmark /></span>
             </Link>
             <nav className="hdr-nav" aria-label="Main">
-              <Link className="hdr-link" href="/musicians">For bands</Link>
+              <Link className="hdr-link" href="/musicians"><span className="hdr-long">For bands</span><span className="hdr-short">Bands</span></Link>
+              <Link className="hdr-link" href="/restaurants"><span className="hdr-long">For restaurants</span><span className="hdr-short">Restaurants</span></Link>
               <Link className="hdr-cta" href="/start"><span className="hdr-long">Start a project</span><span className="hdr-short">Start</span></Link>
             </nav>
           </header>
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
             <nav aria-label="Footer">
               <Link href="/musicians">For bands</Link>
+              <Link href="/restaurants">For restaurants</Link>
               <Link href="/#back-office">Try the back office</Link>
               <Link href="/start">Start a project</Link>
               <Link href="/privacy">Privacy</Link>

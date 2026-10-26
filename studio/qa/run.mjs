@@ -58,7 +58,7 @@ async function check(page, route, expect = 200) {
 
 for (const d of [PHONE, DESKTOP]) {
   const page = await (await ctx(d)).newPage();
-  for (const [r, s] of [["/", 200], ["/start", 200], ["/start?kind=restaurant", 200], ["/musicians", 200], ["/privacy", 200], ["/no-such-page", 404]]) {
+  for (const [r, s] of [["/", 200], ["/start", 200], ["/start?kind=restaurant", 200], ["/musicians", 200], ["/restaurants", 200], ["/privacy", 200], ["/no-such-page", 404]]) {
     const x = await check(page, r, s);
     if (!x.ok) bad++;
     console.log(`${x.ok ? "ok  " : "FAIL"} ${d.name.padEnd(7)} ${r}`, x.ok ? "" : JSON.stringify(x));
@@ -158,6 +158,31 @@ for (const d of [PHONE, DESKTOP]) {
   const okMail = await fans.locator(".jc-email h3", { hasText: "New single out Friday" }).waitFor({ timeout: 8000 }).then(() => true, () => false);
   if (!okJoin || !okMail) bad++;
   console.log(`${okJoin && okMail ? "ok  " : "FAIL"} ${d.name.padEnd(7)} fan joins on her site, email lands in a fan's inbox`);
+}
+
+// Restaurants: the truck moves and sells out on the fan's phone; the café's board updates its site
+for (const d of [PHONE, DESKTOP]) {
+  const page = await (await ctx(d)).newPage();
+  await page.goto(BASE + "/restaurants", { waitUntil: "networkidle" });
+  const truck = page.locator("#truck");
+  await truck.getByRole("radio", { name: /By the trail/ }).check();
+  await truck.getByRole("checkbox", { name: /Brisket plate/ }).check();
+  const okSpot = await truck.locator(".lr-where", { hasText: "By the trail" }).waitFor({ timeout: 5000 }).then(() => true, () => false)
+    && await truck.locator(".lr-item", { hasText: "Brisket plate" }).locator("em").isVisible();
+  await truck.getByRole("button", { name: "Sold out for today" }).click();
+  const okDone = await truck.locator(".lr-closed").waitFor({ timeout: 5000 }).then(() => true, () => false);
+  if (!okSpot || !okDone) bad++;
+  console.log(`${okSpot && okDone ? "ok  " : "FAIL"} ${d.name.padEnd(7)} truck spot, 86 and sold-out show on the fan's phone`);
+  const cafe = page.locator("#cafe");
+  await cafe.getByLabel(/Today.s special/).fill("QA waffles");
+  await cafe.getByRole("button", { name: "Write it on the board" }).click();
+  await cafe.getByRole("checkbox", { name: /Cinnamon rolls/ }).check();
+  await cafe.getByLabel("Wait right now").fill("0");
+  const okCafe = await cafe.locator(".ss-chalk", { hasText: "QA waffles" }).waitFor({ timeout: 5000 }).then(() => true, () => false)
+    && await cafe.locator(".ss-case li", { hasText: "Cinnamon rolls" }).locator("em").waitFor({ timeout: 3000 }).then(() => true, () => false)
+    && await cafe.locator(".ss-wait b", { hasText: "No wait" }).isVisible();
+  if (!okCafe) bad++;
+  console.log(`${okCafe ? "ok  " : "FAIL"} ${d.name.padEnd(7)} café special, sold-out and wait show on its site`);
 }
 
 await browser.close();

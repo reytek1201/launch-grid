@@ -122,6 +122,7 @@ export function Doors() {
         <div className="console-go">
           <Link className="btn" href={cur ? `/start?kind=${cur.kind}` : "/start"}>{cur ? cur.go : "Start a project"} <span aria-hidden="true">→</span></Link>
           {cur?.kind === "band" && phase === "open" ? <Link className="console-more" href="/musicians">See the band sites</Link> : null}
+          {cur?.kind === "restaurant" && phase === "open" ? <Link className="console-more" href="/restaurants">See the restaurant sites</Link> : null}
         </div>
       </div>
     </div>

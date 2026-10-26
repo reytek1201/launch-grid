@@ -691,6 +691,20 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
 .yr-slide.s2 { transform: translateX(calc(var(--side) * var(--k) * var(--w-sig) * var(--out, .55) * .75)) rotate(calc(var(--side) * var(--k) * 17deg)); z-index: 2; }
 .yr-slide.s3 { transform: translateX(calc(var(--side) * var(--k) * var(--w-sig) * var(--out, .55) * .5)) rotate(calc(var(--side) * var(--k) * 28deg)); z-index: 1; }
 
+/* PoE Source: the rune emblem rolls out from behind the phone while a campaign checklist ticks itself off and syncs */
+.yr-poe { width: 0; height: 0; }
+.yr-emblem { position: absolute; width: calc(var(--w-sig) * .98); aspect-ratio: 1; left: calc(var(--w-sig) * -.49); top: calc(var(--w-sig) * -.86); border-radius: 50%; filter: drop-shadow(0 18px 26px rgba(20,12,4,.55));
+  transform: translateX(calc(var(--side) * var(--k) * var(--w-sig) * .58)) rotate(calc(var(--side) * var(--s, .5) * 140deg)); }
+.yr-emblem::after { content: ""; position: absolute; inset: -18%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(231,178,62,.5), rgba(231,178,62,0)); opacity: var(--k); }
+.yr-stop[data-lit="true"] .yr-emblem::after { animation: yr-flicker 3.6s ease-in-out infinite; }
+.yr-quest { z-index: 3; width: 196px; margin-left: -98px; left: calc(50% + var(--side) * var(--w-sig) * .62); top: calc(50% + var(--w-sig) * .3); display: grid; gap: 5px; padding: 10px 10px 9px; border-radius: 12px; background: #17130F; border: 1px solid #4a3a22; box-shadow: 0 16px 30px -14px rgba(10,8,4,.7); color: #EDE3CF; font: 600 .7rem/1.25 var(--font-sans); opacity: clamp(0, calc((var(--e, 1) - .3) * 4), 1); transform: translateY(calc((1 - var(--k)) * 16px)); }
+.yr-quest span { --r: clamp(0, calc((var(--e, 1) - .5 - var(--i) * .12) / .1), 1); position: relative; display: flex; align-items: center; gap: 7px; }
+.yr-quest span i { flex: none; width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid #B48A3C; background: linear-gradient(#E7B23E, #E7B23E) center / calc(var(--r) * 100%) calc(var(--r) * 100%) no-repeat; }
+.yr-quest span::after { content: ""; position: absolute; left: 20px; right: 0; top: 50%; height: 1px; background: #B9AA8E; transform-origin: left; transform: scaleX(var(--r)); }
+.yr-quest span { color: color-mix(in srgb, #EDE3CF calc(100% - var(--r) * 45%), #6f6453); }
+.yr-quest b { justify-self: end; margin-top: 2px; padding: 3px 8px; border-radius: 99px; background: #1F3B2A; color: #B6E8C4; font: 600 .62rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; opacity: clamp(0, calc((var(--e, 1) - .86) * 10), 1); }
+.yr-note { color: var(--muted); font-size: .8rem; }
+
 @media (min-width: 900px) {
   .yr-path { padding-left: 0; }
   .yr-rail { left: 50%; margin-left: -1px; }

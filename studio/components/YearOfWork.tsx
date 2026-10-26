@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 type Stop = {
-  id: "reytek" | "funkharp" | "cinque" | "keymacro" | "slidepress";
+  id: "reytek" | "funkharp" | "cinque" | "keymacro" | "slidepress" | "poesource";
+  note?: string;
   kind: string;
   name: string;
   text: string;
@@ -53,7 +54,17 @@ const STOPS: Stop[] = [
     screen: "/work/sp-editor.webp", alt: "SlidePress editor: slide 1 of 5 with its image, headline, voiceover script and voice choices",
     link: { href: "https://www.slidepress.co", label: "Open slidepress.co" },
   },
+  {
+    id: "poesource", kind: "My own web app · full launch Dec 1 with PoE 2 1.0", name: "PoE Source",
+    text: "A free hub for Path of Exile players with a real database behind it. Sign in with Google or Discord and your campaign checklist, characters, saved builds, Atlas trees and farming strategies follow you to any device. Players share builds and strategies publicly, like each other's, and check live economy prices.",
+    tags: ["Accounts & sync", "Saved builds", "Public shares & likes", "Live economy", "WebGL skill trees"],
+    screen: "/work/poe-home.webp", alt: "PoE Source on a phone: a golden rune emblem over an old map with the PoE Source name",
+    link: { href: "https://poe2source.com", label: "Open poe2source.com" },
+    note: "Unofficial fan project, not affiliated with Grinding Gear Games.",
+  },
 ];
+
+const QUESTS = ["Defeat the Bloated Miller", "Talk to Renly for a skill gem", "Defeat Beira of the Rotten Pack"];
 
 const RINGS = [["Calories", 2056, 2045], ["Protein", 161, 149], ["Carbs", 175, 182], ["Fat", 77, 80]] as const;
 
@@ -86,6 +97,17 @@ function Signature({ id }: { id: Stop["id"] }) {
       ))}
     </div>
   );
+  if (id === "poesource") return (
+    <>
+      <div className="yr-sig yr-poe" aria-hidden="true">
+        <div className="yr-emblem"><Image src="/work/poe-emblem.webp" alt="" fill sizes="150px" /></div>
+      </div>
+      <div className="yr-sig yr-quest" aria-hidden="true">
+        {QUESTS.map((q, i) => <span key={q} style={{ ["--i" as string]: i }}><i />{q}</span>)}
+        <b>Synced</b>
+      </div>
+    </>
+  );
   return (
     <div className="yr-sig yr-deck" aria-hidden="true">
       <div className="yr-slide s3"><b /><b /><i /></div>
@@ -98,7 +120,7 @@ function Signature({ id }: { id: Stop["id"] }) {
 /**
  * "One year. Five launches." A cobalt flight path draws down the page as you scroll. Each stop is a real
  * phone that tilts into place with its own small signature (turntable, equalizer, candlelit window,
- * macro rings, a fanned slide deck). Scroll position is written to CSS variables, nothing re-renders.
+ * macro rings, a fanned slide deck, a quest list that checks itself off). Scroll position is written to CSS variables, nothing re-renders.
  */
 export function YearOfWork() {
   const root = useRef<HTMLElement>(null);
@@ -143,8 +165,8 @@ export function YearOfWork() {
     <section ref={root} className="section yr" id="work" aria-labelledby="yr-title">
       <div className="section-head">
         <span className="label">The past year</span>
-        <h2 id="yr-title">One year. Five launches.</h2>
-        <p>Everything here I designed and built myself: my own artist site, a band&rsquo;s site, a demo restaurant, and two apps I made for my own use.</p>
+        <h2 id="yr-title">One year. Six launches.</h2>
+        <p>Everything here I designed and built myself: my own artist site, a band&rsquo;s site, a demo restaurant, and three apps of my own.</p>
       </div>
 
       <div className="yr-path">
@@ -174,6 +196,7 @@ export function YearOfWork() {
                 <ul className="yr-tags">{s.tags.map((t) => <li key={t}>{t}</li>)}</ul>
                 {s.link && <a className="yr-link" href={s.link.href} target="_blank" rel="noopener">{s.link.label} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>}
                 {s.soon && <span className="yr-soon">{s.soon}</span>}
+                {s.note && <small className="yr-note">{s.note}</small>}
               </div>
             </li>
           ))}

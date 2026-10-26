@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MusiciansHero } from "@/components/MusiciansHero";
 import { RtDeck } from "@/components/deck/RtDeck";
 import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
+import { ShowsDesk } from "@/components/funkharp/ShowsDesk";
 import { fhDisplay, fhSans, fhSerif } from "./fonts";
 
 export const metadata: Metadata = {
@@ -31,6 +32,16 @@ export default function Musicians() {
           <p>This is the booking letter from Funkharp&rsquo;s site. Fill it in and seal it: the band gets an alert on their phones and the letter lands in their back office, where they also run their shows, music, videos and fan list.</p>
         </div>
         <FunkharpDesk />
+      </section>
+
+      <section className={`section fh bs ${fhDisplay.variable} ${fhSerif.variable} ${fhSans.variable}`} id="backstage" aria-labelledby="bs-title">
+        <div className="fh-head">
+          <span className="lbl">Backstage · what the band changes themselves</span>
+          <h2 id="bs-title">Add a show from your phone. It&rsquo;s on the site before you put it away.</h2>
+          <p>This is Funkharp&rsquo;s back office and their Shows page. Add a date on the phone: the ticket prints onto the site, and the soonest date becomes the big &ldquo;Next show&rdquo;. No developer, no waiting.</p>
+        </div>
+        <ShowsDesk />
+        <p className="fh-demo" style={{ color: "rgb(243 239 230 / .7)" }}>Demo with sample dates and venues. Nothing is saved.</p>
       </section>
     </main>
   );

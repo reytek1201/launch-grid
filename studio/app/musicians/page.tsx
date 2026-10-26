@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { MusiciansHero } from "@/components/MusiciansHero";
 import { RtDeck } from "@/components/deck/RtDeck";
 import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
 import { fhDisplay, fhSans, fhSerif } from "./fonts";
@@ -12,14 +12,7 @@ export const metadata: Metadata = {
 export default function Musicians() {
   return (
     <main>
-      <section className="section" style={{ borderTop: 0, paddingTop: 24 }} aria-labelledby="mu-title">
-        <div className="section-head">
-          <span className="label">For bands and artists</span>
-          <h1 id="mu-title">A band site that doesn&rsquo;t look like a template.</h1>
-          <p className="lede">Your sound, your look, and a back office on your phone for shows, music, videos and bookings.</p>
-          <p><Link className="btn" href="/start?kind=band">Start a band project <span aria-hidden="true">→</span></Link></p>
-        </div>
-      </section>
+      <MusiciansHero fontClass={fhDisplay.variable} />
 
       <section className="section rk-sec" id="reytek" aria-labelledby="rk-title">
         <div className="rk-head">

@@ -2,15 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 type Kind = "band" | "restaurant" | "other";
 type Phase = "arming" | "open";
 
-const BAYS: { kind: Kind; n: string; short: string; title: string; text: string; go: string }[] = [
-  { kind: "band", n: "01", short: "Bands", title: "Bands and artists", text: "Shows, music, videos, a booking inbox and your fan list.", go: "Start a band project" },
-  { kind: "restaurant", n: "02", short: "Restaurants", title: "Restaurants", text: "Menu, specials, hours, reservations and photos you change yourself.", go: "Start a restaurant project" },
-  { kind: "other", n: "03", short: "Other", title: "Other small businesses", text: "The same build and back office, shaped to what you sell. I’ll reply with the nearest fit.", go: "Tell me what you run" },
+const BAYS: { kind: Kind; n: string; short: string; title: string; text: string; go: string; href: string; enter: string }[] = [
+  { kind: "band", n: "01", short: "Bands", title: "Bands and artists", text: "Shows, music, videos, a booking inbox and your fan list.", go: "Start a band project", href: "/musicians", enter: "See the band sites" },
+  { kind: "restaurant", n: "02", short: "Restaurants", title: "Restaurants", text: "Menu, specials, hours, reservations and photos you change yourself.", go: "Start a restaurant project", href: "/restaurants", enter: "See the restaurant sites" },
+  { kind: "other", n: "03", short: "Other", title: "Other small businesses", text: "The same build and back office, shaped to what you sell. I’ll reply with the nearest fit.", go: "Tell me what you run", href: "/start?kind=other", enter: "Tell me what you run" },
 ];
 
 const BULBS = Array.from({ length: 9 }, (_, i) => { const x = 6 + i * 11; const t = x / 100; return { x, y: 3 + 4 * t * (1 - t) * 13 }; });
@@ -56,6 +57,7 @@ export function Doors() {
   const pending = useRef<Kind | null>(null);
   const [locked, setLocked] = useState<Kind | null>(null);
   const [phase, setPhase] = useState<Phase>("open");
+  const router = useRouter();
 
   const choose = (k: Kind) => {
     chosen.current = true;
@@ -98,16 +100,17 @@ export function Doors() {
         {BAYS.map((b) => {
           const state = locked === b.kind ? phase : "shut";
           return (
-            <button key={b.kind} type="button" className={`bay bay-${b.kind}`} data-state={state} aria-pressed={locked === b.kind} aria-describedby={`bay-${b.kind}-d`} onClick={() => choose(b.kind)}>
+            <button key={b.kind} type="button" className={`bay bay-${b.kind}`} data-state={state} aria-pressed={locked === b.kind} aria-describedby={`bay-${b.kind}-d`} onClick={() => (locked === b.kind && phase === "open" ? router.push(b.href) : choose(b.kind))}>
               <span className="bay-plate" aria-hidden="true"><b>Bay {b.n}</b><span className="lamp" /></span>
               <span className="bay-door" aria-hidden="true">
                 <Room kind={b.kind} />
                 <span className="shutter"><span className="stencil">{b.n}</span><span className="stripe" /><span className="bar"><i /><i /></span></span>
                 <span className="leak" />
                 <span className="housing" />
+                {state === "open" ? <span className="bay-enter">Go in <span>→</span></span> : null}
               </span>
               <span className="bay-floor" aria-hidden="true" />
-              <span className="bay-name">{b.short}<span className="sr-only">: {b.title}</span></span>
+              <span className="bay-name">{b.short}<span className="sr-only">: {b.title}</span>{state === "open" ? <span className="sr-only">. Open. Press again: {b.enter}</span> : null}</span>
               <span id={`bay-${b.kind}-d`} className="sr-only">{b.text}</span>
             </button>
           );

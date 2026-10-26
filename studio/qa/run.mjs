@@ -160,6 +160,20 @@ for (const d of [PHONE, DESKTOP]) {
   console.log(`${okJoin && okMail ? "ok  " : "FAIL"} ${d.name.padEnd(7)} fan joins on her site, email lands in a fan's inbox`);
 }
 
+// Home bays: the first tap opens a bay, a second tap on the open bay goes to its page
+for (const d of [PHONE, DESKTOP]) {
+  const page = await (await ctx(d)).newPage();
+  await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  const bay = page.locator(".bays").getByRole("button", { name: /^Restaurants/ });
+  await bay.scrollIntoViewIfNeeded();
+  await bay.click();
+  await page.locator(".bay-restaurant[data-state=open]").waitFor({ timeout: 5000 });
+  await bay.click();
+  const okBay = await page.waitForURL(/\/restaurants$/, { timeout: 8000 }).then(() => true, () => false);
+  if (!okBay) bad++;
+  console.log(`${okBay ? "ok  " : "FAIL"} ${d.name.padEnd(7)} second tap on an open bay goes to its page`);
+}
+
 // Restaurants: the truck moves and sells out on the fan's phone; the café's board updates its site
 for (const d of [PHONE, DESKTOP]) {
   const page = await (await ctx(d)).newPage();

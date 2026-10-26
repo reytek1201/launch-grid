@@ -1714,3 +1714,10 @@ img.lr-badge, img.lr-badge-sm { background: none; box-shadow: none; border-radiu
 @media (min-width: 1100px) { .rs-fw .fw-rider { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .ss-name { margin-top: 38px; }
 .ss-case em { left: 14px; right: 14px; top: 22%; font-size: .85rem; }
+/* an open bay invites a second tap: go in */
+.bay-enter { position: absolute; left: 50%; bottom: 14px; z-index: 3; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 14px; border-radius: 99px; background: rgba(14,16,23,.82); color: #F2F0EA; font: 600 .78rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 8px 20px rgba(0,0,0,.4); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: bay-enter .5s .2s both cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.bay-enter > span { transition: transform .25s; }
+.bay:hover .bay-enter > span, .bay:focus-visible .bay-enter > span { transform: translateX(3px); }
+@keyframes bay-enter { from { opacity: 0; transform: translate(-50%, 8px); } }
+@media (max-width: 520px) { .bay-enter { padding: 7px 10px; font-size: .68rem; letter-spacing: .04em; } }
+@media (prefers-reduced-motion: reduce) { .bay-enter { animation: none; } }

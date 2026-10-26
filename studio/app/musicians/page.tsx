@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RtDeck } from "@/components/deck/RtDeck";
+import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
+import { fhDisplay, fhSans, fhSerif } from "./fonts";
 
 export const metadata: Metadata = {
   title: "For bands and artists",
@@ -27,6 +29,15 @@ export default function Musicians() {
         </div>
         <RtDeck />
         <p className="rk-foot">Ninety-second excerpts of my own music · sound starts only when you touch the deck</p>
+      </section>
+
+      <section className={`section fh ${fhDisplay.variable} ${fhSerif.variable} ${fhSans.variable}`} id="funkharp" aria-labelledby="fh-title">
+        <div className="fh-head">
+          <span className="lbl">The business side · Funkharp, band client</span>
+          <h2 id="fh-title">Someone writes to book you. Your phone buzzes.</h2>
+          <p>This is the booking letter from Funkharp&rsquo;s site. Fill it in and seal it: the band gets an alert on their phones and the letter lands in their back office, where they also run their shows, music, videos and fan list.</p>
+        </div>
+        <FunkharpDesk />
       </section>
     </main>
   );

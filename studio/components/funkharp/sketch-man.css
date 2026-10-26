@@ -1,0 +1,71 @@
+/* From Funkharp app/sketch-man.css: the pencil sketch and the sealed-letter card. */
+.sketch-slot {
+  display: block;
+  position: relative;
+  flex: none;
+}
+.sketch-man {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: bottom center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: bottom center;
+  mask-size: contain;
+}
+.sketch-slot-letter {
+  width: clamp(52px, 8vw, 70px);
+  aspect-ratio: 536 / 2997;
+  color: var(--ink);
+  margin-bottom: -3px;
+}
+.draw {
+  clip-path: inset(0 0 0 0);
+}
+.draw.armed {
+  clip-path: inset(0 0 100% 0);
+}
+.draw.go {
+  animation: sketch-draw 1.9s cubic-bezier(0.55, 0.1, 0.35, 1) forwards;
+}
+.draw.drawn {
+  clip-path: none;
+  animation: none;
+}
+@keyframes sketch-draw {
+  0% { clip-path: inset(0 0 100% 0); }
+  18% { clip-path: inset(0 0 78% 0); }
+  24% { clip-path: inset(0 0 74% 0); }
+  60% { clip-path: inset(0 0 30% 0); }
+  66% { clip-path: inset(0 0 27% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+.letter-done {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(18px, 4vw, 36px);
+  max-width: 640px;
+  padding: 26px clamp(20px, 4vw, 36px) 0;
+  background: #fbf8f1;
+  border: 1px solid rgb(28 23 18 / 0.08);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgb(28 23 18 / 0.05), 0 16px 30px rgb(46 26 12 / 0.1);
+  overflow: hidden;
+}
+.letter-done-text {
+  padding-bottom: 30px;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.draw.armed,
+  .draw.go,
+  .draw.drawn {
+    clip-path: none;
+    animation: none;
+  }
+@media (prefers-reduced-motion: reduce) { .draw.armed, .draw.go, .draw.drawn { clip-path: none; animation: none; } }

@@ -130,6 +130,20 @@ for (const d of [PHONE, DESKTOP]) {
   console.log(`${okFast ? "ok  " : "FAIL"} too-fast send is dropped quietly`);
 }
 
+// Musicians: Funkharp's booking letter lands on the band's phone (demo only, nothing is sent)
+for (const d of [PHONE, DESKTOP]) {
+  const page = await (await ctx(d)).newPage();
+  await page.goto(BASE + "/musicians", { waitUntil: "networkidle" });
+  await page.getByLabel("Your name").fill("QA Tester");
+  await page.getByLabel("Venue or event").fill("The QA Room");
+  await page.getByLabel("Your email").fill("qa@example.com");
+  await page.getByRole("button", { name: /Seal it and send/ }).click();
+  const okLetter = await page.locator(".fh-phone li", { hasText: "QA Tester" }).first().waitFor({ timeout: 9000 }).then(() => true, () => false)
+    && page.url().endsWith("/musicians") && await page.getByText("Thanks, QA.").isVisible();
+  if (!okLetter) bad++;
+  console.log(`${okLetter ? "ok  " : "FAIL"} ${d.name.padEnd(7)} booking letter lands in the band's inbox`);
+}
+
 await browser.close();
 if (bad) console.log("dev server log tail:\n" + devLog.slice(-2000));
 console.log(`screenshots: ${SHOTS}`);

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ReytekDeck } from "@/components/deck/ReytekDeck";
+import { RtDeck } from "@/components/deck/RtDeck";
 
 export const metadata: Metadata = {
   title: "For bands and artists",
@@ -19,14 +19,14 @@ export default function Musicians() {
         </div>
       </section>
 
-      <section className="section" id="reytek" aria-labelledby="rk-title">
-        <div className="section-head">
-          <span className="label">How far it can go · My own artist site</span>
+      <section className="section rk-sec" id="reytek" aria-labelledby="rk-title">
+        <div className="rk-head">
+          <span className="lbl">How far it can go · My own artist site</span>
           <h2 id="rk-title">Upload a song. The site finds its beat.</h2>
-          <p>This is the music deck from my own site, rebuilt for this page with five of my tracks. Press Start, grab the record and scratch it, push the pitch, or drag the arm. The ticks on the waveform are beats the site found in the audio.</p>
+          <p>This is the turntable from reytek1201.com, running here with five of my tracks. Drag the tonearm onto a groove or tap a band on the record. Grab the vinyl to scratch. Pick another track while one plays and it backspins into the next. Every beat that lights the deck was found in the audio by the site&rsquo;s back office.</p>
         </div>
-        <ReytekDeck />
-        <p className="pt-note">Ninety-second excerpts of my own music. Sound starts only when you press something.</p>
+        <RtDeck />
+        <p className="rk-foot">Ninety-second excerpts of my own music · sound starts only when you touch the deck</p>
       </section>
     </main>
   );

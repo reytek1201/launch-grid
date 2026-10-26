@@ -149,6 +149,15 @@ for (const d of [PHONE, DESKTOP]) {
   const okShow = await page.locator(".bs-site .kv-flyer").first().filter({ hasText: "QA Hall" }).waitFor({ timeout: 6000 }).then(() => true, () => false);
   if (!okShow) bad++;
   console.log(`${okShow ? "ok  " : "FAIL"} ${d.name.padEnd(7)} added show becomes the next show on the site`);
+  // Fan list: joining on Josie's site shows on her phone; sending from her phone lands in a fan's inbox
+  const fans = page.locator("#fans");
+  await fans.getByLabel(/Join the list/).fill("qa@example.com");
+  await fans.getByRole("button", { name: "Count me in" }).click();
+  const okJoin = await fans.locator(".jc-fans li", { hasText: "q•••@example.com" }).waitFor({ timeout: 5000 }).then(() => true, () => false);
+  await fans.getByRole("button", { name: /Send to 643 fans/ }).click();
+  const okMail = await fans.locator(".jc-email h3", { hasText: "New single out Friday" }).waitFor({ timeout: 8000 }).then(() => true, () => false);
+  if (!okJoin || !okMail) bad++;
+  console.log(`${okJoin && okMail ? "ok  " : "FAIL"} ${d.name.padEnd(7)} fan joins on her site, email lands in a fan's inbox`);
 }
 
 await browser.close();

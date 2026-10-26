@@ -4,7 +4,8 @@ import { MusiciansHero } from "@/components/MusiciansHero";
 import { RtDeck } from "@/components/deck/RtDeck";
 import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
 import { KaesoDesk } from "@/components/kaeso/KaesoDesk";
-import { fhDisplay, fhSans, fhSerif, kvDisplay, kvSans } from "./fonts";
+import { JosieDesk } from "@/components/josie/JosieDesk";
+import { fhDisplay, fhSans, fhSerif, jcDisplay, jcText, jcType, kvDisplay, kvSans } from "./fonts";
 
 export const metadata: Metadata = {
   title: "For bands and artists",
@@ -43,6 +44,16 @@ export default function Musicians() {
         </div>
         <KaesoDesk />
         <p className="kv-demo">Demo artist with sample dates and venues. Nothing is saved.</p>
+      </section>
+
+      <section className={`section jc ${jcDisplay.variable} ${jcText.variable} ${jcType.variable}`} id="fans" aria-labelledby="jc-title">
+        <div className="jc-head">
+          <span className="lbl">The fan list · Josie Calloway, a demo artist <em>(not a real artist)</em></span>
+          <h2 id="jc-title">Tell your fans first. Straight to their inbox.</h2>
+          <p>Fans join the list on your site, and the list is yours, not a platform&rsquo;s. Join hers, then write about the new single on her phone and send it.</p>
+        </div>
+        <JosieDesk />
+        <p className="jc-demo">Demo artist with sample fans. Nothing is sent or saved.</p>
       </section>
 
       <section className="section fw" id="fair" aria-labelledby="fw-title">

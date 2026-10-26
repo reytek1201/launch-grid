@@ -111,6 +111,7 @@ export function MusiciansHero({ fontClass = "" }: { fontClass?: string }) {
             <li><a href="#reytek"><b>Upload a song. The site finds its beat.</b><small>Reytek · the 3D deck</small></a></li>
             <li><a href="#funkharp"><b>Someone writes to book you.</b><small>Funkharp · the booking letter</small></a></li>
             <li><a href="#backstage"><b>Add a show from your phone.</b><small>Kaeso Vance · demo artist</small></a></li>
+            <li><a href="#fans"><b>Tell your fans first.</b><small>Josie Calloway · demo artist</small></a></li>
           </ol>
           <p className="mh-encore"><a href="/start?kind=band"><span>Encore</span> Start a band project</a></p>
         </nav>

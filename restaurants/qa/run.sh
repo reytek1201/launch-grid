@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Starts the fake Supabase and the dev server, runs the QA scripts, and stops both.
-#   npm run qa                 smoke + admin
+#   npm run qa                 smoke + admin + try-flow
 #   npm run qa -- gallery-flow run one script (smoke, admin, gallery-flow, or any qa/*.js)
 # Needs: Playwright (preinstalled in the cloud workspace) and `npm install` done in restaurants/.
 set -u
@@ -13,6 +13,6 @@ npx next dev -p "$PORT" > /tmp/qa-dev.log 2>&1 & DEV=$!
 trap 'kill $FAKE $DEV 2>/dev/null; wait 2>/dev/null' EXIT
 for i in $(seq 1 40); do curl -s -o /dev/null "http://localhost:$PORT/menu" && break; sleep 3; done
 status=0
-for s in ${@:-smoke admin}; do echo "── $s"; node "qa/$s.js" || status=1; done
+for s in ${@:-smoke admin try-flow}; do echo "── $s"; node "qa/$s.js" || status=1; done
 echo "fake Supabase log: /tmp/qa-fake.log (PATCH / INSERT / UPLOAD lines show what the admin wrote)"
 exit $status

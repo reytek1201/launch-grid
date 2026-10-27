@@ -33,6 +33,21 @@ export default function Restaurants() {
           </div>
           <CinqueLive />
         </div>
+
+        <div className="cl-admin">
+          <div className="cl-admin-bar" aria-hidden="true"><b>Cinque Lune</b><i>Admin</i><span>Home</span><span className="on">Menu</span><span>Hours</span></div>
+          <div className="cl-admin-in">
+            <span className="lbl">Now run it</span>
+            <h3>Try the admin. Nothing you do is saved.</h3>
+            <p>Open the trattoria&rsquo;s real back office in a sandbox. Make three changes an owner makes every week and watch the site change beside it.</p>
+            <ul aria-label="What to try">
+              <li>Mark a dish sold out</li>
+              <li>Post tonight&rsquo;s special</li>
+              <li>Close for a holiday</li>
+            </ul>
+            <a className="cl-admin-go" href="https://cinque-lune-demo.vercel.app/try" target="_blank" rel="noopener">Try the admin<span className="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
       </section>
 
       <section className={`section lr ${lrSlab.variable} ${lrCond.variable}`} id="truck" aria-labelledby="lr-title">

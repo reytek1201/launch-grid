@@ -23,7 +23,7 @@ const navFor = (site: SiteData) => [
 
 // The specials banner: one solid line at the top of the header, so it moves and hides with it.
 // Visitors can close it; it stays closed for the visit, and comes back when the message changes.
-function Strip({ text, onClose }: { text?: string; onClose: () => void }) {
+export function Strip({ text, onClose }: { text?: string; onClose: () => void }) {
   if (!text) return null;
   return (
     <div role="status" className="relative bg-terracotta-deep py-1.5 pl-4 pr-12 text-center text-[0.8rem] font-medium leading-snug text-cream sm:text-sm">

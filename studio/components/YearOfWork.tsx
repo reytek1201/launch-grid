@@ -45,14 +45,14 @@ const STOPS: Stop[] = [
     text: "Nutrition and training in one place: calories and macros, fasting, Apple Health sync, and Coach Key, a coach you can just text.",
     tags: ["Macros", "Fasting", "Apple Health", "AI coach"],
     screen: "/work/km-today.webp", alt: "KeyMacro's Today screen: calorie, protein, carb and fat rings all in zone, and a fasting timer",
-    link: { href: "https://keymacro.fit", label: "Open keymacro.fit" },
+    video: "/work/keymacro-clip.mp4", link: { href: "https://keymacro.fit", label: "Open keymacro.fit" },
   },
   {
     id: "slidepress", kind: "My own app", name: "SlidePress",
     text: "Type an idea, get a slide carousel with a voiceover. Every slide gets an image, a headline and a script you can rewrite, in the voice you pick.",
     tags: ["Slides", "Voiceover", "Rewrite", "Share"],
     screen: "/work/sp-editor.webp", alt: "SlidePress editor: slide 1 of 5 with its image, headline, voiceover script and voice choices",
-    link: { href: "https://www.slidepress.co", label: "Open slidepress.co" },
+    video: "/work/slidepress-clip.mp4", link: { href: "https://www.slidepress.co", label: "Open slidepress.co" },
   },
   {
     id: "poesource", kind: "My own web app · full launch Dec 1 with PoE 2 1.0", name: "PoE Source",

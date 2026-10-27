@@ -58,8 +58,8 @@ const STOPS: Stop[] = [
     id: "poesource", kind: "My own web app · full launch Dec 1 with PoE 2 1.0", name: "PoE Source",
     text: "A free hub for Path of Exile players with a real database behind it. Sign in with Google or Discord and your campaign checklist, characters, saved builds, Atlas trees and farming strategies follow you to any device. Players share builds and strategies publicly, like each other's, and check live economy prices.",
     tags: ["Accounts & sync", "Saved builds", "Public shares & likes", "Live economy", "WebGL skill trees"],
-    screen: "/work/poe-home.webp", alt: "PoE Source on a phone: a golden rune emblem over an old map with the PoE Source name",
-    link: { href: "https://poe2source.com", label: "Open poe2source.com" },
+    screen: "/work/poe-home.webp", alt: "PoE Source on a phone: the Path of Exile 2 hub with the campaign leveling guide and featured build guides",
+    video: "/work/poesource-clip.mp4", link: { href: "https://poe2source.com", label: "Open poe2source.com" },
     note: "Unofficial fan project, not affiliated with Grinding Gear Games.",
   },
 ];

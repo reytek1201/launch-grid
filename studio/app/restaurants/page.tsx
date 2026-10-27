@@ -97,7 +97,7 @@ export default function Restaurants() {
             <span className="fw-n">Designed around your place, with a back office on your phone. I build it.</span>
           </li>
         </ol>
-        <p className="fw-src">Prices from each company&rsquo;s pricing page, checked Oct 25, 2026, and they change: <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://www.owner.com/pricing" target="_blank" rel="noopener">Owner.com<span className="sr-only"> (opens in a new tab)</span></a>. Lowest plan shown; Owner.com also lists a guest order fee.</p>
+        <p className="fw-src">Prices from each company&rsquo;s pricing page, checked Oct 27, 2026, and they change: <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://www.owner.com/pricing" target="_blank" rel="noopener">Owner.com<span className="sr-only"> (opens in a new tab)</span></a>. Lowest plan shown; Owner.com also lists a guest order fee.</p>
       </section>
 
       <section className="encore rs-encore" id="encore" aria-labelledby="en-title">

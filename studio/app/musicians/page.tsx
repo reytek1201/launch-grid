@@ -88,7 +88,7 @@ export default function Musicians() {
             <span className="fw-n">Designed around your band, with a back office on your phone. I build it.</span>
           </li>
         </ol>
-        <p className="fw-src">Prices from each company&rsquo;s pricing page, checked Oct 25, 2026, and they change: <a href="https://linktr.ee/s/pricing" target="_blank" rel="noopener">Linktree<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://bandzoogle.com/pricing" target="_blank" rel="noopener">Bandzoogle<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace<span className="sr-only"> (opens in a new tab)</span></a>. Lowest plan shown.</p>
+        <p className="fw-src">Prices from each company&rsquo;s pricing page, checked Oct 27, 2026, and they change: <a href="https://linktr.ee/s/pricing" target="_blank" rel="noopener">Linktree<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://bandzoogle.com/pricing" target="_blank" rel="noopener">Bandzoogle<span className="sr-only"> (opens in a new tab)</span></a>, <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace<span className="sr-only"> (opens in a new tab)</span></a>. Lowest plan shown.</p>
       </section>
 
       <section className="encore" id="encore" aria-labelledby="en-title">

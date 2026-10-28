@@ -19,6 +19,7 @@ const FAQ = [
   ["Who builds it?", "I do, Reytek, one person in Atlanta. You write to me and I write back, so nothing gets handed between people."],
   ["Do we ever need to get on a call?", "No. The brief, the proposal and all feedback happen in writing. If you'd rather see something walked through, I can record a short screen video."],
   ["Can I really change things from my phone?", "Yes. The back office is built for a phone screen first. Try the sample above: it is the same kind of back office you would get."],
+  ["How much does it cost?", "Band sites start at $900 and restaurant sites at $1,500, each with a monthly care plan. The price is fixed in your written proposal before work starts. The full list is on the pricing page."],
   ["How long does it take?", "Your proposal states a launch date in writing. Most of the time goes to gathering your photos and words."],
   ["What do I need to send you?", "To start, just the form below. Later I'll ask for your photos, words and links, in writing, a little at a time."],
 ];

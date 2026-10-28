@@ -29,7 +29,7 @@ export function RefCapture() {
   return null;
 }
 
-export function StartForm({ initialKind = "", initialBusiness = "", copyOn = false, ticket = false }: { initialKind?: string; initialBusiness?: string; copyOn?: boolean; ticket?: boolean }) {
+export function StartForm({ initialKind = "", initialBusiness = "", initialNeed = "", copyOn = false, ticket = false }: { initialKind?: string; initialBusiness?: string; initialNeed?: string; copyOn?: boolean; ticket?: boolean }) {
   const [state, action, pending] = useActionState<FormState, FormData>(startProject, { status: "idle" });
   const opened = useRef(0);
   const waited = useRef<HTMLInputElement>(null);
@@ -37,8 +37,8 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
   const sentBox = useRef<HTMLDivElement>(null);
   const refInput = useRef<HTMLInputElement>(null);
   const formEl = useRef<HTMLFormElement>(null);
-  const [needLen, setNeedLen] = useState(0);
-  const [draft, setDraft] = useState<Draft>({ name: "", email: "", kind: initialKind, business: initialBusiness, need: "" });
+  const [needLen, setNeedLen] = useState(initialNeed.length);
+  const [draft, setDraft] = useState<Draft>({ name: "", email: "", kind: initialKind, business: initialBusiness, need: initialNeed });
   const touchedKind = useRef(false);
 
   // a bay locked in above ("Pick your bay") sets the type here, unless the visitor already chose one
@@ -80,7 +80,7 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
     );
   }
 
-  const v = state.status === "idle" ? { ...EMPTY, kind: initialKind, business: initialBusiness } : state.values;
+  const v = state.status === "idle" ? { ...EMPTY, kind: initialKind, business: initialBusiness, need: initialNeed } : state.values;
   const e = state.status === "invalid" ? state.errors : {};
   const err = (k: keyof typeof e) => (e[k] ? { "aria-invalid": true as const, "aria-describedby": `${k}-err` } : {});
 

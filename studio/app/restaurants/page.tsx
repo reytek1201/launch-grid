@@ -111,6 +111,7 @@ export default function Restaurants() {
           <h2 id="en-title">Your table&rsquo;s ready.</h2>
           <p>Tell me about your place in a few lines. I reply in writing by the next business day.</p>
           <Link className="btn en-btn" href="/start?kind=restaurant">Start a restaurant project <span aria-hidden="true">→</span></Link>
+          <Link href="/pricing#restaurants" style={{ color: "inherit", textDecoration: "underline", display: "inline-flex", alignItems: "center", minHeight: 44, marginLeft: 16 }}>See the prices</Link>
         </div>
       </section>
     </main>

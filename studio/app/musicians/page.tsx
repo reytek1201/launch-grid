@@ -102,6 +102,7 @@ export default function Musicians() {
           <h2 id="en-title">Your band, next on the setlist.</h2>
           <p>Tell me about the band in a few lines. I reply in writing by the next business day.</p>
           <Link className="btn en-btn" href="/start?kind=band">Start a band project <span aria-hidden="true">→</span></Link>
+          <Link href="/pricing#bands" style={{ color: "inherit", textDecoration: "underline", display: "inline-flex", alignItems: "center", minHeight: 44, marginLeft: 16 }}>See the prices</Link>
         </div>
       </section>
     </main>

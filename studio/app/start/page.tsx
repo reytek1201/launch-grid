@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { StartForm } from "@/components/StartForm";
 import { copyConfigured } from "@/lib/email";
 import { KINDS } from "@/lib/inquiry";
+import { tierIntro } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Start a website project",
@@ -13,6 +14,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
   const sp = await searchParams;
   const kind = String(sp.kind ?? "");
   const business = String(sp.business ?? "").slice(0, 160);
+  const tier = tierIntro(String(sp.tier ?? ""));
   const copyOn = copyConfigured();
   return (
     <main className="section form-grid" style={{ borderTop: 0, paddingTop: 24 }}>
@@ -26,7 +28,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
           <li><b>{copyOn ? 3 : 2}</b><span>You get a written proposal with a price and a launch date.</span></li>
         </ol>
       </div>
-      <StartForm initialKind={kind in KINDS ? kind : ""} initialBusiness={business} copyOn={copyOn} />
+      <StartForm initialKind={kind in KINDS ? kind : tier?.kind ?? ""} initialBusiness={business} initialNeed={tier?.text ?? ""} copyOn={copyOn} />
     </main>
   );
 }

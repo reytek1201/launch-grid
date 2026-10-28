@@ -58,7 +58,7 @@ async function check(page, route, expect = 200) {
 
 for (const d of [PHONE, DESKTOP]) {
   const page = await (await ctx(d)).newPage();
-  for (const [r, s] of [["/", 200], ["/start", 200], ["/start?kind=restaurant", 200], ["/musicians", 200], ["/restaurants", 200], ["/privacy", 200], ["/no-such-page", 404]]) {
+  for (const [r, s] of [["/", 200], ["/start", 200], ["/start?kind=restaurant", 200], ["/musicians", 200], ["/restaurants", 200], ["/pricing", 200], ["/start?kind=band&tier=headliner", 200], ["/privacy", 200], ["/no-such-page", 404]]) {
     const x = await check(page, r, s);
     if (!x.ok) bad++;
     console.log(`${x.ok ? "ok  " : "FAIL"} ${d.name.padEnd(7)} ${r}`, x.ok ? "" : JSON.stringify(x));
@@ -128,6 +128,22 @@ for (const d of [PHONE, DESKTOP]) {
   const okFast = received.length === before;
   if (!okFast) bad++;
   console.log(`${okFast ? "ok  " : "FAIL"} too-fast send is dropped quietly`);
+}
+
+// Pricing: a tier button opens the form with the kind chosen and the package named; prices come from one file
+for (const d of [PHONE, DESKTOP]) {
+  const page = await (await ctx(d)).newPage();
+  await page.goto(BASE + "/pricing", { waitUntil: "networkidle" });
+  const cards = await page.locator(".pr-card").count();
+  const sameRow = d.name === "desktop" ? await page.evaluate(() => { const t = [...document.querySelectorAll("#bands .pr-card")].map((c) => Math.round(c.getBoundingClientRect().top)); return new Set(t).size === 1; }) : true;
+  await page.screenshot({ path: `${SHOTS}/${d.name}-pricing-full.png`, fullPage: true });
+  await page.getByRole("link", { name: /Start with Headliner/ }).click();
+  await page.waitForURL(/\/start\?kind=band&tier=headliner/);
+  const kindOn = await page.locator('input[name="kind"][value="band"]').isChecked();
+  const need = await page.getByLabel("What do you need?").inputValue();
+  const ok = cards === 5 && sameRow && kindOn && /Headliner package \(\$1,800\)/.test(need);
+  if (!ok) bad++;
+  console.log(`${ok ? "ok  " : "FAIL"} ${d.name.padEnd(7)} pricing: tier button fills the form`, ok ? "" : JSON.stringify({ cards, sameRow, kindOn, need }));
 }
 
 // Musicians: Funkharp's booking letter lands on the band's phone (demo only, nothing is sent)

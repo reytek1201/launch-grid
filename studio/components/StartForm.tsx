@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import { startProject } from "@/app/actions";
 import { EMPTY, KINDS, NEED_MAX, TIMINGS, type FormState } from "@/lib/inquiry";
 import { Mark, type MarkHandle } from "./Mark";
@@ -56,6 +57,7 @@ export function StartForm({ initialKind = "", initialBusiness = "", copyOn = fal
   useEffect(() => { opened.current = Date.now(); }, []);
   useEffect(() => {
     if (state.status === "sent") {
+      track("Project form sent");
       mark.current?.arm();
       requestAnimationFrame(() => { mark.current?.play(); sentBox.current?.focus(); });
     }

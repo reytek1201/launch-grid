@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono, Public_Sans } from "next/font/google";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
+import { TrackClicks } from "@/components/TrackClicks";
 import { ShyHeader } from "@/components/ShyHeader";
 import { Mark } from "@/components/Mark";
 import { RefCapture } from "@/components/StartForm";
@@ -32,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${bricolage.variable} ${publicSans.variable} ${plex.variable}`}>
       <body>
         <RefCapture />
+        <TrackClicks />
         <div className="wrap">
           <ShyHeader>
             <Link className="brand" href="/" aria-label="LaunchGrid Studio, home">
@@ -59,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           </footer>
         </div>
+        <Analytics />
       </body>
     </html>
   );

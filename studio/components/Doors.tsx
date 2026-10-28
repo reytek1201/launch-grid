@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 
 type Kind = "band" | "restaurant" | "other";
@@ -65,6 +66,7 @@ export function Doors() {
     window.clearTimeout(timer.current);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.dispatchEvent(new CustomEvent("lg:kind", { detail: k }));
+    track("Bay opened", { kind: k });
     setLocked(k);
     setPhase(reduce ? "open" : "arming");
     if (!reduce) timer.current = window.setTimeout(() => setPhase("open"), 780);

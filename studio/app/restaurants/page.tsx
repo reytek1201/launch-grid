@@ -29,7 +29,7 @@ export default function Restaurants() {
               <li><b>Tap Reserve</b> and fill in the paper slip</li>
               <li><b>Find the hours</b>: it knows if they&rsquo;re open right now</li>
             </ul>
-            <p className="cl-open"><a href="https://cinque-lune-demo.vercel.app" target="_blank" rel="noopener">Open the full demo<span className="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a> <span>The owner runs the menu, specials, hours and photos from a phone.</span></p>
+            <p className="cl-open"><a href="https://cinque-lune-demo.vercel.app" target="_blank" rel="noopener" data-track="Restaurant demo opened">Open the full demo<span className="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a> <span>The owner runs the menu, specials, hours and photos from a phone.</span></p>
           </div>
           <CinqueLive />
         </div>
@@ -45,7 +45,7 @@ export default function Restaurants() {
               <li>Post tonight&rsquo;s special</li>
               <li>Close for a holiday</li>
             </ul>
-            <a className="cl-admin-go" href="https://cinque-lune-demo.vercel.app/try" target="_blank" rel="noopener">Try the admin<span className="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>
+            <a className="cl-admin-go" href="https://cinque-lune-demo.vercel.app/try" target="_blank" rel="noopener" data-track="Try the admin opened">Try the admin<span className="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>

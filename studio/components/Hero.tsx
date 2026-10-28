@@ -117,7 +117,7 @@ export function Hero() {
           <span className="hx-line"><span>A website you run</span></span>{" "}
           <span className="hx-line"><span>from your <em>phone.</em></span></span>
         </h1>
-        <p className="lede hx-lede">I build custom sites for bands, restaurants and small businesses, with a back office you run from your phone. Everything happens in writing.</p>
+        <p className="lede hx-lede">I build custom websites for bands, restaurants and small businesses, with a back office you run from your phone. Everything happens in writing.</p>
         <div className="row hx-cta">
           <Link className="btn" href="/start">Start a project</Link>
           <a className="btn btn-ghost" href="#back-office">Try the back office</a>

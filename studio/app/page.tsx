@@ -5,7 +5,15 @@ import { HowIWork } from "@/components/HowIWork";
 import { Hero } from "@/components/Hero";
 import { StartForm } from "@/components/StartForm";
 import { YearOfWork } from "@/components/YearOfWork";
+import type { Metadata } from "next";
 import { copyConfigured } from "@/lib/email";
+import { JsonLd, faqLd } from "@/lib/jsonld";
+
+export const metadata: Metadata = {
+  title: { absolute: "LaunchGrid Studio · Band and restaurant websites, Atlanta" },
+  description: "Custom websites for bands, musicians, restaurants, cafés and food trucks, built by one designer in Atlanta. Each comes with a back office you run from your phone.",
+  alternates: { canonical: "/" },
+};
 
 const FAQ = [
   ["Who builds it?", "I do, Reytek, one person in Atlanta. You write to me and I write back, so nothing gets handed between people."],
@@ -19,6 +27,7 @@ export default function Home() {
   const copyOn = copyConfigured();
   return (
     <main>
+      <JsonLd data={faqLd(FAQ)} />
       <Hero />
 
       <section className="section" id="back-office" aria-labelledby="bo-title">

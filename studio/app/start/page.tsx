@@ -4,8 +4,9 @@ import { copyConfigured } from "@/lib/email";
 import { KINDS } from "@/lib/inquiry";
 
 export const metadata: Metadata = {
-  title: "Start a project",
-  description: "Tell me what you're launching. A few lines is enough, and I reply in writing.",
+  title: "Start a website project",
+  description: "Tell me about your band, restaurant or business in a few lines. I reply in writing by the next business day, with no calls needed.",
+  alternates: { canonical: "/start" },
 };
 
 export default async function StartPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {

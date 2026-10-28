@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd, serviceLd } from "@/lib/jsonld";
 import { CinqueLive } from "@/components/restaurants/CinqueLive";
 import { RestaurantsHero } from "@/components/restaurants/RestaurantsHero";
 import { LowRolling } from "@/components/restaurants/LowRolling";
@@ -8,13 +9,15 @@ import { SparrowSkillet } from "@/components/restaurants/SparrowSkillet";
 import { chalk, clDisplay, lrCond, lrSlab, ssSans, ssSerif } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "For restaurants",
-  description: "Custom restaurant, café and food truck websites with a back office on your phone, built by Reytek.",
+  title: "Restaurant, café and food truck websites",
+  description: "Custom websites for restaurants, cafés and food trucks: menu, specials, hours and reservation requests you change from your phone. Built in Atlanta.",
+  alternates: { canonical: "/restaurants" },
 };
 
 export default function Restaurants() {
   return (
     <main>
+      <JsonLd data={serviceLd("/restaurants", "Restaurant, café and food truck websites", "Website design for restaurants", "Custom websites for restaurants, cafés and food trucks with a phone back office for the menu, specials, hours and reservation requests.")} />
       <RestaurantsHero fontClass={chalk.variable} />
 
       <section className={`section cl ${clDisplay.variable} ${chalk.variable}`} id="cinque" aria-labelledby="cl-title">

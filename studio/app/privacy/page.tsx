@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Privacy", description: "How LaunchGrid Studio uses what you send." };
+export const metadata: Metadata = { title: "Privacy", description: "How LaunchGrid Studio uses what you send through the project form, and what analytics the site runs.", alternates: { canonical: "/privacy" } };
 
 export default function Privacy() {
   return (

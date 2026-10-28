@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd, serviceLd } from "@/lib/jsonld";
 import { MusiciansHero } from "@/components/MusiciansHero";
 import { RtDeck } from "@/components/deck/RtDeck";
 import { FunkharpDesk } from "@/components/funkharp/FunkharpDesk";
@@ -8,13 +9,15 @@ import { JosieDesk } from "@/components/josie/JosieDesk";
 import { fhDisplay, fhSans, fhSerif, jcDisplay, jcText, jcType, kvDisplay, kvSans } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "For bands and artists",
-  description: "Custom band and artist websites with a back office on your phone, built by Reytek.",
+  title: "Band and musician websites",
+  description: "Custom websites for bands and artists: shows, music, videos, a booking inbox and a fan list you update from your phone. Built by Reytek in Atlanta.",
+  alternates: { canonical: "/musicians" },
 };
 
 export default function Musicians() {
   return (
     <main>
+      <JsonLd data={serviceLd("/musicians", "Band and musician websites", "Website design for bands and musicians", "Custom websites for bands and artists with a phone back office for shows, music, videos and bookings.")} />
       <MusiciansHero fontClass={fhDisplay.variable} />
 
       <section className="section rk-sec" id="reytek" aria-labelledby="rk-title">

@@ -9,6 +9,7 @@ import { Mark } from "@/components/Mark";
 import { RefCapture } from "@/components/StartForm";
 import { Wordmark } from "@/components/Wordmark";
 import { siteUrl, isLive } from "@/lib/site";
+import { JsonLd, studioGraph } from "@/lib/jsonld";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-bricolage" });
@@ -18,7 +19,10 @@ const plex = IBM_Plex_Mono({ subsets: ["latin"], weight: ["500", "700"], variabl
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: { default: "LaunchGrid Studio · Websites for bands and restaurants, with a back office", template: "%s · LaunchGrid Studio" },
-  description: "I build custom websites for bands, restaurants and small businesses, with a back office you run from your phone. Everything happens in writing.",
+  description: "Custom websites for bands, musicians, restaurants, cafés and food trucks, built by one designer in Atlanta. Each comes with a back office you run from your phone.",
+  authors: [{ name: "Reytek", url: "https://reytek1201.com" }],
+  creator: "Reytek",
+  category: "Web design",
   applicationName: "LaunchGrid Studio",
   openGraph: { type: "website", siteName: "LaunchGrid Studio", locale: "en_US" },
   twitter: { card: "summary_large_image" },
@@ -34,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${bricolage.variable} ${publicSans.variable} ${plex.variable}`}>
       <body>
+        <JsonLd data={studioGraph()} />
         <RefCapture />
         <TrackClicks />
         <div className="wrap">

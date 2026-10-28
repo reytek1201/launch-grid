@@ -10,6 +10,7 @@
     "qa": "node qa/run.mjs"
   },
   "dependencies": {
+    "@next/third-parties": "16.3.6",
     "@vercel/analytics": "2.0.1",
     "framer-motion": "13.4.4",
     "next": "16.3.6",

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/track";
 import { useEffect, useRef, useState } from "react";
 
 type Kind = "band" | "restaurant" | "other";

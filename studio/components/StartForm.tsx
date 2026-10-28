@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/track";
 import { startProject } from "@/app/actions";
 import { EMPTY, KINDS, NEED_MAX, TIMINGS, type FormState } from "@/lib/inquiry";
 import { Mark, type MarkHandle } from "./Mark";

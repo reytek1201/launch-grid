@@ -1,6 +1,6 @@
 "use client";
 
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/track";
 import { useEffect } from "react";
 
 /** Counts clicks on any element marked data-track="Event name" (Vercel Web Analytics custom events). */

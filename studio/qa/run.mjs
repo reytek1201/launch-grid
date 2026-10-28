@@ -130,20 +130,38 @@ for (const d of [PHONE, DESKTOP]) {
   console.log(`${okFast ? "ok  " : "FAIL"} too-fast send is dropped quietly`);
 }
 
-// Pricing: a tier button opens the form with the kind chosen and the package named; prices come from one file
+// Pricing: the sample proposal fills in per package, switches paper for restaurants, and its button fills the form
 for (const d of [PHONE, DESKTOP]) {
   const page = await (await ctx(d)).newPage();
   await page.goto(BASE + "/pricing", { waitUntil: "networkidle" });
-  const cards = await page.locator(".pr-card").count();
-  const sameRow = d.name === "desktop" ? await page.evaluate(() => { const t = [...document.querySelectorAll("#bands .pr-card")].map((c) => Math.round(c.getBoundingClientRect().top)); return new Set(t).size === 1; }) : true;
+  await page.locator(".pz").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(2600);
+  await page.screenshot({ path: `${SHOTS}/${d.name}-pricing-top.png` });
+  const startBand = await page.locator(".pz-big .sr-only").textContent();
+  await page.locator(".pz-tier", { hasText: "Tour" }).click();
+  await page.waitForTimeout(2600);
+  const tour = await page.locator(".pz-big .sr-only").textContent();
+  const highlighted = await page.locator(".pz-lines li[data-new]").count();
+  await page.locator(".pz").screenshot({ path: `${SHOTS}/${d.name}-pricing-tour.png` });
+  await page.locator(".pz-who-opt", { hasText: "restaurant" }).click();
+  await page.locator(".pz-tier", { hasText: "Dine-In" }).click();
+  await page.waitForTimeout(2600);
+  const stock = await page.locator(".pz").getAttribute("data-stock");
+  await page.locator(".pz").screenshot({ path: `${SHOTS}/${d.name}-pricing-dinein.png` });
   await page.screenshot({ path: `${SHOTS}/${d.name}-pricing-full.png`, fullPage: true });
-  await page.getByRole("link", { name: /Start with Headliner/ }).click();
-  await page.waitForURL(/\/start\?kind=band&tier=headliner/);
-  const kindOn = await page.locator('input[name="kind"][value="band"]').isChecked();
+  await page.addScriptTag({ content: axeSource });
+  const v = (await page.evaluate(() => axe.run())).violations.map((x) => x.id);
+  const over = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  await page.getByRole("link", { name: /Start with Dine-In/ }).click();
+  await page.waitForURL(/\/start\?kind=restaurant&tier=dine-in/);
+  const kindOn = await page.locator('input[name="kind"][value="restaurant"]').isChecked();
   const need = await page.getByLabel("What do you need?").inputValue();
-  const ok = cards === 5 && sameRow && kindOn && /Headliner package \(\$1,800\)/.test(need);
+  // a link straight to the restaurant prices opens on the guest check
+  await page.goto(BASE + "/pricing#restaurants", { waitUntil: "networkidle" });
+  const hashStock = await page.locator(".pz").getAttribute("data-stock");
+  const ok = startBand === "$1,800" && tour === "$2,700" && highlighted >= 3 && stock === "check" && !v.length && over <= 0 && kindOn && /Dine-In package \(\$2,800\)/.test(need) && hashStock === "check";
   if (!ok) bad++;
-  console.log(`${ok ? "ok  " : "FAIL"} ${d.name.padEnd(7)} pricing: tier button fills the form`, ok ? "" : JSON.stringify({ cards, sameRow, kindOn, need }));
+  console.log(`${ok ? "ok  " : "FAIL"} ${d.name.padEnd(7)} pricing: proposal fills, paper switches, button fills the form`, ok ? "" : JSON.stringify({ startBand, tour, highlighted, stock, v, over, kindOn, need, hashStock }));
 }
 
 // Musicians: Funkharp's booking letter lands on the band's phone (demo only, nothing is sent)

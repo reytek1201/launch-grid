@@ -1,39 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ProposalDesk } from "@/components/pricing/ProposalDesk";
 import { JsonLd, faqLd, studioId } from "@/lib/jsonld";
 import { siteUrl } from "@/lib/site";
-import { ALL_TIERS, BAND_TIERS, FAQ, PRICES_AS_OF, RESTAURANT_TIERS, usd, type Tier } from "@/lib/pricing";
+import { ALL_TIERS, BAND_TIERS, FAQ, PRICES_AS_OF, RESTAURANT_TIERS, usd } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Pricing for band and restaurant websites",
   description: `Fixed prices, set in writing. Band websites from ${usd(BAND_TIERS[0].price)}, restaurant websites from ${usd(RESTAURANT_TIERS[0].price)}, each with a back office you run from your phone.`,
   alternates: { canonical: "/pricing" },
 };
-
-function TierCard({ t, headingId }: { t: Tier; headingId: string }) {
-  const href = `/start?kind=${t.kind}&tier=${t.id}`;
-  return (
-    <article className="pr-card" data-pick={t.note ? "true" : undefined} aria-labelledby={headingId}>
-      {t.note && <span className="pr-flag">{t.note}</span>}
-      <h3 id={headingId}>{t.name}</h3>
-      <p className="pr-blurb">{t.blurb}</p>
-      <p className="pr-price">
-        <b>{usd(t.price)}</b>
-        <span>one time</span>
-      </p>
-      <p className="pr-sub">
-        {t.split ? <>or {t.split} × {usd(t.price / t.split)}<br /></> : null}
-        then {usd(t.care)}/month care plan
-      </p>
-      <dl className="pr-facts">
-        {t.facts.map(([k, v]) => (
-          <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
-        ))}
-      </dl>
-      <Link className={`btn ${t.note ? "" : "btn-ghost"}`} href={href} data-track={`Tier ${t.name} chosen`}>Start with {t.name} <span aria-hidden="true">→</span></Link>
-    </article>
-  );
-}
 
 export default function Pricing() {
   const url = siteUrl();
@@ -66,43 +42,22 @@ export default function Pricing() {
       <section className="pr-top" aria-labelledby="pr-title">
         <span className="label">Pricing</span>
         <h1 id="pr-title">Fixed prices, set in writing.</h1>
-        <p className="lede">Pick the closest fit and tell me about your project. My written proposal states the price and launch date before any work starts.</p>
-        <nav className="pr-jump" aria-label="Jump to a price list">
-          <a href="#bands">Bands and artists</a>
-          <a href="#restaurants">Restaurants</a>
-          <a href="#terms">How it works</a>
-        </nav>
+        <p className="lede">Every project starts with a one-page proposal: what&rsquo;s included, the price and the launch date. Here&rsquo;s what yours could say.</p>
       </section>
 
-      <section className="section pr-sec" id="bands" aria-labelledby="pr-bands">
-        <div className="section-head">
-          <span className="label">For bands and artists</span>
-          <h2 id="pr-bands">Three ways to put your music online.</h2>
-          <p>Each one has a matching monthly care plan. Prices in US dollars.</p>
-        </div>
-        <div className="pr-grid" data-n="3">
-          {BAND_TIERS.map((t) => <TierCard key={t.id} t={t} headingId={`pr-${t.id}`} />)}
-        </div>
-      </section>
-
-      <section className="section pr-sec" id="restaurants" aria-labelledby="pr-rest">
-        <div className="section-head">
-          <span className="label">For restaurants, cafés and food trucks</span>
-          <h2 id="pr-rest">Two ways to open on every phone.</h2>
-          <p>Both come with a back office you run from your phone, and a monthly care plan. Prices in US dollars.</p>
-        </div>
-        <div className="pr-grid" data-n="2">
-          {RESTAURANT_TIERS.map((t) => <TierCard key={t.id} t={t} headingId={`pr-${t.id}`} />)}
-        </div>
-        <p className="pr-fine">Need online ordering or payments on your own site, or a sync with your register? Those aren&rsquo;t in these two. Ask in the form and I&rsquo;ll tell you in writing what&rsquo;s possible.</p>
+      <section className="pr-desk-sec" id="packages" aria-label="Packages and prices">
+        <span id="bands" className="pr-anchor" aria-hidden="true" />
+        <span id="restaurants" className="pr-anchor" aria-hidden="true" />
+        <h2 className="sr-only">Packages and prices</h2>
+        <ProposalDesk />
       </section>
 
       <section className="section pr-sec" id="terms" aria-labelledby="pr-terms">
         <div className="section-head">
           <span className="label">How it works</span>
-          <h2 id="pr-terms">The terms, in plain words.</h2>
+          <h2 id="pr-terms">The fine print, in plain words.</h2>
         </div>
-        <dl className="pr-terms">
+        <dl className="pr-terms pp-sheet">
           <div><dt>Paying</dt><dd>50% to start, 50% at launch. Bands can split the build into 3 monthly payments instead, with launch after the last one.</dd></div>
           <div><dt>The care plan covers</dt><dd>Hosting, security and software updates, backups, keeping your forms and back office working, and up to 1 hour a month of small changes.</dd></div>
           <div><dt>Not covered</dt><dd>New pages, redesigns and new features. I quote them first, or charge $75 an hour for small jobs. No surprise bills.</dd></div>

@@ -13,3 +13,4 @@ The marketing site for LaunchGrid Studio (launchgrid.studio). Brand, tokens and 
 ## Live
 
 Launched Oct 27, 2026 at https://launchgrid.studio (SITE_LIVE=1, email alerts and sender copy on, Vercel Authentication on previews only).
+Analytics: Vercel Web Analytics enabled Oct 27, 2026 (cookieless page views; custom events: Project form sent, Bay opened, Restaurant demo opened, Try the admin opened). Search Console: URL-prefix property, verified by public/googleaccbf8fa4e57ddd9.html.

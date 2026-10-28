@@ -59,7 +59,7 @@ export async function emailAlert(i: Sent) {
     to,
     replyTo: i.email,
     subject: `New project: ${KINDS[i.kind]} · ${i.business}`,
-    text: `${summary(i)}\n\n${i.ref ? `Came from: ${i.ref}\n` : ""}Sent ${new Date().toISOString()}\nHit Reply to answer them.`,
+    text: `${summary(i)}\n\n${i.ref ? `Came from: ${i.ref}\n` : ""}Sent ${new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", dateStyle: "medium", timeStyle: "short" }).format(new Date())} (Atlanta time)\nHit Reply to answer them.`,
   });
 }
 

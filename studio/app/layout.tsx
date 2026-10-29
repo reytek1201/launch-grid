@@ -8,6 +8,7 @@ import { ShyHeader } from "@/components/ShyHeader";
 import { Mark } from "@/components/Mark";
 import { RefCapture } from "@/components/StartForm";
 import { Wordmark } from "@/components/Wordmark";
+import { SocialCells } from "@/components/SocialCells";
 import { siteUrl, isLive } from "@/lib/site";
 import { JsonLd, studioGraph } from "@/lib/jsonld";
 import "./globals.css";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           </ShyHeader>
           {children}
+          <SocialCells />
           <footer className="site-footer">
             <div>
               <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, color: "var(--ink)" }}><Wordmark /> Studio · Atlanta</div>

@@ -1,4 +1,5 @@
 import { siteUrl } from "./site";
+import { SOCIAL } from "./social";
 
 /** Structured data for search engines, rendered as a script tag (see Next's JSON-LD guide). `<` is escaped. */
 export function JsonLd({ data }: { data: Record<string, unknown> }) {
@@ -22,6 +23,7 @@ export function studioGraph() {
         image: `${url}/opengraph-image`,
         description: "Custom websites for bands, musicians, restaurants, cafés and food trucks, each with a back office the owner runs from a phone.",
         email: "reytek@launchgrid.studio",
+        sameAs: SOCIAL.map((s) => s.url),
         address: { "@type": "PostalAddress", addressLocality: "Atlanta", addressRegion: "GA", addressCountry: "US" },
         areaServed: [{ "@type": "City", name: "Atlanta" }, { "@type": "Country", name: "United States" }],
         founder: { "@type": "Person", name: "Reytek", url: "https://reytek1201.com" },

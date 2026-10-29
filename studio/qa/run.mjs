@@ -76,6 +76,18 @@ for (const d of [PHONE, DESKTOP]) {
     await page.screenshot({ path: `${SHOTS}/${d.name}-beat${i}.png` });
   }
   console.log(`ok   ${d.name.padEnd(7)} launch sequence beats`);
+  // follow the build: three social links, named, opening in a new tab; the cell lifts on hover/focus
+  for (const n of ["Instagram", "TikTok", "Facebook"]) {
+    const a = page.locator(".social").getByRole("link", { name: new RegExp(`^${n} .*opens in a new tab`) });
+    if ((await a.count()) !== 1 || (await a.getAttribute("target")) !== "_blank" || !(await a.getAttribute("href"))?.startsWith("https://")) { bad++; console.log(`FAIL ${d.name} social link ${n}`); }
+  }
+  const strip = page.locator(".social"); await strip.scrollIntoViewIfNeeded(); await page.waitForTimeout(1800);
+  await strip.screenshot({ path: `${SHOTS}/${d.name}-social.png` });
+  await page.locator(".sc-instagram").hover(); await page.waitForTimeout(500);
+  const lifted = await page.evaluate(() => getComputedStyle(document.querySelector(".sc-instagram .sc-tile")).transform);
+  if (!lifted || lifted === "none") { bad++; console.log(`FAIL ${d.name} social cell did not lift on focus`); }
+  await strip.screenshot({ path: `${SHOTS}/${d.name}-social-focus.png` });
+  console.log(`ok   ${d.name.padEnd(7)} social links`);
   // back office demo: a sold-out switch changes the preview
   await page.locator("#back-office").scrollIntoViewIfNeeded();
   await page.getByRole("switch", { name: "Cacio e pepe sold out" }).click();

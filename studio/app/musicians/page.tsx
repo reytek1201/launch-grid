@@ -35,6 +35,7 @@ export default function Musicians() {
           <span className="lbl">The business side · Funkharp, band client</span>
           <h2 id="fh-title">Someone writes to book you. Your phone buzzes.</h2>
           <p>This is the booking letter from Funkharp&rsquo;s site. Fill it in and seal it: the band gets an alert on their phones and the letter lands in their back office, where they also run their shows, music, videos and fan list.</p>
+          <p><a className="fh-live" href="https://funkharp.com/" target="_blank" rel="noopener">See the live site, funkharp.com <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a></p>
         </div>
         <FunkharpDesk />
       </section>

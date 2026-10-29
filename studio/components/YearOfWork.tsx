@@ -31,7 +31,7 @@ const STOPS: Stop[] = [
     text: "Shows, a booking inbox that alerts the band's phones, a fan list, music and videos. The band changes all of it themselves.",
     tags: ["Shows", "Booking inbox", "Fan list", "Music"],
     screen: "/work/funkharp-home.webp", alt: "Funkharp's band site on a phone: the band name over a cream and teal home screen",
-    video: "/work/funkharp-clip.mp4", soon: "Live link soon",
+    video: "/work/funkharp-clip.mp4", link: { href: "https://funkharp.com/", label: "Open funkharp.com" },
   },
   {
     id: "cinque", kind: "Demo restaurant · not a real business", name: "Trattoria Cinque Lune",

@@ -1918,3 +1918,5 @@ img.lr-badge, img.lr-badge-sm { background: none; box-shadow: none; border-radiu
   .social-cells.seen .sc-tile, .sc-flash, .sc-ripple { animation: none !important; }
   .sc-trail { display: none; }
 }
+.fh-head .fh-live { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font: 600 1rem/1.2 var(--fh-sans), sans-serif; color: var(--dirt); text-underline-offset: 4px; }
+.fh-head .fh-live:hover { color: var(--ink); }
